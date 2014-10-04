@@ -1,0 +1,13 @@
+{
+    "name":    "libraries",
+    "version": "0.0.1",
+    "description": "Libraries loader for Broccoli or similar library loaders or importers",
+    "author": "Kristian Mandrup <kmandrup@gmail.com>",
+    "license": "MIT",
+    "engine": "node >= 0.10",
+    "repository": "https://github.com/kristianmandrup/libraries",
+    "engines": {
+        "node": ">= 0.10.0"
+    },
+    "main": "libraries"
+}
