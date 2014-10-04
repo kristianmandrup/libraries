@@ -3,8 +3,19 @@ config    = {}
 
 Composite = require './composite'
 
+class Directory
+  (@app, @config) ->
+
+  bowerDir: ->
+    @app.bowerDirectory if @name is 'bower'
+
+  dir: (@name) ->
+    @config[@name] or @bowerDir! or @name
+
+
 module.exports = class Importer
-  (@app, @file = './imports/libraries.json') ->
+  (@app, @options = {}) ->
+    @file   = @options.file or './imports/libraries.json'
     @libs!
     @
 
@@ -15,14 +26,18 @@ module.exports = class Importer
     # console.log @readLibs!
     @libs = JSON.parse @readLibs!
 
+  dir: (name) ->
+    @directory!.dir name
+
+  directory: ->
+    @_directory ||= new Directory @app, @config
+
   importAll: ->
-    @config = @libs['config'] or {}
+    @config = @options.config or @libs['config'] or {}
     delete @libs['config']
 
     for key, value of @libs
       @importFor key, value
 
   importFor: (name, values) ->
-    directory = @config[name] or name
-    directory = @app.bowerDirectory if name is 'bower'
-    new Composite(@app, directory).importAll values
+    new Composite(@app, @dir(name)).importAll values

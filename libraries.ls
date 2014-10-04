@@ -1,7 +1,7 @@
 Importer = require './importer'
 
-importAll = (app, file) ->
-  new Importer(app, file).importAll!
+importAll = (app, options = {}) ->
+  new Importer(app, options).importAll!
 
 module.exports =
   importAll: importAll

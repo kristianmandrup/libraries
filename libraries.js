@@ -2,8 +2,9 @@
 (function(){
   var Importer, importAll;
   Importer = require('./importer');
-  importAll = function(app, file){
-    return new Importer(app, file).importAll();
+  importAll = function(app, options){
+    options == null && (options = {});
+    return new Importer(app, options).importAll();
   };
   module.exports = {
     importAll: importAll

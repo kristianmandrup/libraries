@@ -2,11 +2,24 @@
 (function(){
   var app, libraries;
   app = {
-    'import': function(location){
-      return console.log('app.import("' + location + '");');
+    'import': function(location, opts){
+      var x;
+      opts == null && (opts = '');
+      x = opts ? '", ' : '"';
+      return console.log('app.import(  "' + location + x, opts, ');');
     },
     bowerDirectory: 'bower_components'
   };
-  libraries = require('./libraries');
+  libraries = require('../libraries');
   libraries.importAll(app);
+  libraries.importAll(app, {
+    file: './imports/libraries.json'
+  });
+  console.log('with options');
+  libraries.importAll(app, {
+    file: './imports/libraries.json',
+    config: {
+      vendor: 'vendor/dev'
+    }
+  });
 }).call(this);
