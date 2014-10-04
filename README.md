@@ -26,6 +26,10 @@ app =
 
 libraries = require './libraries'
 libraries.importAll app
+
+# or passing custom options 
+
+libraries.importAll app, file: './imports/libraries.json', config: {vendor: 'vendor/dev'}
 ```
 
 ### Brocfile example
