@@ -1,4 +1,3 @@
-fs        = require 'fs'
 config    = {}
 
 Composite = require './composite'
@@ -12,19 +11,13 @@ class Directory
   dir: (@name) ->
     @config[@name] or @bowerDir! or @name
 
+Reader = require './reader'
 
-module.exports = class Importer
+module.exports = class Importer implements Reader
   (@app, @options = {}) ->
     @file   = @options.file or './imports/libraries.json'
     @libs!
     @
-
-  readLibs: ->
-    fs.readFileSync @file,'utf8'
-
-  libs: ->
-    # console.log @readLibs!
-    @libs = JSON.parse @readLibs!
 
   dir: (name) ->
     @directory!.dir name

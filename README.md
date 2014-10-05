@@ -82,6 +82,22 @@ Example configuration:
 }
 ```
 
+### Adding configuration libs and remaps via API
+
+```
+libraries.adder.addLibs 'chaines', ['sdfds/sddsg.js']
+adder.save()
+
+# or save to specific file
+adder.save(my-filepath)
+
+# print full libraries configuration (for debugging)
+adder.print()
+
+# to any printer function which takes a string argument
+adder.print console.log
+```
+
 Enjoy :)
 
 ### License
