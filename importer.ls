@@ -11,13 +11,18 @@ class Directory
   dir: (@name) ->
     @config[@name] or @bowerDir! or @name
 
-Reader = require './reader'
 
-module.exports = class Importer implements Reader
+Adder     = require './adder'
+Remover   = require './remover'
+
+module.exports = class Importer implements Adder, Remover
   (@app, @options = {}) ->
     @file   = @options.file or './imports/libraries.json'
     @libs!
     @
+
+  init: (key) ->
+    @libs[key] ||= {}
 
   dir: (name) ->
     @directory!.dir name

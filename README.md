@@ -1,6 +1,6 @@
 # Libraries
 
-Libraries loader for Broccoli or similar library loaders or importers.
+Libraries loader for Broccoli
 
 ## Why?
 
@@ -11,7 +11,9 @@ Configuration is now externalised. Libraries can be grouped by category. We can 
  We can even include automatic support for remapping.
 
 Using a JSON format we can allow (code) generators to automatically process, append or remove libraries as needed 
-from the JSON structure ;)
+using the JSON structure ;)
+
+One such util which will soon take advantage of this is [ember-config](https://github.com/kristianmandrup/ember-config) generator.
 
 ## Usage example
 
@@ -25,11 +27,13 @@ app =
   bowerDirectory: 'bower_components'
 
 libraries = require './libraries'
-libraries.importAll app
+libraries = new Libraries(app)
+libraries.importAll()
 
 # or passing custom options 
 
-libraries.importAll app, file: './imports/libraries.json', config: {vendor: 'vendor/dev'}
+libraries = new Libraries app, file: './imports/libraries.json', config: {vendor: 'vendor/dev'}
+libraries.importAll() 
 ```
 
 ### Brocfile example
@@ -41,7 +45,9 @@ var app = new EmberApp();
 
 // Use `app.import` to add additional libraries to the generated
 
-require('libraries').importAll(app);
+Libraries = require('libraries')
+libraries = new Libraries(app)
+libraries.importAll(app);
 
 module.exports = app.toTree();
 ```
@@ -85,17 +91,27 @@ Example configuration:
 ### Adding configuration libs and remaps via API
 
 ```
-libraries.adder.addLibs 'chaines', ['sdfds/sddsg.js']
-adder.save()
+libraries.addLibs 'chaines', ['sdfds/sddsg.js']
+libraries.save()
 
 # or save to specific file
-adder.save(my-filepath)
+libraries.save(my-filepath)
 
 # print full libraries configuration (for debugging)
-adder.print()
+libraries.print()
 
 # to any printer function which takes a string argument
-adder.print console.log
+libraries.print console.log
+```
+
+### Removing configuration libs and remaps via API
+
+```
+libraries.removeLibs 'chaines', ['sdfds/sddsg.js']
+libraries.removeRemap 'bower', 'jquery/core'
+libraries.removeRemaps 'bower', ['jquery/core', 'famous/core']
+libraries.print()
+libraries.save()
 ```
 
 Enjoy :)

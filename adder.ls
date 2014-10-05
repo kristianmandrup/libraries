@@ -1,19 +1,6 @@
-fs     = require 'fs'
-Reader = require './reader'
+FileIO = require './file-io'
 
-module.exports = class Adder implements Reader
-  (@options = {}) ->
-    @file = @options.file || './imports/libraries.json'
-    @libs!
-
-  init: (key) ->
-    @libs[key] ||= {}
-
-  # by default overwrites
-  save: (file) ->
-    file ||= @file
-    fs.writeFileSync file, JSON.stringify(@libs, null, '  ')
-
+Adder =
   # add one or more libs to libraries file
   # call examples
   #   .addLibs 'bower', 'dist/ember-validations.js'
@@ -29,14 +16,11 @@ module.exports = class Adder implements Reader
     @init key
     names = [names] if typeof names is 'string'
     unless typeof! names is 'Array'
-      throw new Error "lib(s) to add must be a String or Object"
+      throw new Error "lib(s) to add must be a String or Array"
 
     return unless names.length > 0
     @libs[key].libs = (@libs[key].libs or []).concat names
     @
-
-  print: (io = console.log) ->
-    io @libs
 
   # add one or more libs to libraries file
   # call examples
@@ -48,11 +32,16 @@ module.exports = class Adder implements Reader
 
     return unless Object.keys(obj).length > 0
 
-    @libs[key].remaps ||= {}
+    @libs[key].remap ||= {}
     for name, value of obj
       @addRemap key, name, value
     @
 
   addRemap: (key, name, value) ->
-    @libs[key].remaps[name] = value
+    @libs[key].remap[name] = value
     @
+
+
+Adder <<< FileIO
+
+module.exports = Adder

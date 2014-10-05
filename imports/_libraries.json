@@ -1,0 +1,24 @@
+{
+    "config": {
+        "vendor": "vendor/prod"
+    },
+    "bower": {
+        "libs": [
+            "ember-validations/dist/ember-validations",
+            "ember-easyform/dist/ember-easyform"
+        ],
+        "remap": {
+            "famous/core": "famous/core",
+            "moment": "moment/index"
+        }
+    },
+    "vendor": {
+        "libs": [
+            "x/dist/x",
+            "y/dist/y"
+        ],
+        "remap": {
+            "jquery/core": "dist/jquery/core"
+        }
+    }
+}
