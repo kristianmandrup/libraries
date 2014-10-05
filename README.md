@@ -179,7 +179,19 @@ There's no juggling `<script src="bower_components/jquery"><script>` calls and s
 "Component, by default, uses the CommonJS module system. The major benefit of this is that there are no boilerplate callbacks. 
 However, as of `1.0.0`, *Component supports ES6 modules natively.*"
 
-Could we make component entries like this, after iterating through the components installed?
+Every component, module, and app needs an entry point. In general, this is the `index.js` file or whatever is listed as `main`. However, you'll notice that many examples have a `component.json` that look like this:
+
+```javascript
+{
+  "name": "app",
+  "locals": ["boot"],
+  "paths": ["lib"]
+}
+```
+
+That is, there's no `.scripts`, and a single `boot` *local*. What this means is that that the *entry point is deferred to boot*, so the *build will automatically require('boot') instead of require('app')*. The main reason for doing so is to avoid having any files at the top of your directory, which makes it cleaner.
+
+Could we use this mechanism to install the components locally? Then make component entries like this, after iterating through the components installed?
  
 Looks like we can use [https://github.com/duojs/duo/blob/master/docs/api.md]
 
