@@ -129,9 +129,34 @@ debug-app(console.log)
 
 Enjoy :)
 
-### Future
+### Future (ideas and thoughts)
 
-- Add support for components.
+Please provide feedback to this section...
+
+- Change libs to object format
+
+Instead of:
+
+```javascript
+bower: {
+  libs: ['asf/dist/asf-0.3', 'zebra/lib/main']
+  },
+```  
+
+Change to a format where each key is the id (folder name) of the library.
+
+```javascript
+bower: {
+  libs: {
+    asf: 'dist/asf-0.3', 
+    zebra: 'lib/main'
+  },
+```  
+
+
+- Add support for components
+
+For "custom" components, we can let users specify them like this, then later turn them into real components with their own `component.json` file.
 
 ```javascript
 components: {
@@ -142,6 +167,59 @@ components: {
   },
   ...
 ```
+
+- Add support for [ComponentJS](https://github.com/componentjs/component) 
+- Also support [Duo](http://duojs.org/) which uses `componenet.json` as well... 
+
+Some quotes:
+
+"Component's integrated build system allows you to simply include one script and one stylesheet in your page.
+There's no juggling `<script src="bower_components/jquery"><script>` calls and such."
+
+"Component, by default, uses the CommonJS module system. The major benefit of this is that there are no boilerplate callbacks. 
+However, as of `1.0.0`, *Component supports ES6 modules natively.*"
+
+Could we make component entries like this, after iterating through the components installed?
+ 
+Looks like we can use [https://github.com/duojs/duo/blob/master/docs/api.md]
+
+
+```javascript
+var duo = new Duo(__dirname); //Initialize a new Duo instance with a path to the package's root directory
+duo.entry(file) // Specify the entry file that Duo will traverse and transform.
+``
+
+"`duo.installTo(path)` - Set the path to the install directory, where dependencies will be installed. Defaults to `./components`"
+
+[normalize](https://normalize.github.io/) is used to push code directly via *SPDY push* and thus does not require a build/bundle step,  
+it can be done however using [nlz](https://github.com/normalize/nlz). Normalize totally circumvnts the build step so it makes no sense to even
+ try to support this. Can be used as a bonus directly from within your javascript files if you wish (yes, they even have Ember examples!).
+
+"The major difference between Bower and Component: `component.json` is more strict and opinionated: 
+all files listed in `component.json` are assumed to be mandatory. 
+On the other hand, files listed in a `bower.json` are generally optional."
+
+This means that we can directly use the files listed in `component.json` for any component :) 
+
+```javascript
+{
+  "name": "duo-component",
+  "version": "0.0.1",
+  "main": "index.js",
+  "dependencies": {
+    "component/tip": "1.x",
+    "jkroso/computed-style": "0.1.0"
+  }
+}
+```
+
+From this, I gather it would be possible to download the `component.json` file from github for each component referenced via their special syntax (we should extract the code to do this!) 
+to folder such as: `'components/_manifests/' + name'`. Then create an `index.js` file with a `require(dependency)` for each dependency.
+
+To use each such manifest to install the component (files) locally, we could use `duo.entry('components/_manifests/' + component + '/index.js')` and then `duo.installTo('./components')`. 
+
+This sure feels like sidestepping the whole idea of component/duo which are all about avoiding the whole build/bundle step, however it is the only way I see that
+ it can work with the current Broccoli workflow. Anyhow, it's all stop-gap measures until we have broad native ES6 module support in the browsers...
 
 - Add support for other client package managers such as [component](https://github.com/component), see [repo](https://github.com/componentjs/component)
 - Add a global registry with pre-configured configurations for common components and libs
