@@ -1,11 +1,12 @@
 app =
   import: (location, opts = '') ->
     x = if opts then '", ' else '"'
-    console.log 'app.import(  "' + location + x, opts, ');',
+    console.log 'app.import(  "' + location + x, opts, ');'
+
   bowerDirectory: 'bower_components'
 
 Libraries = require '../libraries'
-libraries = new Libraries(app)
+libraries = new Libraries app: app
 
 orig-file = './imports/libraries.json'
 file = './imports/libraries.json'

@@ -4,6 +4,9 @@ module.exports = class LibImporter
     @
 
   validate: ->
+    unless typeof @obj is 'Object'
+      throw new Error "LibImporter must take an Object as first arg"
+
     unless typeof! @libs is 'Array'
       throw new Error "libs must be an Array"
 

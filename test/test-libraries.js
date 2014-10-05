@@ -11,7 +11,9 @@
     bowerDirectory: 'bower_components'
   };
   Libraries = require('../libraries');
-  libraries = new Libraries(app);
+  libraries = new Libraries({
+    app: app
+  });
   origFile = './imports/libraries.json';
   file = './imports/libraries.json';
   fs = require('fs');

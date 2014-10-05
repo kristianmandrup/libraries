@@ -45,8 +45,8 @@ var app = new EmberApp();
 
 // Use `app.import` to add additional libraries to the generated
 
-Libraries = require('libraries')
-libraries = new Libraries(app)
+manager = require('libraries')
+libraries = new manage.Libraries(app)
 libraries.importAll(app);
 
 module.exports = app.toTree();
@@ -106,7 +106,7 @@ libraries.print console.log
 
 ### Removing configuration libs and remaps via API
 
-```
+```javascript
 libraries.removeLibs 'chaines', ['sdfds/sddsg.js']
 libraries.removeRemap 'bower', 'jquery/core'
 libraries.removeRemaps 'bower', ['jquery/core', 'famous/core']
@@ -114,7 +114,56 @@ libraries.print()
 libraries.save()
 ```
 
+### Dummy App and Debugging
+
+To print all `app.import` statements to via `console.log` (default)
+
+```javascript
+manager   = require('libraries')
+libraries = new manage.Libraries manager.debug-app()
+libraries.importAll()
+
+# or use any other function that takes a string 
+debug-app(console.log)
+```
+
 Enjoy :)
+
+### Future
+
+- Add support for components.
+
+```javascript
+components: {
+  bootstrap: {
+    script: 'dist/bootstrap.js'
+    styles: [...]
+    fonts: [...]
+  },
+  ...
+```
+
+- Add support for other client package managers such as [component](https://github.com/component), see [repo](https://github.com/componentjs/component)
+- Add a global registry with pre-configured configurations for common components and libs
+- Allow local registry override and extension of global registry via `Object.extend`
+- Enable [ember-config](https://github.com/kristianmandrup/ember-config) generator to both add and remove libs and components easily using registry
+- Add CLI interface to add/remove via CLI commands
+
+`library add component bootstrap`
+
+`library remove component bootstrap`
+
+`library add component bootstrap:fonts`
+
+`library add lib jquery:css`
+
+`library add components jquery-ui bootstrap`
+
+`library remove components jquery-ui bootstrap`
+ 
+Please help out to make this an awesome experience and greatly enhance productivity for all of us... ;)
+
+*Enjoy :)*
 
 ### License
 

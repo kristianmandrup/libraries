@@ -17,6 +17,9 @@
       return this.importRemaps();
     };
     prototype.validate = function(){
+      if (typeof this.obj !== 'Object') {
+        throw new Error("RemapImporter must take an Object as first arg");
+      }
       if (toString$.call(this.remaps).slice(8, -1) !== 'Object') {
         throw new Error("remap must be an Object");
       }

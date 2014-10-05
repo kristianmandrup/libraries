@@ -7,14 +7,15 @@
   module.exports = Libraries = (function(){
     Libraries.displayName = 'Libraries';
     var prototype = Libraries.prototype, constructor = Libraries;
-    function Libraries(app, options){
-      this.app = app;
-      this.options = options;
+    function Libraries(options){
+      this.options = options != null
+        ? options
+        : {};
       this.importer();
       this;
     }
     prototype.importer = function(){
-      return this.importer = new Importer(this.app, this.options);
+      return this.importer = new Importer(this.options.app, this.options);
     };
     prototype.importAll = function(){
       return this.importer.importAll();

@@ -11,6 +11,9 @@
       this;
     }
     prototype.validate = function(){
+      if (typeof this.obj !== 'Object') {
+        throw new Error("LibImporter must take an Object as first arg");
+      }
       if (toString$.call(this.libs).slice(8, -1) !== 'Array') {
         throw new Error("libs must be an Array");
       }

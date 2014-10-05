@@ -5,6 +5,10 @@ Composite = require './composite'
 class Directory
   (@app, @config) ->
 
+  validate: ->
+    unless typeof @app is 'Object'
+      throw new Error "Directory must take an app Object"
+
   bowerDir: ->
     @app.bowerDirectory if @name is 'bower'
 
@@ -17,9 +21,14 @@ Remover   = require './remover'
 
 module.exports = class Importer implements Adder, Remover
   (@app, @options = {}) ->
+    @validate!
     @file   = @options.file or './imports/libraries.json'
     @libs!
     @
+
+  validate: ->
+    unless typeof @app is 'Object'
+      throw new Error "Importer must take an app Object as first arg"
 
   init: (key) ->
     @libs[key] ||= {}

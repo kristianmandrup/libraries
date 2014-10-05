@@ -3,12 +3,12 @@ Adder      = require './adder'
 Remover    = require './remover'
 
 module.exports = class Libraries
-  (@app, @options) ->
+  (@options = {}) ->
     @importer!
     @
 
   importer: ->
-    @importer = new Importer(@app, @options)
+    @importer = new Importer(@options.app, @options)
 
   importAll: ->
     @importer.importAll!

@@ -8,6 +8,9 @@ module.exports = class RemapImporter
     @importRemaps!
 
   validate: ->
+    unless typeof @obj is 'Object'
+      throw new Error "RemapImporter must take an Object as first arg"
+
     unless typeof! @remaps is 'Object'
       throw new Error "remap must be an Object"
 

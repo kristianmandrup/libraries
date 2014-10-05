@@ -10,6 +10,11 @@
       this.app = app;
       this.config = config;
     }
+    prototype.validate = function(){
+      if (typeof this.app !== 'Object') {
+        throw new Error("Directory must take an app Object");
+      }
+    };
     prototype.bowerDir = function(){
       if (this.name === 'bower') {
         return this.app.bowerDirectory;
@@ -33,10 +38,16 @@
       this.options = options != null
         ? options
         : {};
+      this.validate();
       this.file = this.options.file || './imports/libraries.json';
       this.libs();
       this;
     }
+    prototype.validate = function(){
+      if (typeof this.app !== 'Object') {
+        throw new Error("Importer must take an app Object as first arg");
+      }
+    };
     prototype.init = function(key){
       var ref$;
       return (ref$ = this.libs)[key] || (ref$[key] = {});
