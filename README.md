@@ -131,6 +131,14 @@ Enjoy :)
 
 ### Future (ideas and thoughts)
 
+![Package management](http://upload.wikimedia.org/wikipedia/commons/2/22/Pms.svg "Package management")
+
+Links:
+
+- http://www.huffingtonpost.com/alex-ivanovs/5-package-managers-for-no_b_5880116.html
+- http://blog.slant.co/post/95896285907/finding-a-winning-workflow-for-frontend-development
+- http://infomatrix-blog.herokuapp.com/post/modules-modules-everywhere
+
 Please provide feedback to this section...
 
 - Change libs to object format
@@ -156,87 +164,169 @@ bower: {
 
 - Add support for components
 
-For "custom" components, we can let users specify them like this, then later turn them into real components with their own `component.json` file.
+For "custom" components, we can let users specify them something like this...
+Question: Is this too much complexity to be worth it? If we can have a registry of it and make it easy to auto-populate for most 
+libraries it should be worth it. Makes it much easier to manage and allows for tooling support to manage it.
 
 ```javascript
 components: {
   bootstrap: {
-    script: 'dist/bootstrap.js'
-    styles: [...]
-    fonts: [...]
+    items: {
+      dir: 'dist',
+      scripts: {
+        baseDir: 'js', // relative ie. 'dist/js'
+        files: ['bootstrap.js'] // becomes 'bootstrap/dist/js/bootstrap.js'
+      },
+      styles: {
+        dir: 'css',
+        files: [...]
+      }
+      fonts: {
+        dir: 'fonts',
+        files: [...]
+      }
+    },
+    remap: 'bootstrap3'
   },
   ...
 ```
 
-- Add support for [ComponentJS](https://github.com/componentjs/component) 
-- Also support [Duo](http://duojs.org/) which uses `componenet.json` as well... 
+Ideally it would be nice if we could auto-populate this somehow, either by lookup in a registry or by parsing the downloaded components in the folders
+such as `bower_components` folder. At least it would be nice to generate empty placeholders :)
 
-Some quotes:
+[what is the Bower main property](http://stackoverflow.com/questions/20391742/what-is-the-main-property-when-doing-bower-init)
 
-"Component's integrated build system allows you to simply include one script and one stylesheet in your page.
-There's no juggling `<script src="bower_components/jquery"><script>` calls and such."
-
-"Component, by default, uses the CommonJS module system. The major benefit of this is that there are no boilerplate callbacks. 
-However, as of `1.0.0`, *Component supports ES6 modules natively.*"
-
-Every component, module, and app needs an entry point. In general, this is the `index.js` file or whatever is listed as `main`. However, you'll notice that many examples have a `component.json` that look like this:
+Would be awesome to take advantage of this :)
 
 ```javascript
 {
-  "name": "app",
-  "locals": ["boot"],
-  "paths": ["lib"]
-}
+  "name": "bootstrap",
+  "version": "3.0.3",
+  "main": [
+    // scripts
+    "./dist/css/bootstrap.css",
+    
+    // styles
+    "./dist/js/bootstrap.js",
+
+    // fonts
+    "./dist/fonts/glyphicons-halflings-regular.eot",
+    "./dist/fonts/glyphicons-halflings-regular.svg",
+    "./dist/fonts/glyphicons-halflings-regular.ttf",
+    "./dist/fonts/glyphicons-halflings-regular.woff"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.9.0"
+  }
+}    
 ```
 
-That is, there's no `.scripts`, and a single `boot` *local*. What this means is that that the *entry point is deferred to boot*, so the *build will automatically require('boot') instead of require('app')*. The main reason for doing so is to avoid having any files at the top of your directory, which makes it cleaner.
+Design:
 
-Could we use this mechanism to install the components locally? Then make component entries like this, after iterating through the components installed?
- 
-Looks like we can use [https://github.com/duojs/duo/blob/master/docs/api.md]
+```
+- xlibs
+  libraries.json
+  - components
+    - bower
+      components.json
+    - vendor
+      components.json        
+```
 
-
-```javascript
-var duo = new Duo(__dirname); //Initialize a new Duo instance with a path to the package's root directory
-duo.entry(file) // Specify the entry file that Duo will traverse and transform.
-``
-
-"`duo.installTo(path)` - Set the path to the install directory, where dependencies will be installed. Defaults to `./components`"
-
-[normalize](https://normalize.github.io/) is used to push code directly via *SPDY push* and thus does not require a build/bundle step,  
-it can be done however using [nlz](https://github.com/normalize/nlz). Normalize totally circumvnts the build step so it makes no sense to even
- try to support this. Can be used as a bonus directly from within your javascript files if you wish (yes, they even have Ember examples!).
-
-"The major difference between Bower and Component: `component.json` is more strict and opinionated: 
-all files listed in `component.json` are assumed to be mandatory. 
-On the other hand, files listed in a `bower.json` are generally optional."
-
-This means that we can directly use the files listed in `component.json` for any component :) 
-
-```javascript
+```
+// libaries.json
 {
-  "name": "duo-component",
-  "version": "0.0.1",
-  "main": "index.js",
-  "dependencies": {
-    "component/tip": "1.x",
-    "jkroso/computed-style": "0.1.0"
+  components: {
+    bower: [
+      'bootstrap',
+      ...
+    ],
+    vendor: [
+      ...
+    ]
   }
 }
 ```
 
-From this, I gather it would be possible to download the `component.json` file from github for each component referenced via their special syntax (we should extract the code to do this!) 
-to folder such as: `'components/_manifests/' + name'`. Then create an `index.js` file with a `require(dependency)` for each dependency.
 
-To use each such manifest to install the component (files) locally, we could use `duo.entry('components/_manifests/' + component + '/index.js')` and then `duo.installTo('./components')`. 
+- Add support for other client package managers such as [component](https://github.com/component)? 
 
-This sure feels like sidestepping the whole idea of component/duo which are all about avoiding the whole build/bundle step, however it is the only way I see that
- it can work with the current Broccoli workflow. Anyhow, it's all stop-gap measures until we have broad native ES6 module support in the browsers...
-
-- Add support for other client package managers such as [component](https://github.com/component), see [repo](https://github.com/componentjs/component)
 - Add a global registry with pre-configured configurations for common components and libs
 - Allow local registry override and extension of global registry via `Object.extend`
 - Enable [ember-config](https://github.com/kristianmandrup/ember-config) generator to both add and remove libs and components easily using registry
+
+### Jam support?
+
+[Jam](http://jamjs.org/) is similar to Bower in its functionality.
+
+`jam search` to find jam packages
+
+```bash
+$ jam install jquery
+...
+updating jam/jam.json
+```
+
+This will download the latest version of jQuery and put it into `./jam/jquery/jquery.js`. 
+By default all packages are installed to `./jam`. Now, we could just include that script manually, 
+but Jam comes with *RequireJS* to manage this for us.
+
+`<script src="jam/require.js"></script>`
+
+Then use it...
+
+```javascript
+require(['jquery'], function () {
+ ...
+}); 
+```
+
+However, according to *@tomdale*, [AMD is not the answer](http://tomdale.net/2012/01/amd-is-not-the-answer/)
+Could we perhaps use *amdclean* to strip this away and repack?
+
+### Ender support?
+
+- http://wibblycode.wordpress.com/2013/01/01/the-state-of-javascript-package-management/
+
+"The created library exposes a global variable `$` with properties defined by the component packages. Once your library has been started you use ender add and ender remove to manage the components that it provides. The library is written into `ender.js` and `ender.min.js`.
+*Ender* piggybacks off of the *npm registry*, with each *Ender* package being an npm package. To signify that an npm module is compatible you add the `‘ender’` keyword to `package.json"
+
+### Volo support?
+
+"Volo can be used much like bower to simply install the contents of a package, but it also includes a project automation/build system and *can automatically turn installed packages into AMD modules*
+Volo uses *Github* as its backend – a package is a Github repository and volo add will use the Github search API to find packages if you only provide a name or keyword. You can specify a full repository name with `volo add <username>/<project name>`, e.g. `volo add jquery/jquery`."
+
+`volo add [flags] [archive] [localName]`
+
+`-amdoff`: Turns off AMD conversion for when the project is AMD and the dependency being added is not AMD/CommonJS. 
+
+For the directory in which add is run, it will look for the following to know where to install:
+
+Looks for a `volo.baseDir` `package.json` property.
+Looks for a `js` directory
+Looks for a `scripts` directory
+
+### Webmake?
+
+Alternative to Browserify!
+
+[webmake](https://github.com/medikoo/modules-webmake) - Bundle CommonJS/Node.js modules for web browsers.
+
+Require CSS and HTML files same way. Webmake allows you to require them too, which makes it a full stack modules bundler for a web browser.
+
+Hmm... actually it looks better than Browserify in many aspects I would say ;)
+
+[comparison-with-other-solutions](https://github.com/medikoo/modules-webmake#comparison-with-other-solutions)
+
+"When comparing with other CJS bundlers, main difference would be that Webmake *completely follows resolution logic as it 
+works in `node.js`*. It resolves both packages and modules exactly as `node.js`, and it doesn't introduce any different ways to do that. 
+Thanks to that, you can be sure that your modules are runnable in it's direct form both on server and client-side."
+
+"... noticeably faster solution"
+
+
+### CLI support
+
 - Add CLI interface to add/remove via CLI commands
 
 `library add component bootstrap`

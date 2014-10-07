@@ -1,0 +1,15 @@
+{
+    "dir": "dist",
+    "scripts": {
+        "dir": "js",
+        "files": ["bootstrap.js"]
+    },
+    "styles": {
+        "dir": "css",
+        "files": ["x.css"]
+    },
+    "fonts": {
+        "dir": "fonts",
+        "files": ["xyz.eof", "xyz.svg"]
+    }
+}

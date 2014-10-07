@@ -1,0 +1,9 @@
+{
+    "dir": "dist",
+    "files": [
+        "js/foundation.js",
+        "css/foundation.css",
+        "fonts/foundation.eof",
+        "fonts/foundation.svg"
+    ]
+}

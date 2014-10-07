@@ -1,0 +1,5 @@
+#!bash/node
+
+var manager = require('../index');
+
+// read CLI commands and options

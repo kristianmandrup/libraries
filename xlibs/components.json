@@ -1,0 +1,32 @@
+{
+    "bootstrap": {
+        "dir": "dist",
+        "scripts": {
+            "dir": "js",
+            "files": ["bootstrap.js"]
+        },
+        "styles": {
+            "dir": "css",
+            "files": ["bootstrap.css"]
+        },
+        "fonts": {
+            "dir": "fonts",
+            "files": ["bootstrap.eof", "bootstrap.svg"]
+        }
+    },
+    "foundation": {
+        "dir": "dist",
+        "scripts": {
+            "dir": "js",
+            "files": ["foundation.js"]
+        },
+        "styles": {
+            "dir": "css",
+            "files": ["foundation.css"]
+        },
+        "fonts": {
+            "dir": "fonts",
+            "files": ["foundation.eof", "foundation.svg"]
+        }
+    }
+}

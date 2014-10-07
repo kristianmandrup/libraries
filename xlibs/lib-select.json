@@ -1,0 +1,7 @@
+{
+    "select": [
+        "bootstrap",
+        "foundation",
+        "ember-easyform"
+    ]
+}
