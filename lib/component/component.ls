@@ -13,7 +13,7 @@ module.exports = class Component
 
   location-obj: ->
     obj = {}
-    for name in ['scripts', 'styles', 'fonts']
+    for name in ['scripts', 'styles', 'sass', 'fonts']
       paths = @locations name
       obj[name] = paths if paths
     obj

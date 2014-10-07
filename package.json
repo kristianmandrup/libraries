@@ -8,8 +8,13 @@
     "engines": {
         "node": ">= 0.10.0"
     },
+    "preferGlobal": "true",
+    "bin": {
+      "library": "bin/library.js"
+    },
     "devDependencies": {
       "mocha": "x",
-      "chai": "x"
+      "chai": "x",
+      "cli": "x"
     }
 }

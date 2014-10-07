@@ -2,23 +2,29 @@ fs     = require 'fs'
 FileIO = require './file-io'
 
 module.exports =
-  readLibs: ->
-    fs.readFileSync @file,'utf8'
+  read: ->
+    @content ||= fs.readFileSync @file,'utf8'
 
   # by default overwrites
   save: (file) ->
     file ||= @file
-    fs.writeFileSync file, JSON.stringify(@libs, null, '  ')
+    fs.writeFileSync file, @string!
     @
+
+  string: ->
+    JSON.stringify(@json!, null, '  ')
+
+  exists: ->
+    fs.existsSync @file
 
   load: ->
-    @libs = JSON.parse @readLibs!
+    @_json = void
+    @json!
     @
 
-  libs: ->
-    @libs = JSON.parse @readLibs!
-    @
+  json: ->
+    @_json ||= JSON.parse @read!
 
   print: (io = console.log) ->
-    io @libs
+    io @json!
     @

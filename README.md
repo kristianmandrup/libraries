@@ -26,9 +26,7 @@ app =
     console.log 'app.import("' + location + '");'
   bowerDirectory: 'bower_components'
 
-libraries = require './libraries'
-libraries = new Libraries(app)
-libraries.importAll()
+require('libraries')(app).importAll();
 
 # or passing custom options 
 

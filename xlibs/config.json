@@ -1,0 +1,21 @@
+{
+  "config": {
+      "vendor": "vendor/prod"
+  },
+  "bower": {
+    "components": [
+      "boostrap",
+      "foundation"
+    ],
+    "libs": {
+      "ember-validations": "dist/ember-validations",
+      "ember-easyform": "dist/ember-easyform",
+      "moment": {
+        "moment": "momentjs/index"
+      }
+    }
+  },
+  "vendor": {
+
+  }
+}
