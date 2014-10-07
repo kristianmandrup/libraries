@@ -63,3 +63,7 @@ describe 'Configurator' ->
 
       specify 'has ember-validations' ->
         expect configurator.part('bower').libs['ember-validations'] .to.eql "dist/ember-validations"
+
+    describe 'cmps' ->
+      specify 'an instance' ->
+        expect configurator.cmps! .to.not.eql void

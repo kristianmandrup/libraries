@@ -1,4 +1,5 @@
-FileIO = require '../file-io'
+FileIO      = require '../file-io'
+Components  = require '../component/components'
 
 module.exports = class Configurator implements FileIO
   (@file) ->
@@ -7,6 +8,9 @@ module.exports = class Configurator implements FileIO
     @read!
     @config = @json!.config or {}
     @
+
+  cmps: ->
+    @_cmps ||= new Components @
 
   validate: ->
     unless @exists!

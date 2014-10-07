@@ -67,12 +67,17 @@
           return expect(configurator.part('bower').components).to.include("boostrap");
         });
       });
-      return describe('libs', function(){
+      describe('libs', function(){
         specify('not empty', function(){
           return expect(configurator.part('bower').libs).to.not.be.empty;
         });
         return specify('has ember-validations', function(){
           return expect(configurator.part('bower').libs['ember-validations']).to.eql("dist/ember-validations");
+        });
+      });
+      return describe('cmps', function(){
+        return specify('an instance', function(){
+          return expect(configurator.cmps()).to.not.eql(void 8);
         });
       });
     });
