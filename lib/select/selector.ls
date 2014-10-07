@@ -1,10 +1,11 @@
-FileIO = require '../file-io'
+FileIO        = require '../file-io'
+ListMutator   = require '../list-mutator'
 
 unless String.prototype.trim
   String.prototype.trim = ->
     @replace /^\s+|\s+$/g, ''
 
-module.exports = class Select implements FileIO
+module.exports = class Select implements FileIO, ListMutator
   (@options = {}) ->
     @file = @options.file or './xlibs/select'
     @validate!
@@ -23,26 +24,10 @@ module.exports = class Select implements FileIO
     @content = @lines!.join "\n"
     @
 
-  add: (names) ->
-    names = @_normalize names
-    for name in names
-      @add-one name
-    @
-
   remove-one: (name) ->
-    return unless @has name
     @clear!
-    @content.splice @index(name, 1)
+    @_remove-item @content, name
     @
-
-  remove: (names) ->
-    names = @_normalize names
-    for name in names
-      @remove-one name
-    @
-
-  _normalize: (names) ->
-    if typeof! names is 'String' then [names] else names
 
   # cache lines!
   lines: ->
@@ -53,6 +38,3 @@ module.exports = class Select implements FileIO
 
   index: (name) ->
     @lines!.index-of name
-
-  has: (name) ->
-    @index(name) > -1

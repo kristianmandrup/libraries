@@ -5,13 +5,25 @@
  */
 
 Component = require './component'
+ListMutator   = require '../list-mutator'
 
-module.exports = class Components
-  (@configurator) ->
+module.exports = class Components implements ListMutator
+  (@list) ->
 
-  component: ->
-    new Component
+  validate: ->
+    unless typeof! @libs is 'Array'
+      throw new Error "Must be an Array"
 
-  add: (name) ->
+  component: (name) ->
+    new Component name
 
-  remove: (name) ->
+  add-one: (name) ->
+    @list.push name
+    @
+
+  remove-one: (name) ->
+    @_remove-item @list, name
+    @
+
+  index: (name) ->
+    @list.index-of name
