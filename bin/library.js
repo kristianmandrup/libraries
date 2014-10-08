@@ -10,11 +10,14 @@
   });
   console.log('Command is: ' + cli.command);
   program.command('help').description('display verbose help').action(function(){});
-  program.command('setup').description('run remote setup commands').action(function(){
+  program.command('setup').description('run setup commands').action(function(){
     return console.log('setup');
   });
-  program.command('exec <cmd>').description('run the given remote command').action(function(cmd){
-    return console.log('exec "%s"', cmd);
+  program.command('add <lib>').description('add the given library').action(function(lib){
+    return console.log('add library "%s"', lib);
+  });
+  program.command('rm <lib>').description('rm the given library').action(function(lib){
+    return console.log('rm library "%s"', lib);
   });
   program.command('*').description('deploy the given env').action(function(env){
     return console.log('deploying "%s"', env);

@@ -65,16 +65,23 @@ program
 
 program
  .command('setup')
- .description('run remote setup commands')
+ .description('run setup commands')
  .action( ->
    console.log('setup');
  );
 
 program
- .command('exec <cmd>')
- .description('run the given remote command')
- .action( (cmd) ->
-   console.log('exec "%s"', cmd);
+ .command('add <lib>')
+ .description('add the given library')
+ .action( (lib) ->
+   console.log('add library "%s"', lib);
+ )
+
+program
+ .command('rm <lib>')
+ .description('rm the given library')
+ .action( (lib) ->
+   console.log('rm library "%s"', lib);
  )
 
 program
