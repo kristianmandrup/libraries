@@ -1,5 +1,5 @@
 module.exports =
-  libraries: require '.libraries'
+  libraries: require './lib/libraries'
 
   dummy-app: (io) ->
     io ||= console.log

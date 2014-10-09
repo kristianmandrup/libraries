@@ -10,7 +10,7 @@
     },
     "preferGlobal": "true",
     "bin": {
-      "library": "bin/library.js"
+      "library": "./bin/library.js"
     },
     "devDependencies": {
       "mocha": "x",
