@@ -7,7 +7,7 @@
 (function(){
   var expect, Configurator, log;
   expect = require('chai').expect;
-  Configurator = require('../../lib/config/configurator');
+  Configurator = require('../../../lib/config/configurator');
   log = console.log;
   describe('Configurator', function(){
     var configurator, conf;
@@ -51,33 +51,17 @@
           return expect(configurator.config.vendor).to.eql("vendor/prod");
         });
       });
-      describe('part', function(){
+      describe('containers', function(){
+        return specify('is not empty', function(){
+          return expect(configurator.containers).to.not.be.empty;
+        });
+      });
+      return describe('container(name)', function(){
         specify('bower is not empty', function(){
-          return expect(configurator.part('bower')).to.not.be.empty;
+          return expect(configurator.container('bower')).to.not.be['void'];
         });
-        return specify('vendor is empty', function(){
-          return expect(configurator.part('vendor')).to.eql({});
-        });
-      });
-      describe('components', function(){
-        specify('not empty', function(){
-          return expect(configurator.part('bower').components).to.not.be.empty;
-        });
-        return specify('includes boostrap', function(){
-          return expect(configurator.part('bower').components).to.include("boostrap");
-        });
-      });
-      describe('libs', function(){
-        specify('not empty', function(){
-          return expect(configurator.part('bower').libs).to.not.be.empty;
-        });
-        return specify('has ember-validations', function(){
-          return expect(configurator.part('bower').libs['ember-validations']).to.eql("dist/ember-validations");
-        });
-      });
-      return describe('cmps', function(){
-        return specify('an instance', function(){
-          return expect(configurator.cmps()).to.not.eql(void 8);
+        return specify('vendor has no libs', function(){
+          return expect(configurator.container('vendor').libs()).to.eql({});
         });
       });
     });

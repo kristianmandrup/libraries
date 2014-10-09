@@ -6,12 +6,12 @@
 
 expect = require 'chai' .expect
 
-Configurator = require '../../lib/config/configurator'
+Container = require '../../lib/config/container'
 
 log = console.log
 
 describe 'Configurator' ->
-  var configurator, conf
+  var container, conf
 
   conf = {}
 
@@ -23,32 +23,25 @@ describe 'Configurator' ->
   describe 'create' ->
     context 'invalid' ->
       specify 'no args throws' ->
-        expect(-> new Configurator).to.throw
+        expect(-> new Container).to.throw
 
       specify 'bad nam throws' ->
-        expect(-> new Configurator 7).to.throw
+        expect(-> new Container 7).to.throw
 
       specify 'non-existing file' ->
-        expect(-> new Configurator 'x').to.not.throw
+        expect(-> new Container 'x').to.not.throw
 
 
     context 'valid' ->
-        expect(-> new Configurator './xlibs/config.json').to.not.throw
+      specify 'obj is ok' ->
+        expect(-> new Container {libs: 'x'}).to.not.throw
 
-  describe 'valid component' ->
+      specify 'allow empty obj' ->
+        expect(-> new Container {}).to.not.throw
+
+  describe 'valid container' ->
     before-each ->
-      configurator := new Configurator
-
-    describe 'config' ->
-      specify 'loaded' ->
-        expect configurator.config.vendor .to.eql "vendor/prod"
-
-    describe 'part' ->
-      specify 'bower is not empty' ->
-        expect configurator.part('bower') .to.not.be.empty
-
-      specify 'vendor is empty' ->
-        expect configurator.part('vendor') .to.eql {}
+      container := new Container
 
     describe 'components' ->
       specify 'not empty' ->

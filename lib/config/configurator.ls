@@ -1,5 +1,6 @@
 FileIO      = require '../file-io'
 Components  = require '../component/components'
+Container   = require './container'
 
 module.exports = class Configurator implements FileIO
   (@file) ->
@@ -22,20 +23,6 @@ module.exports = class Configurator implements FileIO
     @_containers ||= @json!.containers
 
   # f.ex bower or vendor
-  part: (name) ->
-    @containers![name] or {}
-
-  components: (name) ->
-    @part(name).components or []
-
-  libs: (name) ->
-    @part(name).libs or {}
-
-  is-component: (name) ->
-    @components!.index-of(name) > -1
-
-  is-lib: (name) ->
-    @libs!.index-of(name) > -1
-
-  has: (name) ->
-    @is-component(name) or @is-lib(name)
+  # TODO: cache?
+  container: (name) ->
+    new Container(@containers![name] or {})
