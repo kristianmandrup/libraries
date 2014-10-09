@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+`#!/usr/bin/env node`
 
 libraries = require '../lib/libraries'
 program   = require 'commander'
@@ -56,16 +56,16 @@ program
  .action ->
    console.log 'install or update registry'
 
-
-program.parse process.argv
 #
 # `library build`
 #
 # Will run `library update registry` and then run `libraries.importSelected()` which will generate the `imports.js` file
 #  from the `selected` file.
 
-#program
-# .command 'build'
-# .description 'build Brocfile imports'
-# .action ->
-#   console.log 'building Brocfile imports...'
+program
+.command 'build'
+.description 'build Brocfile imports'
+.action ->
+   console.log 'building Brocfile imports...'
+
+program.parse process.argv

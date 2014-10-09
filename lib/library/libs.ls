@@ -30,3 +30,6 @@ module.exports = class Libs
   remove: (name) ->
     delete @libs[name] if @libs[name]
     @
+
+  output: (name) ->
+    "app.import('#{@libs[name]}');"

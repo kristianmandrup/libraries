@@ -17,6 +17,7 @@
       "chai": "x",
       "cli": "x",
       "fs-extra": "x",
-      "commander": "x"
+      "commander": "x",
+      "util": "x"
     }
 }

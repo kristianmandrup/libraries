@@ -22,12 +22,17 @@ module.exports = class Registry implements FileIO
     unless typeof! @local-registry-path is 'String'
       throw new Error "localRegistryPath must be a String, was #{@local-registry-path}"
 
-
   index-file: ->
     [@registry-uri, 'index.json'].join '/'
 
   index: ->
-    @json @index-file!
+    @_index ||= @json @index-file!
+
+  list: ->
+    @_list ||= index.registry
+
+  has: (name) ->
+    @list.index-of name > -1
 
   config-file: (name) ->
     [@registry-uri, "#{name}.json"].join '/'

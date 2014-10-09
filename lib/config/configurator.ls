@@ -25,4 +25,4 @@ module.exports = class Configurator implements FileIO
   # f.ex bower or vendor
   # TODO: cache?
   container: (name) ->
-    new Container(@containers![name] or {})
+    new Container(@containers![name] or {}, @config)

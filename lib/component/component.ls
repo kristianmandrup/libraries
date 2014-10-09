@@ -27,3 +27,10 @@ module.exports = class Component
   location: (dir, file) ->
     [@base-dir, dir, file].filter( (item) -> !!item ).join '/'
 
+  # TODO: Sass suppport via class path (see ember/cli/fontawesome-sass)
+  output: ->
+    imports = []
+    for key, location in @location-obj!
+      imports.push "app.import('#{location}');"
+    imports
+
