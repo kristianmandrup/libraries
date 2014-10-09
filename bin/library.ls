@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-manager = require '../index'
-program = require 'commander'
+libraries = require '../lib/libraries'
+program   = require 'commander'
 
 program
   .version('0.0.1')
@@ -31,6 +31,8 @@ program
  .description 'add the given library'
  .action (lib) ->
    console.log 'add library "%s"', lib
+   libraries.select.add lib .save!
+
 
 #`library rm cmp:bootstrap` - removes bootstrap component config from registry
 #`library rm bootstrap` - will remove entry from `selected` file.

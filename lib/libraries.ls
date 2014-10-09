@@ -1,2 +1,4 @@
+Selector = require('./select/selector')
+
 module.exports =
-  select: require('./select/selector')
+  select: new Selector

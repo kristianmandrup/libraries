@@ -18,15 +18,20 @@ module.exports = class Select implements FileIO, ListMutator
       throw new Error "File #{@file} does not exist"
 
   add-one: (name) ->
-    return if @has name
+    return false if @has name
     @clear!
     @lines!.push(name)
-    @content = @lines!.join "\n"
+    @refresh!
     @
 
+  refresh: ->
+    @content = @lines!.join "\n"
+
   remove-one: (name) ->
+    return false unless @has name
     @clear!
-    @_remove-item @content, name
+    @_remove-item @lines!, name
+    @refresh!
     @
 
   # cache lines!
