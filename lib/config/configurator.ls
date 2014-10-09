@@ -15,10 +15,15 @@ module.exports = class Configurator implements FileIO
   validate: ->
     unless @exists!
       throw new Error "File #{@file} does not exist"
+    unless typeof! @containers! is 'Object'
+      throw new Error "Must have 'containers' Object"
+
+  containers: ->
+    @_containers ||= @json!.containers
 
   # f.ex bower or vendor
   part: (name) ->
-    @json![name] or {}
+    @containers![name] or {}
 
   components: (name) ->
     @part(name).components or []

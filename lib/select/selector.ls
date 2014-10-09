@@ -33,6 +33,9 @@ module.exports = class Select implements FileIO, ListMutator
   lines: ->
     @_lines ||= @content.split "\n" .filter( (x) -> !!x ).map( (x) -> x.trim! )
 
+  list:->
+    @lines!
+
   clear: ->
     @_lines = void
 
