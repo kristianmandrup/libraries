@@ -4,24 +4,30 @@
  * Time: 14:06
  */
 
-FileIO = require 'file-io'
+FileIO  = require '../file-io'
+# fs    = require 'fs'
+fs      = require 'fs-extra'
 
 module.exports = class Registry implements FileIO
-  (@uri-root, @target-path) ->
+  (@registry-uri, @local-registry-path) ->
     @registry-uri         ||= './xlibs/registry'
-    @local-registry-path  ||= @uri-root
+    @local-registry-path  ||= @registry-uri
     @validate!
     @
 
   validate: ->
     unless typeof! @registry-uri is 'String'
-      throw new Error "uri root must be a String"
+      throw new Error "registryUri must be a String"
+
+    unless typeof! @local-registry-path is 'String'
+      throw new Error "localRegistryPath must be a String, was #{@local-registry-path}"
+
 
   index-file: ->
     [@registry-uri, 'index.json'].join '/'
 
   index: ->
-    @read index-file
+    @json @index-file!
 
   config-file: (name) ->
     [@registry-uri, "#{name}.json"].join '/'
@@ -29,8 +35,17 @@ module.exports = class Registry implements FileIO
   target-config: (name) ->
     [@local-registry-path, "#{name}.json"].join '/'
 
-  install: (name, @target-path = './xlibs/components') ->
-    fs.copy @config-file(name), @local-registry-path(name)
+  error: (msg) ->
+    console.error msg
 
-  uninstall: (name, @target-path = './xlibs/components') ->
-    fs.delete @target-config(name)
+  install: (name) ->
+    try
+      fs.copySync @config-file(name), @target-config(name)
+    catch err
+      @error err
+
+  uninstall: (name) ->
+    try
+      fs.unlinkSync @target-config(name)
+    catch err
+      @error err

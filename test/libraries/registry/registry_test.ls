@@ -5,7 +5,7 @@
  */
 expect = require 'chai' .expect
 
-Registry = require '../../lib/registry/registry'
+Registry = require '../../../lib/registry/registry'
 
 log = console.log
 
@@ -25,15 +25,16 @@ describe 'Registry' ->
       specify 'string arg ok' ->
         expect(-> new Registry './xlibs/config.json').to.not.throw
 
-  describe 'valid component' ->
-    before-each ->
+  describe 'valid instance' ->
+    before ->
       registry := new Registry
+      log registry
 
     describe 'registry-uri' ->
       specify 'is path' ->
         expect registry.registry-uri .to.eql "./xlibs/registry"
 
-    describe 'target-path' ->
+    describe 'local-registry-path' ->
       specify 'is path' ->
         expect registry.local-registry-path .to.eql "./xlibs/registry"
 
@@ -43,9 +44,7 @@ describe 'Registry' ->
 
     describe 'index' ->
       specify 'is json' ->
-        expect registry.index! .to.eql {
-          blip: 'blap'
-        }
+        expect registry.index!.registry .to.include "bootstrap"
 
     describe 'config-file(name)' ->
       specify 'is path' ->

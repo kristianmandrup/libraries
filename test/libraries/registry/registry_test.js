@@ -7,7 +7,7 @@
 (function(){
   var expect, Registry, log;
   expect = require('chai').expect;
-  Registry = require('../../lib/registry/registry');
+  Registry = require('../../../lib/registry/registry');
   log = console.log;
   describe('Registry', function(){
     var registry;
@@ -32,16 +32,17 @@
         });
       });
     });
-    return describe('valid component', function(){
-      beforeEach(function(){
-        return registry = new Registry;
+    return describe('valid instance', function(){
+      before(function(){
+        registry = new Registry;
+        return log(registry);
       });
       describe('registry-uri', function(){
         return specify('is path', function(){
           return expect(registry.registryUri).to.eql("./xlibs/registry");
         });
       });
-      describe('target-path', function(){
+      describe('local-registry-path', function(){
         return specify('is path', function(){
           return expect(registry.localRegistryPath).to.eql("./xlibs/registry");
         });
@@ -53,9 +54,7 @@
       });
       describe('index', function(){
         return specify('is json', function(){
-          return expect(registry.index()).to.eql({
-            blip: 'blap'
-          });
+          return expect(registry.index().registry).to.include("bootstrap");
         });
       });
       describe('config-file(name)', function(){

@@ -2,7 +2,7 @@ fs     = require 'fs'
 FileIO = require './file-io'
 
 module.exports =
-  read: ->
+  read: (@file) ->
     @content ||= fs.readFileSync @file,'utf8'
 
   # by default overwrites
@@ -17,13 +17,15 @@ module.exports =
   exists: ->
     fs.existsSync @file
 
-  load: ->
+  load: (file) ->
+    file ||= @file
     @_json = void
-    @json!
+    @json file
     @
 
-  json: ->
-    @_json ||= JSON.parse @read!
+  json: (file) ->
+    file ||= @file
+    @_json ||= JSON.parse @read file
 
   print: (io = console.log) ->
     io @json!
