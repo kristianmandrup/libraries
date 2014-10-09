@@ -6,7 +6,7 @@
 
 expect = require 'chai' .expect
 
-Container = require '../../lib/config/container'
+Container = require '../../../lib/config/container'
 
 log = console.log
 
@@ -15,10 +15,9 @@ describe 'Configurator' ->
 
   conf = {}
 
-  conf.bootstrap =
-    dir: 'dist'
-    scripts:
-      files: ['js/bootstrap.js']
+  conf.bower =
+    libs: {datepicker: "blip", 'ember-validations': "dist/ember-validations"}
+    components: ['bootstrap']
 
   describe 'create' ->
     context 'invalid' ->
@@ -41,22 +40,48 @@ describe 'Configurator' ->
 
   describe 'valid container' ->
     before-each ->
-      container := new Container
+      container := new Container conf.bower
 
     describe 'components' ->
       specify 'not empty' ->
-        expect configurator.part('bower').components .to.not.be.empty
+        expect container.components! .to.not.be.empty
 
       specify 'includes boostrap' ->
-        expect configurator.part('bower').components .to.include "boostrap"
+        expect container.components! .to.include "bootstrap"
 
     describe 'libs' ->
       specify 'not empty' ->
-        expect configurator.part('bower').libs .to.not.be.empty
+        expect container.libs! .to.not.be.empty
 
       specify 'has ember-validations' ->
-        expect configurator.part('bower').libs['ember-validations'] .to.eql "dist/ember-validations"
+        expect container.libs!['ember-validations'] .to.eql "dist/ember-validations"
 
-    describe 'cmps' ->
-      specify 'an instance' ->
-        expect configurator.cmps! .to.not.eql void
+    describe 'libs-list' ->
+      specify 'not empty' ->
+        expect container.libs-list! .to.not.be.empty
+
+
+    describe 'is-component(name)' ->
+      specify 'bootstrap is a component' ->
+        expect container.is-component('bootstrap') .to.be.true
+
+      specify 'ember-validations is NOT a component' ->
+        expect container.is-component('ember-validations') .to.be.false
+
+
+    describe 'is-lib(name)' ->
+      specify 'bootstrap is NOT a component' ->
+        expect container.is-lib('bootstrap') .to.be.false
+
+      specify 'ember-validations is NOT a component' ->
+        expect container.is-lib('ember-validations') .to.be.true
+
+    describe 'has(name)' ->
+      specify 'bootstrap is there' ->
+        expect container.has('bootstrap') .to.be.true
+
+      specify 'ember-validations is there' ->
+        expect container.has('ember-validations') .to.be.true
+
+
+

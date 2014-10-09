@@ -14,7 +14,7 @@ module.exports = class Container
     @components!.index-of(name) > -1
 
   is-lib: (name) ->
-    @libs!.index-of(name) > -1
+    @libs-list!.index-of(name) > -1
 
   has: (name) ->
     @is-component(name) or @is-lib(name)
