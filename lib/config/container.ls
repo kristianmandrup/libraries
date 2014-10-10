@@ -1,4 +1,4 @@
-module.exports = class Container
+module.exports = class ConfigContainer
   (@obj, @config) ->
 
   comps: ->

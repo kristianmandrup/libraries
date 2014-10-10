@@ -29,10 +29,10 @@ module.exports = class Registry implements FileIO
     @_index ||= @json @index-file!
 
   list: ->
-    @_list ||= index.registry
+    @_list ||= @index!.registry
 
   has: (name) ->
-    @list.index-of name > -1
+    @list!.index-of name > -1
 
   config-file: (name) ->
     [@registry-uri, "#{name}.json"].join '/'

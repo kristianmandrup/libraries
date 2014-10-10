@@ -23,8 +23,9 @@ module.exports =
     file ||= @file
     JSON.stringify(@json(file), null, '  ')
 
-  exists: ->
-    fs.existsSync @file
+  exists: (file) ->
+    file ||= @file
+    fs.existsSync file
 
   load: (file) ->
     file ||= @file
@@ -34,7 +35,6 @@ module.exports =
 
   json: (file) ->
     file ||= @file
-    console.log file
     @_json ||= JSON.parse @read file
 
   print: (io = console.log) ->

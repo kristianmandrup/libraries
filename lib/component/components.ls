@@ -4,9 +4,9 @@
  * Time: 14:40
  */
 
+ConfigLoader  = require '../config/loader'
 Component     = require './component'
 ListMutator   = require '../list-mutator'
-Registry      = require '../registry/registry'
 fs            = require 'fs'
 util          = require 'util'
 
@@ -24,56 +24,33 @@ module.exports = class Components implements ListMutator
   component: (name) ->
     new Component name, @component-object(name)
 
-  registry: ->
-    @_reg ||= new Registry
+  component-object: (name) ->
+    return @load-listed-components![name] if @has-component name
+    throw new Error "#{name} not found in list of registered components: #{util.inspect @list}"
+
+  has-component: (name) ->
+    @load-listed-components![name]
+
+  components-list: ->
+    @components-list ||= Object.keys @load-listed-components!
 
   load-listed-components: ->
-    @configurations = []
+    @_listed-components ||= @load-listed!
+
+  load-listed: ->
+    @configurations = {}
     for name in @list
-      config = @load-config name
-      configurations.push config if @valid-config config, name
+      found = @config-loader(name).load-it!
+      @configurations[name] = found if found
+      if !found
+        console.log "WARNING: #{name} config file not found"
     @configurations
 
-  valid-config: (config, name) ->
-    unless typeof! config is 'Object'
-      throw new Error "Invalid config for component #{name}, was: #{util.inspect config}"
-
-
-  load-config: (name) ->
-    @load-from-local(name) or @load-from-registry(name) or @none(name)
-
-  load-from-local: ->
-    @load @component-file(name) if @has-local name
-
-  load-from-registry: ->
-    @load @registry-file(name) if @registry!.has name
-
-  load: (file-path) ->
-    try
-      JSON.parse fs.readFileSync(file-path, 'utf8')
-    catch err
-      console.error err
-
-  has-local: ->
-    fs.existsSync @component-file(name)
-
-  none: (name) ->
-    @error "No Component config for #{name} could be found in local or global component configuration registries"
-
-  error: (msg) ->
-    console.error msg
-    # throw new Error error
-
-  registry-file: (name) ->
-    @registry!.config-file name
-
-  component-file: (name) ->
-    [@path, "#{name}.json"].join '/'
-
-  component-object: (name) ->
-
+  config-loader: (name) ->
+    new ConfigLoader name, @path
 
   add-one: (name) ->
+    return @ if @has name
     @list.push name
     @
 
@@ -84,5 +61,6 @@ module.exports = class Components implements ListMutator
   index: (name) ->
     @list.index-of name
 
-  output: ->
-    @component(name).output!
+  # TODO> allow for callback output function
+  output: (cb) ->
+    @component(name).output cb
