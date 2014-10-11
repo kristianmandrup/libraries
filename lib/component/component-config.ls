@@ -19,13 +19,13 @@ module.exports = class ComponentConfig implements FileIO
     @valid-config @load-config!
 
   build: ->
-
+    throw new Error "Can't build this :P"
 
   install: (options = {}) ->
-    if should-install options
+    if @should-install options
       @registry!.install @name
 
-  should-install(options = {}) ->
+  should-install: (options = {}) ->
     options.force or @not-local!
 
   valid-config: (config) ->

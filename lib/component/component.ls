@@ -45,10 +45,9 @@ module.exports = class Component
   emit: (location) ->
     "app.import('#{location}');"
 
-  # TODO: allow for callback output function
   # TODO: Sass suppport via class path (see ember/cli/fontawesome-sass)
   # TODO: support exports for AMD remap
   output: (cb) ->
-    @location-obj!.map (key) -~
-      cb @location-obj[key]
+    Object.keys(@location-obj!).map (key) ~>
+      cb @location-obj![key]
 

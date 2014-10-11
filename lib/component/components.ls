@@ -4,8 +4,9 @@
  * Time: 14:40
  */
 
-ConfigLoader  = require '../config/loader'
-Component     = require './component'
+Component         = require './component'
+ComponentConfig   = require './component-config'
+
 ListMutator   = require '../list-mutator'
 fs            = require 'fs'
 util          = require 'util'
@@ -14,7 +15,7 @@ module.exports = class Components implements ListMutator
   (@list, @path) ->
     @path ||= './xlibs/components'
     @validate!
-    @load-listed-components!
+    @listed-components!
     @
 
   validate: ->
@@ -22,11 +23,11 @@ module.exports = class Components implements ListMutator
       throw new Error "Must be an Array, was: #{typeof! @list}"
 
   build: (cb) ->
-    @all.map (component) ->
-      @component.build cb
+    @all!.map (component) ~>
+      component.build cb
 
   all: ->
-    @component-names.map (name) ->
+    @component-names!.map (name) ~>
       @component name
 
   component: (name) ->
@@ -44,7 +45,7 @@ module.exports = class Components implements ListMutator
       @component-config(name).install!
 
   component-names: ->
-    @component-names ||= Object.keys @listed-components!
+    @_component-names ||= Object.keys @listed-components!
 
   listed-components: ->
     @_listed-components ||= @load-listed!

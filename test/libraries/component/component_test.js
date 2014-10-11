@@ -15,6 +15,9 @@
       dir: 'dist',
       scripts: {
         files: ['js/bootstrap.js']
+      },
+      styles: {
+        files: ['css/bootstrap.css']
       }
     };
     describe('create', function(){
@@ -68,15 +71,27 @@
         });
       });
       describe('locations', function(){
-        return specify('for scripts -> full script paths', function(){
+        specify('for scripts -> full script paths', function(){
           return expect(component.locations('scripts')).to.eql(["dist/js/bootstrap.js"]);
         });
+        return specify('for styles -> full styles paths', function(){
+          return expect(component.locations('styles')).to.eql(["dist/css/bootstrap.css"]);
+        });
       });
-      return describe('location-obj', function(){
+      describe('location-obj', function(){
         return specify('for all -> full script paths', function(){
           return expect(component.locationObj()).to.eql({
-            scripts: ["dist/js/bootstrap.js"]
+            scripts: ["dist/js/bootstrap.js"],
+            styles: ["dist/css/bootstrap.css"]
           });
+        });
+      });
+      return describe('build', function(){
+        specify('builds imports', function(){
+          return expect(component.build()).to.eql(["app.import('dist/js/bootstrap.js');", "app.import('dist/css/bootstrap.css');"]);
+        });
+        return specify('first import is js', function(){
+          return expect(component.build()[0]).to.eql("app.import('dist/js/bootstrap.js');");
         });
       });
     });

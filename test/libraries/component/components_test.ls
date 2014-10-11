@@ -8,7 +8,7 @@ expect = require 'chai' .expect
 
 Components    = require '../../../lib/component/components'
 Component     = require '../../../lib/component/component'
-ConfigLoader  = require '../../../lib/config/loader'
+ConfigLoader  = require '../../../lib/component/component-config'
 
 log = console.log
 
@@ -88,21 +88,45 @@ describe 'Components' ->
       specify 'removes it' ->
         expect components.remove-one(cmp).list .to.not.include cmp
 
-    describe 'load-listed-components' ->
+    describe 'listed-components' ->
       specify 'build all configurations' ->
-        expect components.load-listed-components!.foundation.dir .to.eql 'dist'
+        expect components.listed-components!.foundation.dir .to.eql 'dist'
 
-    describe 'config-loader(name)' ->
-      var config-loader
+    describe 'component-config(name)' ->
+      var config
 
       before ->
-        config-loader := components.config-loader 'bootstrap', './xlibs/components'
+        config := components.component-config 'bootstrap', './xlibs/components'
 
       specify 'is a ConfigLoader' ->
-        expect config-loader .to.be.an.instance-of ConfigLoader
+        expect config .to.be.an.instance-of ConfigLoader
 
       specify 'is configured with name' ->
-        expect config-loader.name .to.eql 'bootstrap'
+        expect config.name .to.eql 'bootstrap'
 
       specify 'is configured with path' ->
-        expect config-loader.path .to.eql './xlibs/components'
+        expect config.path .to.eql './xlibs/components'
+
+    describe 'all' ->
+      var all
+
+      before ->
+        all := components.all!
+
+      # TODO: is this correct? why only from registry!!?
+      specify 'creates all components' ->
+        expect all.length .to.eql 1
+
+      specify 'first is a foundation component' ->
+        expect all.0.name .to.eql 'foundation'
+
+    describe 'build' ->
+      var build
+
+      before ->
+        build := components.build!
+
+      specify 'builds all components' ->
+        expect build .to.eql ''
+
+    describe 'install' ->

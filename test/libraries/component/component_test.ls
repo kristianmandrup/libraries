@@ -17,6 +17,8 @@ describe 'Component' ->
     dir: 'dist'
     scripts:
       files: ['js/bootstrap.js']
+    styles:
+      files: ['css/bootstrap.css']
 
   describe 'create' ->
     context 'invalid' ->
@@ -57,8 +59,20 @@ describe 'Component' ->
       specify 'for scripts -> full script paths' ->
         expect component.locations('scripts') .to.eql ["dist/js/bootstrap.js"]
 
+      specify 'for styles -> full styles paths' ->
+        expect component.locations('styles') .to.eql ["dist/css/bootstrap.css"]
+
     describe 'location-obj' ->
       specify 'for all -> full script paths' ->
         expect component.location-obj! .to.eql {
           scripts: ["dist/js/bootstrap.js"]
+          styles: ["dist/css/bootstrap.css"]
         }
+
+    describe 'build' ->
+      specify 'builds imports' ->
+        expect component.build! .to.eql ["app.import('dist/js/bootstrap.js');", "app.import('dist/css/bootstrap.css');"]
+
+      specify 'first import is js' ->
+        expect component.build!.0 .to.eql "app.import('dist/js/bootstrap.js');"
+

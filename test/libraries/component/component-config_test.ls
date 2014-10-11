@@ -5,12 +5,12 @@
  */
 expect = require 'chai' .expect
 
-Loader = require '../../../lib/config/loader'
+Config = require '../../../lib/component/component-config'
 
 log = console.log
 
-describe 'Loader' ->
-  var loader, name
+describe 'ComponentConfig' ->
+  var config, name
 
   before ->
     name := 'bootstrap'
@@ -18,70 +18,70 @@ describe 'Loader' ->
   describe 'create' ->
     context 'invalid' ->
       specify 'no args throws' ->
-        expect(-> new Loader).to.throw
+        expect(-> new Config).to.throw
 
       specify 'bad nam throws' ->
-        expect(-> new Loader 7).to.throw
+        expect(-> new Config 7).to.throw
 
       specify 'a name is ok' ->
-        expect(-> new Loader 'x').to.not.throw
+        expect(-> new Config 'x').to.not.throw
 
       specify 'obj throws' ->
-        expect(-> new Loader {libs: 'x'}, 'blip').to.throw
+        expect(-> new Config {libs: 'x'}, 'blip').to.throw
 
     context 'valid' ->
       specify 'allow empty obj' ->
-        expect(-> new Loader name, name).to.not.throw
+        expect(-> new Config name, name).to.not.throw
 
-  describe 'valid loader' ->
+  describe 'valid config' ->
     before-each ->
-      loader := new Loader name, './xlibs/components'
+      config := new Config name, './xlibs/components'
 
-    describe 'loader' ->
+    describe 'config' ->
       specify 'has name set' ->
-        expect loader.name .to.equal name
+        expect config.name .to.equal name
 
     describe 'valid-config' ->
       specify 'any object is valid' ->
-        expect loader.valid-config({}) .to.eql {}
+        expect config.valid-config({}) .to.eql {}
 
       specify 'any non-object is invalid' ->
-        expect (-> loader.valid-config('x')) .to.throw
+        expect (-> config.valid-config('x')) .to.throw
 
     describe 'component-file' ->
       specify 'is combined into a local repo file path' ->
-        expect loader.component-file! .to.eql './xlibs/components/bootstrap.json'
+        expect config.component-file! .to.eql './xlibs/components/bootstrap.json'
 
       specify 'blip is non-existing file path' ->
-        expect loader.component-file('blip') .to.eql './xlibs/components/blip.json'
+        expect config.component-file('blip') .to.eql './xlibs/components/blip.json'
 
     describe 'has-local' ->
       specify 'bootstrap is in local repo' ->
-        expect loader.has-local! .to.be.true
+        expect config.has-local! .to.be.true
 
     describe 'has-local(name)' ->
       specify 'bootstrap is in local repo' ->
-        expect loader.has-local 'bootstrap' .to.be.true
+        expect config.has-local 'bootstrap' .to.be.true
 
       specify 'blip is not in local repo' ->
-        expect loader.has-local 'blip' .to.be.false
+        expect config.has-local 'blip' .to.be.false
 
     describe 'registry-file' ->
       specify 'is combined into a registry file path' ->
-        expect loader.registry-file! .to.eql './xlibs/registry/bootstrap.json'
+        expect config.registry-file! .to.eql './xlibs/registry/bootstrap.json'
 
     describe 'load' ->
       context 'registry config' ->
         specify 'loads config from registry' ->
-          expect( -> loader.load './xlibs/registry/bootstrap.json').to.throw
+          expect( -> config.load './xlibs/registry/bootstrap.json').to.throw
 
       context 'local config' ->
         specify 'loads config from local repo' ->
-          expect loader.load('./xlibs/components/bootstrap.json').dir .to.eql 'dist'
+          expect config.load('./xlibs/components/bootstrap.json').dir .to.eql 'dist'
 
     describe 'loadIt' ->
       context 'from local config' ->
         specify 'loads config from registry' ->
-          expect loader.load-it!.dir .to.eql 'dist'
+          expect config.load-it!.dir .to.eql 'dist'
 
 

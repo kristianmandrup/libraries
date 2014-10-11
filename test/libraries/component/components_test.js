@@ -9,7 +9,7 @@
   expect = require('chai').expect;
   Components = require('../../../lib/component/components');
   Component = require('../../../lib/component/component');
-  ConfigLoader = require('../../../lib/config/loader');
+  ConfigLoader = require('../../../lib/component/component-config');
   log = console.log;
   describe('Components', function(){
     var components, cmps;
@@ -101,26 +101,48 @@
           return expect(components.removeOne(cmp).list).to.not.include(cmp);
         });
       });
-      describe('load-listed-components', function(){
+      describe('listed-components', function(){
         return specify('build all configurations', function(){
-          return expect(components.loadListedComponents().foundation.dir).to.eql('dist');
+          return expect(components.listedComponents().foundation.dir).to.eql('dist');
         });
       });
-      return describe('config-loader(name)', function(){
-        var configLoader;
+      describe('component-config(name)', function(){
+        var config;
         before(function(){
-          return configLoader = components.configLoader('bootstrap', './xlibs/components');
+          return config = components.componentConfig('bootstrap', './xlibs/components');
         });
         specify('is a ConfigLoader', function(){
-          return expect(configLoader).to.be.an.instanceOf(ConfigLoader);
+          return expect(config).to.be.an.instanceOf(ConfigLoader);
         });
         specify('is configured with name', function(){
-          return expect(configLoader.name).to.eql('bootstrap');
+          return expect(config.name).to.eql('bootstrap');
         });
         return specify('is configured with path', function(){
-          return expect(configLoader.path).to.eql('./xlibs/components');
+          return expect(config.path).to.eql('./xlibs/components');
         });
       });
+      describe('all', function(){
+        var all;
+        before(function(){
+          return all = components.all();
+        });
+        specify('creates all components', function(){
+          return expect(all.length).to.eql(1);
+        });
+        return specify('first is a foundation component', function(){
+          return expect(all[0].name).to.eql('foundation');
+        });
+      });
+      describe('build', function(){
+        var build;
+        before(function(){
+          return build = components.build();
+        });
+        return specify('builds all components', function(){
+          return expect(build).to.eql('');
+        });
+      });
+      return describe('install', function(){});
     });
   });
 }).call(this);
