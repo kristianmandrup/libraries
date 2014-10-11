@@ -8,7 +8,7 @@ unless String.prototype.trim
 
 module.exports = class Select implements FileIO, ListMutator
   (@options = {}) ->
-    @file = @options.file or './xlibs/select'
+    @file = @options.file or './xlibs/selected'
     @validate!
     @read!
     @content = @options.select or @content

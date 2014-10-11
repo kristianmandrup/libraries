@@ -14,7 +14,7 @@ It aims to make it easier and more flexible to configure libraries to be importe
 
 ### Select libraries
 
-`libs-selected` is a simple text file, where each line is a library you wish to include :) 
+`selected` is a simple text file, where each line is a library you wish to include :) 
 
 ```  
 bootstrap
@@ -22,10 +22,11 @@ datepicker
 ...
 ```
 
-Alternatively use the *library CLI* which will operate on the select file: 
+or use the *library CLI* to add/remove selected libs: 
 
-`library add foundation`
-`library rm bootstrap`
+Add `library add foundation`
+
+Remove `library rm bootstrap`
 
 
 ### Configuration
@@ -65,7 +66,8 @@ You can configure a simple directory alias mechanism if you like in the config s
 }
 ```
 
-The `components` entry is used to link the list of components as belonging to *bower*.
+`libs` is for simple libraries that are a single javascript file. Anything beyond one file is a component and should
+ have its own component configuration.
 
 Component configuration:
 
@@ -90,9 +92,13 @@ Component configuration:
 }
 ```
 
+The `dir` entries are optional (but useful). The component structure will make it easy to do all kinds of 
+interesting things in the future... (see Notes + Design documents for some ideas floating around in mind space...) 
+
 ### Registry
 
 The global registry will contain an `index.js` file and a list of library config files.
+Currently a json file, but could perhaps be a simple line divided text file like the `selected` file? 
 
 ```javascript
 // index.json
@@ -118,6 +124,14 @@ On `library install`, the libraries you have selected which don't have a local l
 Then you just have to do `library build` to build the `imports.js` file which `libraries` will use to 
 apply on your `app` to do the magic imports! *Awesome 8>)* 
 
+```js
+function() {
+  module.exports = function(app) {
+    app.import('dist/js/bootstrap.js');
+    app.import('dist/css/bootstrap.css');    
+  }
+}();
+```
 
 ### Petal integration for ES6 goodness
 
@@ -136,16 +150,26 @@ assert.deepEqual(m.exports, {
 });
 ```
 
-As I understand it, Petal will read the source file and convert it to en ES6 module to be saved on top of original (in this example).
+Petal will read the source file and convert it to en ES6 module to be saved on top of original (in this example).
   
-`new Petal(destination, source)`  
+`new Petal(destination, source)`
+  
+The ember-cli petal integration will likely support something an API like this:
+   
+`app.import('bower_components/famous/core', { remap: 'famous/core'' }`;`
+   
+which would somehow output all of this (/8>?
+ 
+`https://github.com/abuiles/famous-remap/tree/master/famous-remapped`
+ 
+According to comments in [#2177](https://github.com/stefanpenner/ember-cli/issues/2177)
 
 ### Ember config
 
 The [ember-config](https://github.com/kristianmandrup/ember-config) generator will soon be refactored 
-to instead export library/component config files instead of directly injecting `app.import` statements into your 
-`Brocfile.js`. This will let you simply select the libraries you like via the generator, install, build and import
- all the goodness directly into the `Brocfile.js` = pure MAGIC!!
+to instead export library/component config files instead of directly injecting `app.import` statements into the 
+`Brocfile.js`. This will let you simply select the libraries you like via the generator and then install, build and import
+ all the *import goodness* directly into the `Brocfile.js` >>> pure MAGIC!!
 
 ## Usage example
 
@@ -163,8 +187,6 @@ require('libraries').applyOn(app);
 
 module.exports = app.toTree();
 ```
-
-
 
 ### CLI support
 
