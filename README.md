@@ -9,35 +9,148 @@ The infrastructure should now be (mostly) ready for action! Just needs some debu
 
 ## Why?
 
-This small project was created in response to ember-cli [#2177](https://github.com/stefanpenner/ember-cli/issues/2177).
-It aims to make it easier and more flexible to configure libraries to be imported by Broccoli. 
+This project was created in response to ember-cli [#2177](https://github.com/stefanpenner/ember-cli/issues/2177).
+It aims to make it easier and more flexible to configure libraries to be imported by Broccoli.
 
-Configuration is now externalised. Libraries can be grouped by category. We can configure a simple directory alias mechanism etc.
- We can even include automatic support for remapping.
+### Select libraries
 
-Using a JSON format we can allow (code) generators to automatically process, append or remove libraries as needed 
-using the JSON structure ;)
+`libs-selected` is a simple text file, where each line is a library you wish to include :) 
 
-One such util which will soon take advantage of this is [ember-config](https://github.com/kristianmandrup/ember-config) generator.
+```  
+bootstrap
+datepicker
+...
+```
+
+Alternatively use the *library CLI* which will operate on the select file: 
+
+`library add foundation`
+`library rm bootstrap`
+
+
+### Configuration
+
+Libraries can be grouped by category (`bower`, `vendor`, `libs` etc.). 
+You can configure a simple directory alias mechanism if you like in the config section `config`.
+
+`config.json` contains configurations for all the simple (or custom) libraries
+
+```javascript  
+// config.json
+{
+  config: {
+    'vendor': 'vendor/libs'
+  },
+  containers: {
+    bower: {
+      "components": [
+        "bootstrap", 
+        ...
+      ],
+      "libs: {    
+        "datepicker": {"date": "dist/datepicker.js"}, // remap to date
+        "calendar": "calendar.js",
+        ...
+      }    
+    },
+    vendor: {
+      "components": [
+        "bootstrap", 
+        ...],
+      "libs: {
+        ...
+      }
+    }
+  }
+}
+```
+
+The `components` entry is used to link the list of components as belonging to *bower*.
+
+Component configuration:
+
+```javascript
+// bootstrap.json
+{
+    "dir": "dist",
+    "scripts": {
+        "dir": "js",
+        "files": ["bootstrap.js"]
+        "main":  {"bootstrap/core": "bootstrap.js"} // can be used to remap
+    },
+    "styles": {
+        "dir": "css",
+        "files": ["x.css"]
+    },
+    "fonts": {
+        "dir": "fonts",
+        "files": ["xyz.eof", "xyz.svg"]
+    },
+    dependencies: ["styleout"]
+}
+```
+
+### Registry
+
+The global registry will contain an `index.js` file and a list of library config files.
+
+```javascript
+// index.json
+{
+  registry: [
+    'bootstrap'
+  ]
+  ...
+}
+```
+
+Registry files: 
+
+```
+index.json
+bootstrap.json
+...
+```
+
+On `library install`, the libraries you have selected which don't have a local library config in your local repo will
+ be downloaded from the global registry.
+ 
+Then you just have to do `library build` to build the `imports.js` file which `libraries` will use to 
+apply on your `app` to do the magic imports! *Awesome 8>)* 
+
+
+### Petal integration for ES6 goodness
+
+We also aim to integrate it nicely with petal and broccoli petal, in order that we can easily export (almost) any
+ javascript library as an ES6 module for Ember CLI consumption :)
+
+Petal test example:
+
+```js
+var source = fs.readFileSync('bower_components/moment/moment.js');
+var m = new Petal('bower_components/moment/moment.js', source);
+
+// moment.js exposed as 'moment' module as default
+assert.deepEqual(m.exports, {
+  'moment': ['default']
+});
+```
+
+As I understand it, Petal will read the source file and convert it to en ES6 module to be saved on top of original (in this example).
+  
+`new Petal(destination, source)`  
+
+### Ember config
+
+The [ember-config](https://github.com/kristianmandrup/ember-config) generator will soon be refactored 
+to instead export library/component config files instead of directly injecting `app.import` statements into your 
+`Brocfile.js`. This will let you simply select the libraries you like via the generator, install, build and import
+ all the goodness directly into the `Brocfile.js` = pure MAGIC!!
 
 ## Usage example
 
 Here simulating the app object and doing `console.log` of the 
 commands that the app object would normally execute on `app.import`
-
-```coffeescript
-app =
-  import: (location) ->
-    console.log 'app.import("' + location + '");'
-  bowerDirectory: 'bower_components'
-
-require('libraries').applyOn(app);
-
-# or passing custom options 
-
-libraries = new Libraries file: './xlibs/imports-libraries.json', config: {vendor: 'vendor/dev'}
-libraries.applyOn(app) 
-```
 
 ### Brocfile example
 
@@ -46,43 +159,12 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp();
 
-// Use `app.import` to add additional libraries to the generated
-
 require('libraries').applyOn(app);
 
 module.exports = app.toTree();
 ```
 
-### Use existing component infrastructure
 
-[what is the Bower main property](http://stackoverflow.com/questions/20391742/what-is-the-main-property-when-doing-bower-init)
-
-Would be awesome to take advantage of this :)
-
-```javascript
-{
-  "name": "bootstrap",
-  "version": "3.0.3",
-  "main": [
-    // scripts
-    "./dist/css/bootstrap.css",
-    
-    // styles
-    "./dist/js/bootstrap.js",
-
-    // fonts
-    "./dist/fonts/glyphicons-halflings-regular.eot",
-    "./dist/fonts/glyphicons-halflings-regular.svg",
-    "./dist/fonts/glyphicons-halflings-regular.ttf",
-    "./dist/fonts/glyphicons-halflings-regular.woff"
-  ],
-  "dependencies": {
-    "jquery": ">= 1.9.0"
-  }
-}    
-```
-
-ComponentJs has similar features that can be used.
 
 ### CLI support
 
@@ -113,7 +195,6 @@ Please help out to make this an awesome experience and greatly enhance productiv
 *Enjoy :)*
 
 ### Customization
-
 
 
 ### License

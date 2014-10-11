@@ -189,6 +189,37 @@ If component, it will download component config.
 Will report which libs are missing. For libs or components missing, it will download via Bower etc. as required.
 Then make a final report if all config entries match an installed lib.
 
+### Use existing component infrastructure
+
+[what is the Bower main property](http://stackoverflow.com/questions/20391742/what-is-the-main-property-when-doing-bower-init)
+
+Would be awesome to take advantage of this :)
+
+```javascript
+{
+  "name": "bootstrap",
+  "version": "3.0.3",
+  "main": [
+    // scripts
+    "./dist/css/bootstrap.css",
+    
+    // styles
+    "./dist/js/bootstrap.js",
+
+    // fonts
+    "./dist/fonts/glyphicons-halflings-regular.eot",
+    "./dist/fonts/glyphicons-halflings-regular.svg",
+    "./dist/fonts/glyphicons-halflings-regular.ttf",
+    "./dist/fonts/glyphicons-halflings-regular.woff"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.9.0"
+  }
+}    
+```
+
+ComponentJs has similar features that can be used.
+
 ### What do we gain?
 
 The problem with the previous approach has been, that you have to copy paste javascript statements with full string paths 
