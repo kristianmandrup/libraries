@@ -1,6 +1,10 @@
 module.exports =
   libraries: require './lib/libraries'
 
+  apply-on: (app) ->
+    applier = libraries.load-applier!
+    applier app
+
   dummy-app: (io) ->
     io ||= console.log
     return {

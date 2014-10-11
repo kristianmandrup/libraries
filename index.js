@@ -2,6 +2,11 @@
 (function(){
   module.exports = {
     libraries: require('./lib/libraries'),
+    applyOn: function(app){
+      var applier;
+      applier = libraries.loadApplier();
+      return applier(app);
+    },
     dummyApp: function(io){
       io || (io = console.log);
       return {

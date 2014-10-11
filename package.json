@@ -18,6 +18,7 @@
       "cli": "x",
       "fs-extra": "x",
       "commander": "x",
-      "util": "x"
+      "util": "x",
+      "chalk": "x"
     }
 }

@@ -1,18 +1,45 @@
-FileIO = require 'file-io'
+FileIO    = require '../file-io'
+Selector  = require '../select/selector'
+chalk     = require 'chalk'
 
 module.exports = class Generator implements FileIO
-  (@options = {env: 'dev'}) ->
+  (@options = {}) ->
+    @options.env ||= process.env.environment || 'dev'
     @options.path ||= './xlibs'
     @
 
-  imports: ->
-    @libraries.create-imports!
+  build: (cb) ->
+    @select.build cb
+
+  select: ->
+    new Selector
 
   target-file: ->
     "imports-#{@options.env}.js"
 
-  target-file: ->
+  target-path: ->
     [@options.path, @target-file!].join '/'
 
-  generate: ->
-    @save @target-file, @imports!
+  load: ->
+    require @target-path!
+
+  generate: (build, opts = {})->
+    opts.cb        ||= @options.cb
+    opts.wrapper   ||= @options.wrapper or @wrapper
+    build          ||= @build opts.cb
+    @save @target-path!, opts.wrapper(build)
+    console.log @success!
+    @
+
+  wrapper: (build) ->
+    """
+function() {
+  module.exports = function(app) {
+    #{build}
+  }
+}();
+    """
+
+  # TODO
+  success: ->
+    chalk.green "#{@options.env} build generated @ #{@target-path!}"

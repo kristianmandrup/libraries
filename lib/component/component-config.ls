@@ -3,7 +3,7 @@ Registry      = require '../registry/registry'
 fs            = require 'fs'
 util          = require 'util'
 
-module.exports = class ConfigLoader implements FileIO
+module.exports = class ComponentConfig implements FileIO
   (@name, @path) ->
     @validate!
     @
@@ -17,6 +17,9 @@ module.exports = class ConfigLoader implements FileIO
 
   load-it: ->
     @valid-config @load-config!
+
+  build: ->
+
 
   install: (options = {}) ->
     if should-install options

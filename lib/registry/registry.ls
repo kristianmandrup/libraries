@@ -9,9 +9,9 @@ FileIO  = require '../file-io'
 fs      = require 'fs-extra'
 
 module.exports = class Registry implements FileIO
-  (@registry-uri, @local-registry-path) ->
-    @registry-uri         ||= './xlibs/registry'
-    @local-registry-path  ||= @registry-uri
+  (@options = {}) ->
+    @registry-uri         = @options.registry or './xlibs/registry'
+    @local-registry-path  = @options.local    or './xlibs/components'
     @validate!
     @
 
@@ -45,12 +45,20 @@ module.exports = class Registry implements FileIO
 
   install: (name) ->
     try
+      @installing name
       fs.copySync @config-file(name), @target-config(name)
     catch err
       @error err
 
+  installing: (name) ->
+    console.log "installing: #{name}"
+
   uninstall: (name) ->
     try
+      @uninstalling name
       fs.unlinkSync @target-config(name)
     catch err
       @error err
+
+  uninstalling: (name) ->
+    console.log "uninstalling: #{name}"

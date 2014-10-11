@@ -1,4 +1,4 @@
-`#!/usr/bin/env node`
+``#!/usr/bin/env node``
 
 libraries = require '../lib/libraries'
 program   = require 'commander'
@@ -42,10 +42,15 @@ program
 
 program
  .command 'install'
- .description 'update the component registry'
+ .description 'install selected component configs from global registry'
  .action ->
-   console.log 'install from registry'
    libraries.install!
+
+program
+ .command 'uninstall <component>'
+ .description 'remove from component registry'
+ .action (component) ->
+   libraries.uninstall component
 
 #
 # `library build`

@@ -17,6 +17,9 @@ module.exports = class Component
       throw new Error "component must be an Object, was: #{util.inspect @comp}"
 
   location-obj: ->
+    @_location-obj ||= @__location-obj!
+
+  __location-obj: ->
     obj = {}
     for name in ['scripts', 'styles', 'sass', 'fonts']
       paths = @locations name
@@ -32,12 +35,20 @@ module.exports = class Component
   location: (dir, file) ->
     [@base-dir, dir, file].filter( (item) -> !!item ).join '/'
 
+  build: (cb) ->
+    @building!
+    @output cb || @emit
+
+  building: ->
+    console.log " - component: #{@name}"
+
+  emit: (location) ->
+    "app.import('#{location}');"
+
   # TODO: allow for callback output function
   # TODO: Sass suppport via class path (see ember/cli/fontawesome-sass)
   # TODO: support exports for AMD remap
   output: (cb) ->
-    imports = []
-    for key, location in @location-obj!
-      imports.push "app.import('#{location}');"
-    imports
+    @location-obj!.map (key) -~
+      cb @location-obj[key]
 

@@ -3,6 +3,10 @@
 Libraries loader for Broccoli to make it easier and more efficient. 
 We should avoid re-packaging every javascript library as a simple Ember CLI addon wrapper!! 
 
+## Status
+
+The infrastructure should now be (mostly) ready for action! Just needs some debugging and testing :)
+
 ## Why?
 
 This small project was created in response to ember-cli [#2177](https://github.com/stefanpenner/ember-cli/issues/2177).
@@ -31,7 +35,7 @@ require('libraries').applyOn(app);
 
 # or passing custom options 
 
-libraries = new Libraries file: './imports/libraries.json', config: {vendor: 'vendor/dev'}
+libraries = new Libraries file: './xlibs/imports-libraries.json', config: {vendor: 'vendor/dev'}
 libraries.applyOn(app) 
 ```
 
@@ -86,21 +90,31 @@ ComponentJs has similar features that can be used.
 
 - Add CLI interface to add/remove via CLI commands
 
-`library add component bootstrap`
+Add a library to selection
 
-`library remove component bootstrap`
+`library add bootstrap`
 
-`library add component bootstrap:fonts`
+Remove a library from selection
 
-`library add lib jquery:css`
+`library rm bootstrap`
 
-`library add components jquery-ui bootstrap`
+Install all library configs selected that are not part of local library configuration repo
+Missing configurations are fetched from remote repo/repository and installed locally!
 
-`library remove components jquery-ui bootstrap`
+`library install`
+
+Build javascript imports from selected libraries, using local library configuration.
+Save as javascript file, ready to be used via `require('libraries').applyOn(app);` in `Brocfile.js`
+ 
+`library build` 
  
 Please help out to make this an awesome experience and greatly enhance productivity for all of us... ;)
 
 *Enjoy :)*
+
+### Customization
+
+
 
 ### License
 

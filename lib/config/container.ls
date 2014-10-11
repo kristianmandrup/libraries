@@ -25,16 +25,19 @@ module.exports = class ConfigContainer
   libraries: ->
     @_libraries ||= new Libs @libs!
 
-  output: (list) ->
+  build: (cb) ->
+    @libraries.build(cb).concat(components.build cb)
+
+  output: (list, cb) ->
     for lib in list
-      @output-lib(name) or @output-component(name)
+      @output-lib(name, cb) or @output-component(name, cb)
 
-  output-component: (name) ->
+  output-component: (name, cb) ->
     return unless @is-component name
-    @components!.output name
+    @components!.output name, cb
 
-  output-lib: (name) ->
+  output-lib: (name, cb) ->
     return unless @is-lib name
-    @libraries!.output name
+    @libraries!.output name, cb
 
 
