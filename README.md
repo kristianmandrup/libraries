@@ -28,7 +28,6 @@ Add `library add foundation`
 
 Remove `library rm bootstrap`
 
-
 ### Configuration
 
 Libraries can be grouped by category (`bower`, `vendor`, `libs` etc.). 
@@ -49,7 +48,7 @@ You can configure a simple directory alias mechanism if you like in the config s
         ...
       ],
       "libs: {    
-        "datepicker": {"date": "dist/datepicker.js"}, // remap to date
+        "datepicker": {"date": "dist/datepicker.js"}, 
         "calendar": "calendar.js",
         ...
       }    
@@ -66,8 +65,8 @@ You can configure a simple directory alias mechanism if you like in the config s
 }
 ```
 
-`libs` is for simple libraries that are a single javascript file. Anything beyond one file is a component and should
- have its own component configuration.
+The `libs` entry is for simple libraries that are a single javascript file. 
+Anything library with more than one file is a "component" and should have its own component configuration.
 
 Component configuration:
 
@@ -87,8 +86,7 @@ Component configuration:
     "fonts": {
         "dir": "fonts",
         "files": ["xyz.eof", "xyz.svg"]
-    },
-    dependencies: ["styleout"]
+    }
 }
 ```
 
@@ -98,7 +96,8 @@ interesting things in the future... (see Notes + Design documents for some ideas
 ### Registry
 
 The global registry will contain an `index.js` file and a list of library config files.
-Currently a json file, but could perhaps be a simple line divided text file like the `selected` file? 
+Currently it is a `json` file (for extensibility). It could perhaps be a simple line-divided text file 
+like the `selected` file if no other info is needed... 
 
 ```javascript
 // index.json
@@ -121,7 +120,7 @@ bootstrap.json
 On `library install`, the libraries you have selected which don't have a local library config in your local repo will
  be downloaded from the global registry.
  
-Then you just have to do `library build` to build the `imports.js` file which `libraries` will use to 
+Then you just have can run `library build` to build the `imports.js` file which `libraries` will use to 
 apply on your `app` to do the magic imports! *Awesome 8>)* 
 
 ```js
@@ -132,6 +131,10 @@ function() {
   }
 }();
 ```
+
+When you build, it will build an`imports-dev.js` if your environment is development and so on... This way you can
+better manage which libraries have been tested to go into production without overwriting them 
+when in dev or test mode. Super bonus!
 
 ### Petal integration for ES6 goodness
 
@@ -218,7 +221,11 @@ Please help out to make this an awesome experience and greatly enhance productiv
 
 ### Customization
 
+The library API is very customizable. See the code for yourself! 
 
+The `build` calls can each take a callback which allows you to fine-tune the output of 
+any build, so as to not be hardcoded to be used for the Broccoli build process ;)
+  
 ### License
 
 MIT
