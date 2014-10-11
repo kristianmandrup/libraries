@@ -1,5 +1,6 @@
-FileIO        = require '../file-io'
-ListMutator   = require '../list-mutator'
+FileIO          = require '../file-io'
+ListMutator     = require '../list-mutator'
+Configurator    = require '../config/configurator'
 
 unless String.prototype.trim
   String.prototype.trim = ->
@@ -33,6 +34,13 @@ module.exports = class Select implements FileIO, ListMutator
     @_remove-item @lines!, name
     @refresh!
     @
+
+  install: ->
+    for lib in list
+      config(lib).install!
+
+  config: (lib) ->
+  new Configurator(lib)
 
   # cache lines!
   lines: ->

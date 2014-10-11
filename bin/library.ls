@@ -9,18 +9,6 @@ program
   .option '-b, --bar', 'enable some bar'
   .option '-B, --baz', 'enable some baz'
 
-program
-  .command 'help'
-  .description 'display verbose help'
-  .action ->
-    # output help here
-
-program
- .command 'setup'
- .description 'run setup commands'
- .action ->
-   console.log 'setup'
-
 # `library add bootstrap`
 # `library add lib:bootstrap` (no component check)
 # `library add cmp:bootstrap` - downloads bootstrap component config from registry if not present
@@ -42,19 +30,22 @@ program
  .description 'rm the given library'
  .action (lib) ->
    console.log 'remove library "%s"', lib
+   libraries.select.remove lib .save!
 
-#`library update registry`
+#`library install`
 #
-# Goes through `selected` file and checks each entry if it's a component by making a lookup in the registry `index.json` file (see below).
+# Goes through `selected` file and checks each entry if it's a
+# component by making a lookup in the registry `index.json` file (see below).
 #
-# If it's a component, it check if it has a component config file in `components/ folder.
-# If not, it downloads the component config from the registry.
+# If it's a component, it checks if it has a component config file in `components/ folder.
+# If not, it downloads or copies the component config from the registry.
 
 program
  .command 'install'
  .description 'update the component registry'
  .action ->
-   console.log 'install or update registry'
+   console.log 'install from registry'
+   libraries.install!
 
 #
 # `library build`
@@ -67,5 +58,6 @@ program
 .description 'build Brocfile imports'
 .action ->
    console.log 'building Brocfile imports...'
+   libraries.build!
 
 program.parse process.argv

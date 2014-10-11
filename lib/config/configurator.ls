@@ -10,8 +10,11 @@ module.exports = class Configurator implements FileIO
     @config = @json!.config or {}
     @
 
-  cmps: ->
-    @_cmps ||= new Components @
+  install: ->
+    @components.install!
+
+  components: ->
+    @_components ||= new Components @
 
   validate: ->
     unless @exists!

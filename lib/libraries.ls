@@ -8,6 +8,9 @@ module.exports =
   config:   new Configurator
   registry: new Registry
 
+  install: ->
+    select.install!
+
   build: ->
     console.log 'building...', @config
     for lib in @select.list!

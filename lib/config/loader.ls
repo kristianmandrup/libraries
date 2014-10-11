@@ -18,6 +18,13 @@ module.exports = class ConfigLoader implements FileIO
   load-it: ->
     @valid-config @load-config!
 
+  install: (options = {}) ->
+    if should-install options
+      @registry!.install @name
+
+  should-install(options = {}) ->
+    options.force or @not-local!
+
   valid-config: (config) ->
     return config if typeof! config is 'Object'
     throw new Error "Invalid config for component #{@name}, was: #{util.inspect config}"
@@ -39,6 +46,9 @@ module.exports = class ConfigLoader implements FileIO
       @json file-path
     catch err
       console.error err
+
+  not-local: (name) ->
+    not @has-local(name)
 
   has-local: (name) ->
     name ||= @name

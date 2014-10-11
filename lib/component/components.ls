@@ -31,6 +31,10 @@ module.exports = class Components implements ListMutator
   has-component: (name) ->
     @load-listed-components![name]
 
+  install: ->
+    for name in @list
+      @config-loader(name).install!
+
   components-list: ->
     @components-list ||= Object.keys @load-listed-components!
 
