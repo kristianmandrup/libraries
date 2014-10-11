@@ -1,9 +1,18 @@
 {
-    "dir": "dist",
+  "dir": "dist",
+  "scripts": {
+    "dir": "js",
+    "files": ["foundation.js"]
+  },
+  "styles": {
+    "dir": "css",
+    "files": ["foundation.css"]
+  },
+  "fonts": {
+    "dir": "fonts",
     "files": [
-        "js/foundation.js",
-        "css/foundation.css",
-        "fonts/foundation.eof",
-        "fonts/foundation.svg"
+      "fonts/foundation.eof",
+      "fonts/foundation.svg"
     ]
+  }
 }

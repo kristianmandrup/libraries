@@ -46,7 +46,7 @@
         });
       });
     });
-    return describe('valid component', function(){
+    describe('valid component', function(){
       beforeEach(function(){
         return component = new Component('bootstrap', conf.bootstrap);
       });
@@ -88,10 +88,36 @@
       });
       return describe('build', function(){
         specify('builds imports', function(){
-          return expect(component.build()).to.eql(["app.import('dist/js/bootstrap.js');", "app.import('dist/css/bootstrap.css');"]);
+          return expect(component.build()[0]).to.eql(["app.import('dist/js/bootstrap.js');"]);
         });
         return specify('first import is js', function(){
-          return expect(component.build()[0]).to.eql("app.import('dist/js/bootstrap.js');");
+          return expect(component.build()[0][0]).to.eql("app.import('dist/js/bootstrap.js');");
+        });
+      });
+    });
+    return context('foundation', function(){
+      conf.foundation = {
+        scripts: {
+          dir: 'dist',
+          files: ['js/foundation.js', 'css/foundation.css', 'fonts/foundation.eof', 'fonts/foundation.svg']
+        }
+      };
+      beforeEach(function(){
+        return component = new Component('foundation', conf.foundation);
+      });
+      describe('location-obj', function(){
+        return specify('location-obj', function(){
+          return expect(component.locationObj()['scripts']).to.eql(["dist/js/foundation.js", "dist/css/foundation.css", "dist/fonts/foundation.eof", "dist/fonts/foundation.svg"]);
+        });
+      });
+      describe('types', function(){
+        return specify('some types', function(){
+          return expect(component.types()).to.eql(['scripts']);
+        });
+      });
+      return describe('build', function(){
+        return specify('bootstrap not in list of components', function(){
+          return expect(component.build()[0][0]).to.eql("app.import('dist/js/foundation.js');");
         });
       });
     });

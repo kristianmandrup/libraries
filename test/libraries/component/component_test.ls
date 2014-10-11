@@ -71,8 +71,38 @@ describe 'Component' ->
 
     describe 'build' ->
       specify 'builds imports' ->
-        expect component.build! .to.eql ["app.import('dist/js/bootstrap.js');", "app.import('dist/css/bootstrap.css');"]
+        expect component.build!.0 .to.eql ["app.import('dist/js/bootstrap.js');"]
 
       specify 'first import is js' ->
-        expect component.build!.0 .to.eql "app.import('dist/js/bootstrap.js');"
+        expect component.build!.0.0 .to.eql "app.import('dist/js/bootstrap.js');"
 
+  context 'foundation' ->
+    conf.foundation =
+      scripts:
+        dir: 'dist'
+        files: [
+          'js/foundation.js'
+          'css/foundation.css'
+          'fonts/foundation.eof'
+          'fonts/foundation.svg'
+        ]
+
+    before-each ->
+      component := new Component 'foundation', conf.foundation
+
+    describe 'location-obj' ->
+      specify 'location-obj' ->
+        expect component.location-obj!['scripts'] .to.eql [
+          "dist/js/foundation.js"
+          "dist/css/foundation.css"
+          "dist/fonts/foundation.eof"
+          "dist/fonts/foundation.svg"
+        ]
+
+    describe 'types' ->
+      specify 'some types' ->
+        expect component.types! .to.eql [ 'scripts' ]
+
+    describe 'build' ->
+      specify 'bootstrap not in list of components' ->
+        expect component.build!.0.0 .to.eql "app.import('dist/js/foundation.js');"

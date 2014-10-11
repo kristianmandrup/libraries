@@ -120,6 +120,13 @@ describe 'Components' ->
       specify 'first is a foundation component' ->
         expect all.0.name .to.eql 'foundation'
 
+    describe 'component build' ->
+      specify 'bootstrap not in list of components' ->
+        expect components.component('bootstrap').build! .to.eql ''
+
+      specify 'builds foundation components' ->
+        expect components.component('foundation').build! .to.eql ''
+
     describe 'build' ->
       var build
 

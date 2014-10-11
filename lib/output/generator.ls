@@ -27,9 +27,12 @@ module.exports = class Generator implements FileIO
     opts.cb        ||= @options.cb
     opts.wrapper   ||= @options.wrapper or @wrapper
     build          ||= @build opts.cb
-    @save @target-path!, opts.wrapper(build)
+    @save @target-path!, opts.wrapper(@unpacked build)
     console.log @success!
     @
+
+  unpacked: (build) ->
+    [].concat.apply([],build);
 
   wrapper: (build) ->
     """

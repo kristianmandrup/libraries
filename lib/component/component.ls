@@ -29,9 +29,10 @@ module.exports = class Component
   locations: (type) ->
     conf = @comp[type]
     return unless conf
-    for file in conf.files
+    conf.files.map (file) ~>
       @location conf.dir, file
 
+  # filter out any null value from path
   location: (dir, file) ->
     [@base-dir, dir, file].filter( (item) -> !!item ).join '/'
 
@@ -42,12 +43,17 @@ module.exports = class Component
   building: ->
     console.log " - component: #{@name}"
 
-  emit: (location) ->
-    "app.import('#{location}');"
+  emit: (locations) ->
+    locations.map (location) ->
+      "app.import('#{location}');"
+    # .join '\n'
+
+  types: ->
+    Object.keys @location-obj!
 
   # TODO: Sass suppport via class path (see ember/cli/fontawesome-sass)
   # TODO: support exports for AMD remap
   output: (cb) ->
-    Object.keys(@location-obj!).map (key) ~>
+    @types!.map (key) ~>
       cb @location-obj![key]
 

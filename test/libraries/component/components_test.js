@@ -133,6 +133,14 @@
           return expect(all[0].name).to.eql('foundation');
         });
       });
+      describe('component build', function(){
+        specify('bootstrap not in list of components', function(){
+          return expect(components.component('bootstrap').build()).to.eql('');
+        });
+        return specify('builds foundation components', function(){
+          return expect(components.component('foundation').build()).to.eql('');
+        });
+      });
       describe('build', function(){
         var build;
         before(function(){

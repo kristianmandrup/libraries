@@ -31,7 +31,9 @@ module.exports = class Components implements ListMutator
       @component name
 
   component: (name) ->
-    new Component name, @component-object(name)
+    comp = @component-object(name)
+    console.log 'comp', comp
+    new Component name, comp
 
   component-object: (name) ->
     return @listed-components![name] if @has-component name

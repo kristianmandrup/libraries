@@ -6,10 +6,10 @@
     },
     "styles": {
         "dir": "css",
-        "files": ["x.css"]
+        "files": ["bootstrap.css"]
     },
     "fonts": {
         "dir": "fonts",
-        "files": ["xyz.eof", "xyz.svg"]
+        "files": ["bootstrap.eof", "bootstrap.svg"]
     }
 }
