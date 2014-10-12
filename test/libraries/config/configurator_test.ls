@@ -47,7 +47,7 @@ describe 'Configurator' ->
       specify 'is not empty' ->
         expect configurator.containers .to.not.be.empty
 
-    describe 'install' ->
+    xdescribe 'install' ->
       specify 'installs' ->
         expect configurator.install! .to.not.be.void
 

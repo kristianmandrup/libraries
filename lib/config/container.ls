@@ -1,5 +1,7 @@
 Libs = require '../library/libs'
 util = require 'util'
+Components  = require '../component/components'
+Libs        = require '../library/libs'
 
 module.exports = class ConfigContainer
   (@container, @config) ->

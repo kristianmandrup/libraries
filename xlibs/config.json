@@ -12,7 +12,7 @@
         "ember-validations": "dist/ember-validations",
         "ember-easyform": "dist/ember-easyform",
         "moment": {
-          "moment": "momentjs/index"
+          "at": "momentjs/index"
         }
       }
     },

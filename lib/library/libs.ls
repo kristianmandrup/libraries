@@ -27,7 +27,7 @@ module.exports = class Libs
 
   build: (cb) ->
     @building!
-    @library-names!.map (name) ->
+    @library-names!.map (name) ~>
       @library(name).output cb
 
   building: ->

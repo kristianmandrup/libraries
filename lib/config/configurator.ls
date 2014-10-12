@@ -14,18 +14,16 @@ module.exports = class Configurator implements FileIO
   validate: ->
     unless @exists!
       throw new Error "File #{@file} does not exist"
-    unless typeof! @containers! is 'Object'
-      throw new Error "Must have 'containers' Object"
+
+#    unless typeof! @containers! is 'Object'
+#      throw new Error "Must have 'containers' Object"
 
   install: ->
-    @components!.install!
+    @containers!.install!
 
   build: (cb) ->
     cb ||= @options.cb
     @containers!.build cb
-
-  components: ->
-    @_components ||= new Components @
 
   containers: ->
     @_containers ||= new Containers @container-objs!, @config

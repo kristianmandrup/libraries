@@ -56,7 +56,7 @@
           return expect(configurator.containers).to.not.be.empty;
         });
       });
-      describe('install', function(){
+      xdescribe('install', function(){
         return specify('installs', function(){
           return expect(configurator.install()).to.not.be['void'];
         });

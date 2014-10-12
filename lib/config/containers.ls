@@ -29,3 +29,6 @@ module.exports = class Containers
   build: ->
     @_build ||= @all!.map (container) ->
       container.build!
+
+  install: ->
+    throw new Error "Not yet implemented!"
