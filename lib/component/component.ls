@@ -48,6 +48,10 @@ module.exports = class Component
       "app.import('#{location}');"
     # .join '\n'
 
+  # utility method to flatten locations if needed
+  flatten: (arr) ->
+    [].concat.apply([],arr);
+
   types: ->
     Object.keys @location-obj!
 

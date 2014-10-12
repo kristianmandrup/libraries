@@ -4,12 +4,12 @@ chalk     = require 'chalk'
 
 module.exports = class Generator implements FileIO
   (@options = {}) ->
-    @options.env ||= process.env.environment || 'dev'
-    @options.path ||= './xlibs'
+    @options.env  ||= process.env.environment || 'dev'
+    @options.path ||= './xlibs/builds'
     @
 
   build: (cb) ->
-    @select.build cb
+    @select!.build cb
 
   select: ->
     new Selector
@@ -25,7 +25,7 @@ module.exports = class Generator implements FileIO
 
   generate: (build, opts = {})->
     opts.cb        ||= @options.cb
-    opts.wrapper   ||= @options.wrapper or @wrapper
+    opts.wrapper   ||= @options.wrapper or @wrapped
     build          ||= @build opts.cb
     @save @target-path!, opts.wrapper(@unpacked build)
     console.log @success!
@@ -34,7 +34,7 @@ module.exports = class Generator implements FileIO
   unpacked: (build) ->
     [].concat.apply([],build);
 
-  wrapper: (build) ->
+  wrapped: (build) ->
     """
 function() {
   module.exports = function(app) {

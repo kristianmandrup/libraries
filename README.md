@@ -132,9 +132,12 @@ function() {
 }();
 ```
 
-When you build, it will build an`imports-dev.js` if your environment is development and so on... This way you can
-better manage which libraries have been tested to go into production without overwriting them 
+When you build, it will build an`xlibs/builds/imports-dev.js` if your current environment is `dev` and so on... 
+This way you can better manage which libraries have been tested to go into production without overwriting them 
 when in dev or test mode. Super bonus!
+
+Note: In future versions we might split up all configuration according to environment so you can opt-in to manage 
+libraries per environment.
 
 ### Petal integration for ES6 goodness
 

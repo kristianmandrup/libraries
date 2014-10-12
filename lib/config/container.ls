@@ -1,3 +1,5 @@
+Libs = require '../library/libs'
+
 module.exports = class ConfigContainer
   (@obj, @config) ->
 
@@ -26,7 +28,7 @@ module.exports = class ConfigContainer
     @_libraries ||= new Libs @libs!
 
   build: (cb) ->
-    @libraries.build(cb).concat(components.build cb)
+    @libraries!.build(cb).concat(@components!.build cb)
 
   output: (list, cb) ->
     for lib in list

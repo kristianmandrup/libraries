@@ -56,12 +56,14 @@
           return expect(configurator.containers).to.not.be.empty;
         });
       });
-      return describe('container(name)', function(){
-        specify('bower is not empty', function(){
-          return expect(configurator.container('bower')).to.not.be['void'];
+      describe('install', function(){
+        return specify('installs', function(){
+          return expect(configurator.install()).to.not.be['void'];
         });
-        return specify('vendor has no libs', function(){
-          return expect(configurator.container('vendor').libs()).to.eql({});
+      });
+      return describe('build', function(){
+        return specify('builds', function(){
+          return expect(configurator.build()).to.not.be['void'];
         });
       });
     });

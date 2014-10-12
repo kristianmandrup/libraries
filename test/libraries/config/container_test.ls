@@ -10,7 +10,7 @@ Container = require '../../../lib/config/container'
 
 log = console.log
 
-describe 'Configurator' ->
+describe 'Container' ->
   var container, conf
 
   conf = {}

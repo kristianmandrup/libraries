@@ -6,7 +6,7 @@
 
 expect = require 'chai' .expect
 
-Selector = require '../../lib/select/selector'
+Selector = require '../../../lib/select/selector'
 
 log = console.log
 
@@ -68,3 +68,11 @@ foundation
       describe 'remove' ->
         specify 'strapper' ->
           expect selector.remove(lib).lines! .to.not.include lib
+
+    describe 'install' ->
+      specify 'installs selected' ->
+        expect selector.install! .to.include 'bootstrap'
+
+    describe 'build' ->
+      specify 'has bootstrap' ->
+        expect selector.build! .to.eql []

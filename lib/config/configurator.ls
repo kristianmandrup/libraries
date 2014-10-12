@@ -1,6 +1,7 @@
-FileIO      = require '../file-io'
-Components  = require '../component/components'
-Container   = require './container'
+FileIO        = require '../file-io'
+Components    = require '../component/components'
+Container     = require './container'
+Containers    = require './containers'
 
 module.exports = class Configurator implements FileIO
   (@options = {}) ->
@@ -11,11 +12,11 @@ module.exports = class Configurator implements FileIO
     @
 
   install: ->
-    @components.install!
+    @components!.install!
 
   build: (cb) ->
     cb ||= @options.cb
-    @containers.build cb
+    @containers!.build cb
 
   components: ->
     @_components ||= new Components @

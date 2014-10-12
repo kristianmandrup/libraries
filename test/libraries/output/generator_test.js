@@ -5,5 +5,111 @@
  * Time: 14:38
  */
 (function(){
-
+  var expect, Generator, Selector, log;
+  expect = require('chai').expect;
+  Generator = require('../../../lib/output/generator');
+  Selector = require('../../../lib/select/selector');
+  log = console.log;
+  describe('Generator', function(){
+    var generator, cmps;
+    cmps = {};
+    cmps.some = ['bootstrap', 'foundation'];
+    describe('create', function(){
+      context('invalid', function(){
+        specify('number throws', function(){
+          return expect(function(){
+            return new Generator(7);
+          }).to['throw'];
+        });
+        specify('string throws', function(){
+          return expect(function(){
+            return new Generator('x');
+          }).to['throw'];
+        });
+        return specify('list throws', function(){
+          return expect(function(){
+            return new Generator(['blip']);
+          }).to['throw'];
+        });
+      });
+      return context('valid', function(){
+        specify('no args ok', function(){
+          return expect(function(){
+            return new Generator;
+          }).to.not['throw'];
+        });
+        return specify('empty obj ok', function(){
+          return expect(function(){
+            return new Generator({});
+          }).to.not['throw'];
+        });
+      });
+    });
+    describe('valid generator', function(){
+      beforeEach(function(){
+        return generator = new Generator;
+      });
+      describe('select', function(){
+        return specify('must be a Selector', function(){
+          return expect(generator.select()).to.be.an.instanceOf(Selector);
+        });
+      });
+      describe('target-file', function(){
+        return specify('must be an imports file', function(){
+          return expect(generator.targetFile()).to.eql('imports-dev.js');
+        });
+      });
+      describe('target-path', function(){
+        return specify('must be an imports path', function(){
+          return expect(generator.targetPath()).to.eql('./xlibs/builds/imports-dev.js');
+        });
+      });
+      describe('load', function(){
+        return specify('no build file to load - throws', function(){
+          return expect(function(){
+            return generator.load();
+          }).to['throw'];
+        });
+      });
+      describe('build(cb)', function(){
+        return specify('must build', function(){
+          return expect(generator.build()).to.eql("x");
+        });
+      });
+      return describe('generate(build, opts)', function(){
+        var res;
+        before(function(){
+          return res = generator.generate();
+        });
+        return specify('must generate', function(){
+          return expect(fs.readFileSync(res.targetPath)).to.not.eql(void 8);
+        });
+      });
+    });
+    return xcontext('build', function(){
+      describe('load', function(){
+        var loaded;
+        before(function(){
+          return loaded = generator.load();
+        });
+        return specify('must load target path', function(){
+          return expect(typeof loaded).to.eql('function');
+        });
+      });
+      describe('unpacked(build)', function(){
+        var build;
+        before(function(){
+          return build = generator.build();
+        });
+        return specify('must flatten', function(){
+          return expect(generator.unpacked(build)).to.eql(['']);
+        });
+      });
+      return describe('wrapped(build)', function(){
+        return specify('must wrap build', function(){
+          return expect(generator.wrapped(build)()).to.match(/module\.exports/);
+        });
+      });
+    });
+  });
 }).call(this);

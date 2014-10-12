@@ -9,7 +9,7 @@
   expect = require('chai').expect;
   Container = require('../../../lib/config/container');
   log = console.log;
-  describe('Configurator', function(){
+  describe('Container', function(){
     var container, conf;
     conf = {};
     conf.bower = {

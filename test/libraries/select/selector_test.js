@@ -7,7 +7,7 @@
 (function(){
   var expect, Selector, log;
   expect = require('chai').expect;
-  Selector = require('../../lib/select/selector');
+  Selector = require('../../../lib/select/selector');
   log = console.log;
   describe('Selector', function(){
     var selector, select, file;
@@ -76,7 +76,7 @@
           return expect(selector.lines()).to.include('bootstrap');
         });
       });
-      return describe('add', function(){
+      describe('add', function(){
         specify('strapper', function(){
           selector.add(lib);
           return expect(selector.lines()).to.include(lib);
@@ -85,6 +85,16 @@
           return specify('strapper', function(){
             return expect(selector.remove(lib).lines()).to.not.include(lib);
           });
+        });
+      });
+      describe('install', function(){
+        return specify('installs selected', function(){
+          return expect(selector.install()).to.include('bootstrap');
+        });
+      });
+      return describe('build', function(){
+        return specify('has bootstrap', function(){
+          return expect(selector.build()).to.eql([]);
         });
       });
     });

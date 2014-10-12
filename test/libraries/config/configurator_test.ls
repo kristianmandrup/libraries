@@ -47,9 +47,10 @@ describe 'Configurator' ->
       specify 'is not empty' ->
         expect configurator.containers .to.not.be.empty
 
-    describe 'container(name)' ->
-      specify 'bower is not empty' ->
-        expect configurator.container('bower') .to.not.be.void
+    describe 'install' ->
+      specify 'installs' ->
+        expect configurator.install! .to.not.be.void
 
-      specify 'vendor has no libs' ->
-        expect configurator.container('vendor').libs! .to.eql {}
+    describe 'build' ->
+      specify 'builds' ->
+        expect configurator.build! .to.not.be.void
