@@ -21,6 +21,8 @@ module.exports = class Lib
       throw new Error "Options must be an Object, was: #{util.inspect @options}"
 
   @fromObject = (name, obj) ->
+    unless obj.at
+      throw new Error "Library #{name} must have an .at key"
     new Lib name, obj.at, obj.opts
 
   output: (cb) ->
@@ -28,4 +30,4 @@ module.exports = class Lib
     cb @location
 
   emit: (location) ->
-    "app.import('#{@location}');"
+    "app.import('#{location}');"

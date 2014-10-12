@@ -7,18 +7,28 @@ Lib     = require './lib'
 util    = require 'util'
 
 module.exports = class Libs
-  (@libs) ->
+  (libs) ->
+    @libs = {} <<< libs
     @validate!
+    @parse!
     @
 
   validate: ->
     unless typeof! @libs is 'Object'
       throw new Error "Must be an Object"
 
+  parse: ->
+    @libraries ||= []
+    for name in Object.keys(@libs)
+      @libraries[name] = @validated-lib name, @libs[name]
+
+  library-names: ->
+    Object.keys @libraries
+
   build: (cb) ->
     @building!
-    Object.keys(@libs).map (name) ->
-      @output key, cb
+    @library-names!.map (name) ->
+      @library(name).output cb
 
   building: ->
     console.log " - all libs"
@@ -38,17 +48,22 @@ module.exports = class Libs
     when 'String'
       new Lib name, lib
     when 'Object'
-      Lib.fromObject name, lib
+      Lib.from-object name, lib
+    when 'Array'
+      new Lib name, lib[0], lib[1]
     default
       throw new Error "lib must be a String or Object, was: #{typeof lib}"
 
   remove: (name) ->
-    delete @libs[name] if @libs[name]
+    delete @libraries[name] if @library(name)
     @
 
   location: (name) ->
-    libs[name].location
+    @library(name).location
+
+  library: (name) ->
+    @libraries[name]
 
   output: (name, cb) ->
-    libs[name].output cb
+    @library(name).output cb
 

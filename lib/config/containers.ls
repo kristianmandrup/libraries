@@ -18,15 +18,14 @@ module.exports = class Containers
     unless typeof! @config is 'Object'
       throw new Error "Config must be an Object, was: #{util.inspect @config}"
 
-  containers: ->
-    @_containers ||= Object.keys(@container-objs).map (name) ~>
+  all: ->
+    @_all ||= Object.keys(@container-objs).map (name) ~>
       @container name
 
   # f.ex bower or vendor
-  # TODO: cache?
   container: (name) ->
     new Container(@container-objs[name] or {}, @config)
 
   build: ->
-    @_build ||= @containers!.map (container) ->
+    @_build ||= @all!.map (container) ->
       container.build!

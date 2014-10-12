@@ -5,18 +5,21 @@
  */
 expect = require 'chai' .expect
 
-Containers = require '../../../lib/config/containers'
+Containers  = require '../../../lib/config/containers'
+Container   = require '../../../lib/config/container'
 
 log = console.log
 
 describe 'Containers' ->
   var containers, conf
 
-  conf = {}
-
-  conf.bower =
-    libs: {datepicker: "blip", 'ember-validations': "dist/ember-validations"}
-    components: ['bootstrap']
+  conf = {
+    bower:
+      libs: {datepicker: "blip", 'ember-validations': "dist/ember-validations.js"}
+      components: ['bootstrap']
+    vendor:
+      libs: {moment: 'momentjs.js'}
+  }
 
   describe 'create' ->
     context 'invalid' ->
@@ -41,12 +44,20 @@ describe 'Containers' ->
 
   describe 'valid containers' ->
     before-each ->
-      containers := new Containers conf.bower, conf
+      containers := new Containers conf, {}
 
     describe 'container(name)' ->
       specify 'bower is not empty' ->
         expect containers.container('bower') .to.not.be.void
 
       specify 'vendor has no libs' ->
-        expect containers.container('vendor').libs! .to.eql {}
+        expect containers.container('vendor').libs! .to.eql {"moment": "momentjs.js"}
+
+    describe 'all' ->
+      specify 'list of Container' ->
+        expect containers.all!.0 .to.be.an.instance-of Container
+
+    describe 'build' ->
+      specify 'builds' ->
+        expect containers.build! .to.not.be.void
 

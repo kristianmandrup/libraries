@@ -5,19 +5,26 @@
  * Time: 10:23
  */
 (function(){
-  var expect, Containers, log;
+  var expect, Containers, Container, log;
   expect = require('chai').expect;
   Containers = require('../../../lib/config/containers');
+  Container = require('../../../lib/config/container');
   log = console.log;
   describe('Containers', function(){
     var containers, conf;
-    conf = {};
-    conf.bower = {
-      libs: {
-        datepicker: "blip",
-        'ember-validations': "dist/ember-validations"
+    conf = {
+      bower: {
+        libs: {
+          datepicker: "blip",
+          'ember-validations': "dist/ember-validations.js"
+        },
+        components: ['bootstrap']
       },
-      components: ['bootstrap']
+      vendor: {
+        libs: {
+          moment: 'momentjs.js'
+        }
+      }
     };
     describe('create', function(){
       context('invalid', function(){
@@ -59,14 +66,26 @@
     });
     return describe('valid containers', function(){
       beforeEach(function(){
-        return containers = new Containers(conf.bower, conf);
+        return containers = new Containers(conf, {});
       });
-      return describe('container(name)', function(){
+      describe('container(name)', function(){
         specify('bower is not empty', function(){
           return expect(containers.container('bower')).to.not.be['void'];
         });
         return specify('vendor has no libs', function(){
-          return expect(containers.container('vendor').libs()).to.eql({});
+          return expect(containers.container('vendor').libs()).to.eql({
+            "moment": "momentjs.js"
+          });
+        });
+      });
+      describe('all', function(){
+        return specify('list of Container', function(){
+          return expect(containers.all()[0]).to.be.an.instanceOf(Container);
+        });
+      });
+      return describe('build', function(){
+        return specify('builds', function(){
+          return expect(containers.build()).to.not.be['void'];
         });
       });
     });
