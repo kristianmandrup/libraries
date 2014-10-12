@@ -11,6 +11,12 @@ module.exports = class Configurator implements FileIO
     @config = @json!.config or {}
     @
 
+  validate: ->
+    unless @exists!
+      throw new Error "File #{@file} does not exist"
+    unless typeof! @containers! is 'Object'
+      throw new Error "Must have 'containers' Object"
+
   install: ->
     @components!.install!
 
@@ -23,12 +29,6 @@ module.exports = class Configurator implements FileIO
 
   containers: ->
     @_containers ||= new Containers @container-objs!, @config
-
-  validate: ->
-    unless @exists!
-      throw new Error "File #{@file} does not exist"
-    unless typeof! @containers! is 'Object'
-      throw new Error "Must have 'containers' Object"
 
   container-objs: ->
     @_container-objs ||= @json!.containers

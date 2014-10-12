@@ -26,35 +26,40 @@
             return new Containers;
           }).to['throw'];
         });
-        specify('bad nam throws', function(){
+        specify('number throws', function(){
           return expect(function(){
             return new Containers(7);
           }).to['throw'];
         });
-        return specify('non-existing file', function(){
+        specify('string throws', function(){
           return expect(function(){
             return new Containers('x');
-          }).to.not['throw'];
+          }).to['throw'];
+        });
+        specify('single obj throws', function(){
+          return expect(function(){
+            return new Containers({});
+          }).to['throw'];
+        });
+        return specify('obj and string throws', function(){
+          return expect(function(){
+            return new Containers({}, 'x');
+          }).to['throw'];
         });
       });
       return context('valid', function(){
-        specify('obj is ok', function(){
+        return specify('obj and obj is ok', function(){
           return expect(function(){
             return new Containers({
               libs: 'x'
-            });
-          }).to.not['throw'];
-        });
-        return specify('allow empty obj', function(){
-          return expect(function(){
-            return new Containers({});
+            }, {});
           }).to.not['throw'];
         });
       });
     });
-    return describe('valid container', function(){
+    return describe('valid containers', function(){
       beforeEach(function(){
-        return containers = new Containers(conf.bower);
+        return containers = new Containers(conf.bower, conf);
       });
       return describe('container(name)', function(){
         specify('bower is not empty', function(){

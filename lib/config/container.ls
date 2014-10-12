@@ -1,19 +1,28 @@
 Libs = require '../library/libs'
+util = require 'util'
 
 module.exports = class ConfigContainer
-  (@obj, @config) ->
+  (@container, @config) ->
+    @validate!
+    @
 
-  comps: ->
-    @_comps ||= @obj.components or []
+  validate: ->
+    unless typeof! @container is 'Object'
+      throw new Error "Container must be an Object, was: #{util.inspect @container}"
+    unless typeof! @config is 'Object'
+      throw new Error "Config must be an Object, was: #{util.inspect @config}"
+
+  component-list: ->
+    @_component-list ||= @container.components or []
 
   libs: ->
-    @_libs ||= @obj.libs or {}
+    @_libs ||= @container.libs or {}
 
   libs-list: ->
     @_libs-list ||= Object.keys @libs!
 
   is-component: (name) ->
-    @comps!.index-of(name) > -1
+    @component-list!.index-of(name) > -1
 
   is-lib: (name) ->
     @libs-list!.index-of(name) > -1
@@ -22,7 +31,7 @@ module.exports = class ConfigContainer
     @is-component(name) or @is-lib(name)
 
   components: ->
-    @_components ||= new Components @comps!
+    @_components ||= new Components @component-list!
 
   libraries: ->
     @_libraries ||= new Libs @libs!

@@ -4,9 +4,19 @@
  * Time: 09:47
  */
 Container = require './container'
+util = require 'util'
 
 module.exports = class Containers
   (@container-objs, @config) ->
+    @validate!
+    @
+
+  validate: ->
+    unless typeof! @container-objs is 'Object'
+      throw new Error "Container objects must be an Object, was: #{util.inspect @container-objs}"
+
+    unless typeof! @config is 'Object'
+      throw new Error "Config must be an Object, was: #{util.inspect @config}"
 
   containers: ->
     @_containers ||= Object.keys(@container-objs).map (name) ~>
