@@ -34,8 +34,7 @@
     });
     return describe('valid instance', function(){
       before(function(){
-        registry = new Registry;
-        return log(registry);
+        return registry = new Registry;
       });
       describe('registry-uri', function(){
         return specify('is path', function(){
@@ -55,6 +54,14 @@
       describe('index', function(){
         return specify('is json', function(){
           return expect(registry.index().registry).to.include("bootstrap");
+        });
+      });
+      describe.only('has', function(){
+        specify('boostrap = true', function(){
+          return expect(registry.has("bootstrap")).to.be['true'];
+        });
+        return specify('mak = false', function(){
+          return expect(registry.has("mak")).to.be['false'];
         });
       });
       describe('config-file(name)', function(){

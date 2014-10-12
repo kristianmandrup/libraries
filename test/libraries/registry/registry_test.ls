@@ -12,7 +12,6 @@ log = console.log
 describe 'Registry' ->
   var registry
 
-
   describe 'create' ->
     context 'invalid' ->
       specify 'bad nam throws' ->
@@ -28,7 +27,6 @@ describe 'Registry' ->
   describe 'valid instance' ->
     before ->
       registry := new Registry
-      log registry
 
     describe 'registry-uri' ->
       specify 'is path' ->
@@ -45,6 +43,13 @@ describe 'Registry' ->
     describe 'index' ->
       specify 'is json' ->
         expect registry.index!.registry .to.include "bootstrap"
+
+    describe.only 'has' ->
+      specify 'boostrap = true' ->
+        expect registry.has "bootstrap" .to.be.true
+
+      specify 'mak = false' ->
+        expect registry.has "mak" .to.be.false
 
     describe 'config-file(name)' ->
       specify 'is path' ->

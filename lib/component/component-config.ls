@@ -1,10 +1,12 @@
 FileIO        = require '../file-io'
 Registry      = require '../registry/registry'
+ConfigLoader  = require '../registry/config-loader'
 fs            = require 'fs'
 util          = require 'util'
 
 module.exports = class ComponentConfig implements FileIO
   (@name, @path) ->
+    @path ||= './xlibs/components'
     @validate!
     @
 
@@ -16,7 +18,7 @@ module.exports = class ComponentConfig implements FileIO
       throw new Error "Name of path to load from must be a String, was: #{@path}"
 
   load-it: ->
-    @valid-config @load-config!
+    @valid-config @config-loader!.load-config!
 
   build: ->
     throw new Error "Can't build this :P"
@@ -32,41 +34,10 @@ module.exports = class ComponentConfig implements FileIO
     return config if typeof! config is 'Object'
     throw new Error "Invalid config for component #{@name}, was: #{util.inspect config}"
 
-  load-config: ->
-    @load-from-local! or @load-from-registry! or @none!
-
-  load-from-local: ->
-    @load @component-file! if @has-local!
-
-  load-from-registry: ->
-    @load @registry-file! if @registry!.has @name
-
   registry: ->
     @_registry ||= new Registry
 
-  load: (file-path) ->
-    try
-      @json file-path
-    catch err
-      console.error err
+  config-loader: ->
+    @_config-loader ||= new ConfigLoader @name, @path
 
-  not-local: (name) ->
-    not @has-local(name)
 
-  has-local: (name) ->
-    name ||= @name
-    @exists @component-file(name)
-
-  none: ->
-    @error "No Component config for #{@name} could be found in local or global component configuration registries"
-
-  registry-file: ->
-    @registry!.config-file @name
-
-  component-file: (name) ->
-    name ||= @name
-    [@path, "#{name}.json"].join '/'
-
-  error: (msg) ->
-    console.error msg
-    # throw new Error error

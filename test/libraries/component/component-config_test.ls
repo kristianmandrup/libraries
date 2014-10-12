@@ -48,36 +48,6 @@ describe 'ComponentConfig' ->
       specify 'any non-object is invalid' ->
         expect (-> config.valid-config('x')) .to.throw
 
-    describe 'component-file' ->
-      specify 'is combined into a local repo file path' ->
-        expect config.component-file! .to.eql './xlibs/components/bootstrap.json'
-
-      specify 'blip is non-existing file path' ->
-        expect config.component-file('blip') .to.eql './xlibs/components/blip.json'
-
-    describe 'has-local' ->
-      specify 'bootstrap is in local repo' ->
-        expect config.has-local! .to.be.true
-
-    describe 'has-local(name)' ->
-      specify 'bootstrap is in local repo' ->
-        expect config.has-local 'bootstrap' .to.be.true
-
-      specify 'blip is not in local repo' ->
-        expect config.has-local 'blip' .to.be.false
-
-    describe 'registry-file' ->
-      specify 'is combined into a registry file path' ->
-        expect config.registry-file! .to.eql './xlibs/registry/bootstrap.json'
-
-    describe 'load' ->
-      context 'registry config' ->
-        specify 'loads config from registry' ->
-          expect( -> config.load './xlibs/registry/bootstrap.json').to.throw
-
-      context 'local config' ->
-        specify 'loads config from local repo' ->
-          expect config.load('./xlibs/components/bootstrap.json').dir .to.eql 'dist'
 
     describe 'loadIt' ->
       context 'from local config' ->
