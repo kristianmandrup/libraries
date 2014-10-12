@@ -26,9 +26,12 @@ module.exports = class Containers
   container: (name) ->
     new Container(@container-objs[name] or {}, @config)
 
+  # always install before build!
   build: ->
-    @_build ||= @all!.map (container) ->
+    @install!
+    @all!.map (container) ->
       container.build!
 
   install: ->
-    throw new Error "Not yet implemented!"
+    @all!.map (container) ->
+      container.install!

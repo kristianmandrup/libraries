@@ -41,6 +41,9 @@ module.exports = class ConfigContainer
   build: (cb) ->
     @libraries!.build(cb).concat(@components!.build cb)
 
+  install: ->
+    @components!.install!
+
   output: (list, cb) ->
     for lib in list
       @output-lib(name, cb) or @output-component(name, cb)

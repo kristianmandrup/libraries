@@ -5,7 +5,7 @@
   "containers": {
     "bower": {
       "components": [
-        "boostrap",
+        "bootstrap",
         "foundation"
       ],
       "libs": {

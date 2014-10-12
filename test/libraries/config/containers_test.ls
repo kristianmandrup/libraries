@@ -13,13 +13,14 @@ log = console.log
 describe 'Containers' ->
   var containers, conf
 
-  conf = {
+  conf =
     bower:
-      libs: {datepicker: "blip", 'ember-validations': "dist/ember-validations.js"}
+      libs:
+        datepicker: "blip"
+        'ember-validations': "dist/ember-validations.js"
       components: ['bootstrap']
     vendor:
       libs: {moment: 'momentjs.js'}
-  }
 
   describe 'create' ->
     context 'invalid' ->
@@ -57,7 +58,12 @@ describe 'Containers' ->
       specify 'list of Container' ->
         expect containers.all!.0 .to.be.an.instance-of Container
 
+    describe 'install' ->
+      specify 'installs missing' ->
+        expect containers.install! .to.not.be.void
+
+    # TODO: Fails if a component is not found in either local or remote registry
+    # Should always install first!
     describe 'build' ->
       specify 'builds' ->
         expect containers.build! .to.not.be.void
-

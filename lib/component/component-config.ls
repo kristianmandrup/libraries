@@ -28,7 +28,7 @@ module.exports = class ComponentConfig implements FileIO
       @registry!.install @name
 
   should-install: (options = {}) ->
-    options.force or @not-local!
+    options.force or @not-in-local!
 
   valid-config: (config) ->
     return config if typeof! config is 'Object'
@@ -40,4 +40,5 @@ module.exports = class ComponentConfig implements FileIO
   config-loader: ->
     @_config-loader ||= new ConfigLoader @name, @path
 
-
+  not-in-local: ->
+    not @config-loader!.local!.has-config @name

@@ -51,6 +51,6 @@ describe 'Configurator' ->
       specify 'installs' ->
         expect configurator.install! .to.not.be.void
 
-    describe 'build' ->
+    describe.only 'build' ->
       specify 'builds' ->
         expect configurator.build! .to.not.be.void

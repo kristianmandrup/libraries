@@ -48,7 +48,6 @@ describe 'ComponentConfig' ->
       specify 'any non-object is invalid' ->
         expect (-> config.valid-config('x')) .to.throw
 
-
     describe 'loadIt' ->
       context 'from local config' ->
         specify 'loads config from registry' ->

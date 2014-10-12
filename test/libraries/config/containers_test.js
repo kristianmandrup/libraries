@@ -83,6 +83,11 @@
           return expect(containers.all()[0]).to.be.an.instanceOf(Container);
         });
       });
+      describe('install', function(){
+        return specify('installs missing', function(){
+          return expect(containers.install()).to.not.be['void'];
+        });
+      });
       return describe('build', function(){
         return specify('builds', function(){
           return expect(containers.build()).to.not.be['void'];

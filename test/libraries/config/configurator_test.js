@@ -61,7 +61,7 @@
           return expect(configurator.install()).to.not.be['void'];
         });
       });
-      return describe('build', function(){
+      return describe.only('build', function(){
         return specify('builds', function(){
           return expect(configurator.build()).to.not.be['void'];
         });

@@ -15,14 +15,12 @@ module.exports = class Configurator implements FileIO
     unless @exists!
       throw new Error "File #{@file} does not exist"
 
-#    unless typeof! @containers! is 'Object'
-#      throw new Error "Must have 'containers' Object"
-
   install: ->
     @containers!.install!
 
   build: (cb) ->
     cb ||= @options.cb
+    console.log @containers!
     @containers!.build cb
 
   containers: ->
