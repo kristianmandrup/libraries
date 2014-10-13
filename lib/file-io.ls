@@ -1,20 +1,30 @@
-fs     = require 'fs'
+fs     = require 'fs-extra'
 FileIO = require './file-io'
 
 module.exports =
   read: (file) ->
     file ||= @file
-    @content ||= fs.readFileSync file,'utf8'
+    @content ||= fs.readFileSync file, 'utf8'
 
   # by default overwrites
-  save: (file, type = 'json') ->
+  save: (file) ->
     file ||= @file
-    fs.writeFileSync file, @string(file)
-    @
+    @write-file file, @string(file)
 
-  save-content: (file) ->
+  write-file: (file, content) ->
     file ||= @file
-    fs.writeFileSync file, @content
+    @create-path file
+    fs.writeFileSync file, content
+
+  create-path: (file) ->
+    file ||= @file
+    path = require('path').dirname file
+    fs.mkdirp path
+
+  save-content: (file, content) ->
+    file ||= @file
+    content ||= @content
+    @write-file content
     @
 
   string: (file) ->

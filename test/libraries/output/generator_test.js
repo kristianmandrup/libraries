@@ -5,10 +5,11 @@
  * Time: 14:38
  */
 (function(){
-  var expect, Generator, Selector, log;
+  var expect, Generator, Selector, fs, log;
   expect = require('chai').expect;
   Generator = require('../../../lib/output/generator');
   Selector = require('../../../lib/select/selector');
+  fs = require('fs-extra');
   log = console.log;
   describe('Generator', function(){
     var generator, cmps;
@@ -49,9 +50,9 @@
       beforeEach(function(){
         return generator = new Generator;
       });
-      describe('select', function(){
+      describe('selector', function(){
         return specify('must be a Selector', function(){
-          return expect(generator.select()).to.be.an.instanceOf(Selector);
+          return expect(generator.selector()).to.be.an.instanceOf(Selector);
         });
       });
       describe('target-file', function(){
@@ -73,7 +74,12 @@
       });
       describe('build(cb)', function(){
         return specify('must build', function(){
-          return expect(generator.build()).to.eql("x");
+          return expect(generator.build()).to.not.be.empty;
+        });
+      });
+      describe('unpacked(cb)', function(){
+        return specify('must unpack build', function(){
+          return expect(generator.unpacked(generator.build())).to.not.be.empty;
         });
       });
       return describe('generate(build, opts)', function(){
@@ -82,7 +88,7 @@
           return res = generator.generate();
         });
         return specify('must generate', function(){
-          return expect(fs.readFileSync(res.targetPath)).to.not.eql(void 8);
+          return expect(fs.readFileSync(res.targetPath())).to.not.eql(void 8);
         });
       });
     });
@@ -107,6 +113,7 @@
       });
       return describe('wrapped(build)', function(){
         return specify('must wrap build', function(){
+          log(generator.wrapped(build)());
           return expect(generator.wrapped(build)()).to.match(/module\.exports/);
         });
       });

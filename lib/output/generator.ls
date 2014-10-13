@@ -1,6 +1,14 @@
 FileIO    = require '../file-io'
 Selector  = require '../select/selector'
 chalk     = require 'chalk'
+util      = require 'util'
+flatten   = require '../util/array' .flatten
+
+is-blank = (str) ->
+  !str or /^\s*$/.test str
+
+lines = (build) ->
+  build.join '\n    '
 
 module.exports = class Generator implements FileIO
   (@options = {}) ->
@@ -9,9 +17,9 @@ module.exports = class Generator implements FileIO
     @
 
   build: (cb) ->
-    @select!.build cb
+    @selector!.build cb
 
-  select: ->
+  selector: ->
     new Selector
 
   target-file: ->
@@ -27,20 +35,28 @@ module.exports = class Generator implements FileIO
     opts.cb        ||= @options.cb
     opts.wrapper   ||= @options.wrapper or @wrapped
     build          ||= @build opts.cb
-    @save @target-path!, opts.wrapper(@unpacked build)
-    console.log @success!
+
+    content        = opts.wrapper lines(@unpacked(build))
+    return @ if is-blank content
+
+    @write-file @target-path!, content
+    @log @success!
     @
 
+  log: (msg) ->
+    console.log msg
+
   unpacked: (build) ->
-    [].concat.apply([],build);
+    flatten build
+    # [].concat.apply([],build);
 
   wrapped: (build) ->
     """
-function() {
+(function() {
   module.exports = function(app) {
     #{build}
   }
-}();
+}).call(this);
     """
 
   # TODO

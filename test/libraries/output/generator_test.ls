@@ -7,6 +7,7 @@ expect = require 'chai' .expect
 
 Generator   = require '../../../lib/output/generator'
 Selector    = require '../../../lib/select/selector'
+fs          = require 'fs-extra'
 
 log = console.log
 
@@ -38,9 +39,9 @@ describe 'Generator' ->
     before-each ->
       generator  := new Generator
 
-    describe 'select' ->
+    describe 'selector' ->
       specify 'must be a Selector' ->
-        expect generator.select! .to.be.an.instance-of Selector
+        expect generator.selector! .to.be.an.instance-of Selector
 
     describe 'target-file' ->
       specify 'must be an imports file' ->
@@ -56,14 +57,19 @@ describe 'Generator' ->
 
     describe 'build(cb)' ->
       specify 'must build' ->
-        expect generator.build! .to.eql "x"
+        expect generator.build! .to.not.be.empty
+
+    describe 'unpacked(cb)' ->
+      specify 'must unpack build' ->
+        expect generator.unpacked(generator.build!) .to.not.be.empty
 
     describe 'generate(build, opts)' ->
       var res
       before ->
         res := generator.generate!
+
       specify 'must generate' ->
-        expect fs.readFileSync(res.target-path) .to.not.eql void
+        expect fs.readFileSync(res.target-path!) .to.not.eql void
 
   xcontext 'build' ->
     describe 'load' ->
@@ -83,4 +89,5 @@ describe 'Generator' ->
 
     describe 'wrapped(build)' ->
       specify 'must wrap build' ->
+        log generator.wrapped(build)!
         expect generator.wrapped(build)! .to.match /module\.exports/
