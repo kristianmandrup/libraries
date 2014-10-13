@@ -60,7 +60,7 @@ module.exports = class Select implements FileIO, ListMutator
       @config(lib).build cb
 
   config: (lib) ->
-    new Configurator(lib)
+    new Configurator
 
   # cache lines!
   lines: ->

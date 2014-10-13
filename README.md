@@ -190,26 +190,22 @@ to instead export library/component config files instead of directly injecting `
 `Brocfile.js`. This will let you simply select the libraries you like via the generator and then install, build and import
  all the *import goodness* directly into the `Brocfile.js` >>> pure MAGIC!!
 
-## Usage example
-
-Here simulating the app object and doing `console.log` of the 
-commands that the app object would normally execute on `app.import`
-
 ### Brocfile example
+
+You can control which imports file you wish to load either directly via an options hash or 
+indirectly via `process.env.environment`.  
 
 ```javascript
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 var app = new EmberApp();
 
-require('libraries').applyOn(app);
+require('libraries').applyOn(app, {env: 'dev'});
 
 module.exports = app.toTree();
 ```
 
 ### CLI support
-
-*Deprecated* See `bin/library` for more recent CLI API
 
 - Add CLI interface to add/remove via CLI commands
 
@@ -228,6 +224,7 @@ Missing configurations are fetched from remote repo/repository and installed loc
 
 Runs install to install any selected components without a config.
 Build javascript imports from selected libraries, using local library configuration.
+
 Save as javascript file, ready to be used via `require('libraries').applyOn(app);` in `Brocfile.js`
  
 `library build` 
@@ -235,6 +232,30 @@ Save as javascript file, ready to be used via `require('libraries').applyOn(app)
 Please help out to make this an awesome experience and greatly enhance productivity for all of us... ;)
 
 *Enjoy :)*
+
+### gitignore
+
+For typical project, you would decide which `imports-` files to share between team members and which to kep local.
+the `imports-prod` would for sure not be in the `.gitignore`, but be the one that has been tested and approved to go
+into production. The `imports-dev` and `imports-test` can be used for development and testing...  
+
+### Roadmap
+
+The next version of libraries will add the following features:
+
+*better environment encapsulation*
+
+Divide `xlibs` into `xlibs/dev`, `xlibs/test` and `xlibs/prod` and configure environments individually.
+ 
+When your dev environment feels ready for testing...
+ 
+`library transfer test` 
+
+When your test environment is ready for production
+ 
+`library transfer prod` 
+
+This feature is ready for beta testing ;)
 
 ### Customization
 

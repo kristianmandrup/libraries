@@ -48,3 +48,6 @@ module.exports =
   print: (io = console.log) ->
     io @json!
     @
+
+  error: (msg) ->
+    console.error msg

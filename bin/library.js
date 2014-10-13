@@ -19,9 +19,15 @@
   program.command('uninstall <component>').description('remove from component registry').action(function(component){
     return libraries.uninstall(component);
   });
-  program.command('build').description('build Brocfile imports').action(function(){
-    console.log('building Brocfile imports...');
-    return libraries.build();
+  program.command('build <env>').description('build Brocfile imports').action(function(env){
+    console.log('building Brocfile imports for ' + env);
+    return libraries.build({
+      env: env
+    });
+  });
+  program.command('transfer <env>').description('transfer environment').action(function(env){
+    console.log('transfer to environment ' + env);
+    return libraries.transfer(env);
   });
   program.parse(process.argv);
 }).call(this);

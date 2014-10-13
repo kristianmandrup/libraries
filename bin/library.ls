@@ -59,10 +59,24 @@ program
 #  from the `selected` file.
 
 program
-.command 'build'
+.command 'build <env>'
 .description 'build Brocfile imports'
-.action ->
-   console.log 'building Brocfile imports...'
-   libraries.build!
+.action (env)->
+   console.log 'building Brocfile imports for ' + env
+   libraries.build env: env
+
+#
+# `library transfer <env>`
+#
+# Will transfer library config files from a lower environment to the one specified, i.e dev to test or test to prod
+
+program
+.command 'transfer <env>'
+.description 'transfer environment'
+.action (env)->
+   console.log 'transfer to environment ' + env
+   libraries.transfer env
+
 
 program.parse process.argv
+

@@ -1,8 +1,8 @@
 module.exports =
   libraries: require './lib/libraries'
 
-  apply-on: (app) ->
-    applier = libraries.load-applier!
+  apply-on: (app, opts = {}) ->
+    applier = libraries.load-applier opts
     applier app
 
   dummy-app: (io) ->

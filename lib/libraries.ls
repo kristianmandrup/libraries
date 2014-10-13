@@ -2,6 +2,8 @@ Selector      = require './select/selector'
 Configurator  = require './config/configurator'
 Registry      = require './registry/registry'
 Generator     = require './output/generator'
+ConfigLoader  = require './registry/config-loader'
+Transferer    = require './tranferer/tranferer'
 
 module.exports =
   select: (opts = {}) ->
@@ -16,6 +18,12 @@ module.exports =
   generator: (opts = {}) ->
     @_generator ||= new Generator opts or @options
 
+  config-loader: (name, path) ->
+    @_config-loader ||= new ConfigLoader name, path
+
+  transferer: -> (env) ->
+    @_transferer ||= new Transferer env
+
   success: ->
     console.log chalk.green('success ;>)')
 
@@ -24,11 +32,14 @@ module.exports =
     @select(opts).install!
     @success!
 
+  transfer: (env = 'dev') ->
+    @transferer.transfer env
+
   uninstall: (name, opts) ->
     @registry(opts).uninstall name
     @success!
 
-  load-applier: (opts) ->
+  load-applier: (opts = {}) ->
     @generator(opts).load!
 
   # you can call with custom callback function to control

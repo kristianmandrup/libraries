@@ -2,9 +2,10 @@
 (function(){
   module.exports = {
     libraries: require('./lib/libraries'),
-    applyOn: function(app){
+    applyOn: function(app, opts){
       var applier;
-      applier = libraries.loadApplier();
+      opts == null && (opts = {});
+      applier = libraries.loadApplier(opts);
       return applier(app);
     },
     dummyApp: function(io){
