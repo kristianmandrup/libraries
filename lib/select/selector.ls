@@ -1,6 +1,7 @@
 FileIO          = require '../file-io'
 ListMutator     = require '../list-mutator'
 Configurator    = require '../config/configurator'
+Registry        = require '../registry/registry'
 
 unless String.prototype.trim
   String.prototype.trim = ->
@@ -36,8 +37,22 @@ module.exports = class Select implements FileIO, ListMutator
     @
 
   install: ->
-    for lib in @list
-      @config(lib).install!
+    @installs = []
+    for name in @list!
+      @installed @registry!.install name
+    @installs
+
+  uninstall: (name) ->
+    @registry!.uninstall name
+
+  installed: (name) ->
+    return unless name
+    console.log 'installed:' + name
+    @installs.push name
+    name
+
+  registry: ->
+    @_registry ||= new Registry
 
   build: (cb) ->
     @install!

@@ -44,11 +44,14 @@ module.exports = class Registry implements FileIO
     console.error msg
 
   install: (name) ->
+    return void if @exists @target-config(name)
     try
       @installing name
       fs.copySync @config-file(name), @target-config(name)
+      return name
     catch err
       @error err
+      void
 
   installing: (name) ->
     console.log "installing: #{name}"

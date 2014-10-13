@@ -5,7 +5,10 @@ We should avoid re-packaging every javascript library as a simple Ember CLI addo
 
 ## Status
 
-The infrastructure should now be (mostly) ready for action! Just needs some debugging and testing :)
+It works :) 
+ 
+You are encouraged to extend the API as you see fit and integrate more of the API as CLI commands to improve
+the user experience!
 
 ## Why?
 
@@ -96,7 +99,8 @@ interesting things in the future... (see Notes + Design documents for some ideas
 ### Registry
 
 The global registry will contain an `index.js` file and a list of library config files.
-Currently it is a `json` file (for extensibility). It could perhaps be a simple line-divided text file 
+
+Note: Currently it is a `json` file (for extensibility). It could perhaps be a simple line-divided text file 
 like the `selected` file if no other info is needed... 
 
 ```javascript
@@ -213,6 +217,7 @@ Missing configurations are fetched from remote repo/repository and installed loc
 
 `library install`
 
+Runs install to install any selected components without a config.
 Build javascript imports from selected libraries, using local library configuration.
 Save as javascript file, ready to be used via `require('libraries').applyOn(app);` in `Brocfile.js`
  

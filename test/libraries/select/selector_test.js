@@ -73,7 +73,7 @@
       });
       describe('lines', function(){
         return specify('has bootstrap', function(){
-          return expect(selector.lines()).to.include('bootstrap');
+          return expect(selector.lines()).to.include('foundation');
         });
       });
       describe('add', function(){
@@ -88,8 +88,11 @@
         });
       });
       describe('install', function(){
+        before(function(){
+          return selector.uninstall('foundation');
+        });
         return specify('installs selected', function(){
-          return expect(selector.install()).to.include('bootstrap');
+          return expect(selector.install()).to.include('foundation');
         });
       });
       return describe('build', function(){

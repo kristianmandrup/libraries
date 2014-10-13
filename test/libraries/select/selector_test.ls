@@ -58,7 +58,7 @@ foundation
 
     describe 'lines' ->
       specify 'has bootstrap' ->
-        expect selector.lines! .to.include 'bootstrap'
+        expect selector.lines! .to.include 'foundation'
 
     describe 'add' ->
       specify 'strapper' ->
@@ -70,8 +70,11 @@ foundation
           expect selector.remove(lib).lines! .to.not.include lib
 
     describe 'install' ->
+      before ->
+        selector.uninstall 'foundation'
+
       specify 'installs selected' ->
-        expect selector.install! .to.include 'bootstrap'
+        expect selector.install! .to.include 'foundation'
 
     describe 'build' ->
       specify 'has bootstrap' ->

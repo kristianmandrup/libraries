@@ -26,6 +26,8 @@ module.exports = class ComponentConfig implements FileIO
   install: (options = {}) ->
     if @should-install options
       @registry!.install @name
+      return @name
+    void
 
   should-install: (options = {}) ->
     options.force or @not-in-local!
