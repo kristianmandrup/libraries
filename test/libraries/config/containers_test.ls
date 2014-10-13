@@ -66,4 +66,5 @@ describe 'Containers' ->
     # Should always install first!
     describe 'build' ->
       specify 'builds' ->
+        log containers.build!
         expect containers.build! .to.not.be.void

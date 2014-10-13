@@ -20,6 +20,9 @@ describe 'Component' ->
     styles:
       files: ['css/bootstrap.css']
 
+  app-import = (location) ->
+    "app.import('" + location + "');"
+
   describe 'create' ->
     context 'invalid' ->
       specify 'no args throws' ->
@@ -71,10 +74,10 @@ describe 'Component' ->
 
     describe 'build' ->
       specify 'builds imports' ->
-        expect component.build!.0 .to.eql ["app.import('dist/js/bootstrap.js');"]
+        expect component.build!.0 .to.eql [app-import 'dist/js/bootstrap.js']
 
       specify 'first import is js' ->
-        expect component.build!.0.0 .to.eql "app.import('dist/js/bootstrap.js');"
+        expect component.build!.0.0 .to.eql app-import 'dist/js/bootstrap.js'
 
   context 'foundation' ->
     conf.foundation =
@@ -105,4 +108,4 @@ describe 'Component' ->
 
     describe 'build' ->
       specify 'bootstrap not in list of components' ->
-        expect component.build!.0.0 .to.eql "app.import('dist/js/foundation.js');"
+        expect component.build!.0.0 .to.eql app-import('dist/js/foundation.js')

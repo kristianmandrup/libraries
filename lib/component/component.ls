@@ -1,4 +1,5 @@
-util = require 'util'
+util    = require 'util'
+flatten = require '../util/array' .flatten
 
 module.exports = class Component
   (@name, @comp) ->
@@ -48,16 +49,18 @@ module.exports = class Component
       "app.import('#{location}');"
     # .join '\n'
 
-  # utility method to flatten locations if needed
-  flatten: (arr) ->
-    [].concat.apply([],arr);
-
   types: ->
     Object.keys @location-obj!
 
+  output: (cb) ->
+    @flat-output cb
+
+  flat-output: (cb) ->
+    flatten @type-output(cb)
+
   # TODO: Sass suppport via class path (see ember/cli/fontawesome-sass)
   # TODO: support exports for AMD remap
-  output: (cb) ->
+  type-output: (cb) ->
     @types!.map (key) ~>
       cb @location-obj![key]
 

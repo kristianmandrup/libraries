@@ -4,7 +4,7 @@ Components  = require '../component/components'
 Libs        = require '../library/libs'
 
 module.exports = class ConfigContainer
-  (@container, @config) ->
+  (@container, @config = {}) ->
     @validate!
     @
 
@@ -39,6 +39,7 @@ module.exports = class ConfigContainer
     @_libraries ||= new Libs @libs!
 
   build: (cb) ->
+    @install!
     @libraries!.build(cb).concat(@components!.build cb)
 
   install: ->

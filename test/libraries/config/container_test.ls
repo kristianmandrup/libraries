@@ -47,7 +47,7 @@ describe 'Container' ->
         expect container.components! .to.not.be.empty
 
       specify 'includes boostrap' ->
-        expect container.components! .to.include "bootstrap"
+        expect container.components!.component-names! .to.include 'bootstrap'
 
     describe 'libs' ->
       specify 'not empty' ->
@@ -59,7 +59,6 @@ describe 'Container' ->
     describe 'libs-list' ->
       specify 'not empty' ->
         expect container.libs-list! .to.not.be.empty
-
 
     describe 'is-component(name)' ->
       specify 'bootstrap is a component' ->
@@ -82,6 +81,15 @@ describe 'Container' ->
 
       specify 'ember-validations is there' ->
         expect container.has('ember-validations') .to.be.true
+
+    describe 'build(cb)' ->
+      specify 'builds it' ->
+        log container.build!
+        expect container.build! .to.not.eql void
+
+    describe 'install' ->
+      specify 'installs it' ->
+        expect container.install! .to.not.eql void
 
 
 

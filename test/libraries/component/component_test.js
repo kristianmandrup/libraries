@@ -9,7 +9,7 @@
   expect = require('chai').expect;
   Component = require('../../../lib/component/component');
   describe('Component', function(){
-    var component, comp, conf;
+    var component, comp, conf, appImport;
     conf = {};
     conf.bootstrap = {
       dir: 'dist',
@@ -19,6 +19,9 @@
       styles: {
         files: ['css/bootstrap.css']
       }
+    };
+    appImport = function(location){
+      return "app.import('" + location + "');";
     };
     describe('create', function(){
       context('invalid', function(){
@@ -88,10 +91,10 @@
       });
       return describe('build', function(){
         specify('builds imports', function(){
-          return expect(component.build()[0]).to.eql(["app.import('dist/js/bootstrap.js');"]);
+          return expect(component.build()[0]).to.eql([appImport('dist/js/bootstrap.js')]);
         });
         return specify('first import is js', function(){
-          return expect(component.build()[0][0]).to.eql("app.import('dist/js/bootstrap.js');");
+          return expect(component.build()[0][0]).to.eql(appImport('dist/js/bootstrap.js'));
         });
       });
     });
@@ -117,7 +120,7 @@
       });
       return describe('build', function(){
         return specify('bootstrap not in list of components', function(){
-          return expect(component.build()[0][0]).to.eql("app.import('dist/js/foundation.js');");
+          return expect(component.build()[0][0]).to.eql(appImport('dist/js/foundation.js'));
         });
       });
     });

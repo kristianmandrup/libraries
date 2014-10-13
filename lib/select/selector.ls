@@ -37,11 +37,12 @@ module.exports = class Select implements FileIO, ListMutator
 
   install: ->
     for lib in @list
-      config(lib).install!
+      @config(lib).install!
 
   build: (cb) ->
+    @install!
     for lib in @list
-      config(lib).build cb
+      @config(lib).build cb
 
   config: (lib) ->
     new Configurator(lib)

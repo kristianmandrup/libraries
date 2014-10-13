@@ -61,7 +61,7 @@
           return expect(container.components()).to.not.be.empty;
         });
         return specify('includes boostrap', function(){
-          return expect(container.components()).to.include("bootstrap");
+          return expect(container.components().componentNames()).to.include('bootstrap');
         });
       });
       describe('libs', function(){
@@ -93,12 +93,23 @@
           return expect(container.isLib('ember-validations')).to.be['true'];
         });
       });
-      return describe('has(name)', function(){
+      describe('has(name)', function(){
         specify('bootstrap is there', function(){
           return expect(container.has('bootstrap')).to.be['true'];
         });
         return specify('ember-validations is there', function(){
           return expect(container.has('ember-validations')).to.be['true'];
+        });
+      });
+      describe('build(cb)', function(){
+        return specify('builds it', function(){
+          log(container.build());
+          return expect(container.build()).to.not.eql(void 8);
+        });
+      });
+      return describe('install', function(){
+        return specify('installs it', function(){
+          return expect(container.install()).to.not.eql(void 8);
         });
       });
     });

@@ -20,7 +20,7 @@ module.exports = class Configurator implements FileIO
 
   build: (cb) ->
     cb ||= @options.cb
-    console.log @containers!
+    @install!
     @containers!.build cb
 
   containers: ->

@@ -135,22 +135,27 @@
       });
       describe('component build', function(){
         specify('bootstrap not in list of components', function(){
-          return expect(components.component('bootstrap').build()).to.eql('');
+          return expect(components.component('bootstrap')).to.be.empty;
         });
         return specify('builds foundation components', function(){
-          return expect(components.component('foundation').build()).to.eql('');
+          return expect(components.component('foundation').build()[0]).to.eql("app.import('dist/js/foundation.js');");
         });
       });
       describe('build', function(){
         var build;
-        before(function(){
+        beforeEach(function(){
+          components = new Components(cmps.some);
           return build = components.build();
         });
         return specify('builds all components', function(){
-          return expect(build).to.eql('');
+          return expect(build[0][0]).to.eql("app.import('dist/js/foundation.js');");
         });
       });
-      return describe('install', function(){});
+      return describe('install', function(){
+        return specify('install missing components', function(){
+          return expect(components.install()).to.not.eql(void 8);
+        });
+      });
     });
   });
 }).call(this);

@@ -9,13 +9,11 @@ module.exports =
   # by default overwrites
   save: (file, type = 'json') ->
     file ||= @file
-    console.log file
     fs.writeFileSync file, @string(file)
     @
 
   save-content: (file) ->
     file ||= @file
-    console.log file
     fs.writeFileSync file, @content
     @
 

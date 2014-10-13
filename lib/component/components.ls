@@ -32,12 +32,12 @@ module.exports = class Components implements ListMutator
 
   component: (name) ->
     comp = @component-object(name)
-    console.log 'comp', comp
+    return {} unless comp
     new Component name, comp
 
   component-object: (name) ->
     return @listed-components![name] if @has-component name
-    throw new Error "#{name} not found in list of registered components: #{util.inspect @list}"
+    void
 
   has-component: (name) ->
     @listed-components![name]

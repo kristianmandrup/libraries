@@ -90,6 +90,7 @@
       });
       return describe('build', function(){
         return specify('builds', function(){
+          log(containers.build());
           return expect(containers.build()).to.not.be['void'];
         });
       });

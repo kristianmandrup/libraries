@@ -122,18 +122,22 @@ describe 'Components' ->
 
     describe 'component build' ->
       specify 'bootstrap not in list of components' ->
-        expect components.component('bootstrap').build! .to.eql ''
+        expect components.component('bootstrap') .to.be.empty
 
       specify 'builds foundation components' ->
-        expect components.component('foundation').build! .to.eql ''
+        expect components.component('foundation').build!.0 .to.eql "app.import('dist/js/foundation.js');"
 
     describe 'build' ->
       var build
 
-      before ->
+      before-each ->
+        components  := new Components cmps.some
         build := components.build!
 
+      # TODO: flatten
       specify 'builds all components' ->
-        expect build .to.eql ''
+        expect build.0.0 .to.eql "app.import('dist/js/foundation.js');"
 
     describe 'install' ->
+      specify 'install missing components' ->
+        expect components.install! .to.not.eql void
