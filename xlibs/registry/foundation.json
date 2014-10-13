@@ -11,8 +11,8 @@
   "fonts": {
     "dir": "fonts",
     "files": [
-      "fonts/foundation.eof",
-      "fonts/foundation.svg"
+      "foundation.eof",
+      "foundation.svg"
     ]
   }
 }
