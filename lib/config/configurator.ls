@@ -5,11 +5,18 @@ Containers    = require './containers'
 
 module.exports = class Configurator implements FileIO
   (@options = {}) ->
-    @file = @options.file or './xlibs/config.json'
+    @file = @options.config-file or @config-file!
     @validate!
     @read!
     @config = @json!.config or {}
     @
+
+  config-file: ->
+    if @options.env then @env-file! else './xlibs/config.json'
+
+  env-file: ->
+    ['./xlibs', @options.env,  'config'].join '/'
+
 
   validate: ->
     unless @exists!

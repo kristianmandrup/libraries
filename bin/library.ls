@@ -15,22 +15,23 @@ program
 # `library add bootstrap index.js` - will set the entry to `"bootstrap": "index.js"`
 
 program
- .command 'add <lib>'
- .description 'add the given library'
+ .command 'select <lib>'
+ .description 'select the given library'
  .action (lib) ->
-   console.log 'add library "%s"', lib
+   console.log 'select library "%s"', lib
    libraries.select.add lib .save!
-
+   libraries.install!
 
 #`library rm cmp:bootstrap` - removes bootstrap component config from registry
 #`library rm bootstrap` - will remove entry from `selected` file.
 
 program
- .command 'rm <lib>'
- .description 'rm the given library'
+ .command 'unselect <lib>'
+ .description 'unselect the given library'
  .action (lib) ->
-   console.log 'remove library "%s"', lib
+   console.log 'unselect library "%s"', lib
    libraries.select.remove lib .save!
+   libraries.install!
 
 #`library install`
 #

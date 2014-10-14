@@ -5,13 +5,15 @@
   libraries = require('../lib/libraries');
   program = require('commander');
   program.version('0.0.1').option('-f, --foo', 'enable some foo').option('-b, --bar', 'enable some bar').option('-B, --baz', 'enable some baz');
-  program.command('add <lib>').description('add the given library').action(function(lib){
-    console.log('add library "%s"', lib);
-    return libraries.select.add(lib).save();
+  program.command('select <lib>').description('select the given library').action(function(lib){
+    console.log('select library "%s"', lib);
+    libraries.select.add(lib).save();
+    return libraries.install();
   });
-  program.command('rm <lib>').description('rm the given library').action(function(lib){
-    console.log('remove library "%s"', lib);
-    return libraries.select.remove(lib).save();
+  program.command('unselect <lib>').description('unselect the given library').action(function(lib){
+    console.log('unselect library "%s"', lib);
+    libraries.select.remove(lib).save();
+    return libraries.install();
   });
   program.command('install').description('install selected component configs from global registry').action(function(){
     return libraries.install();

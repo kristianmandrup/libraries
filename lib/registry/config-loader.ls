@@ -7,10 +7,17 @@ RemoteConfigLoader  = require './config-loader/remote'
 LocalConfigLoader   = require './config-loader/local'
 
 module.exports = class ConfigLoader
-  (@name, @path) ->
-    @path ||= './xlibs/components'
+  (@name, @path, @options = {}) ->
+    @path ||= @components-path!
     @validate!
     @
+
+  components-path: ->
+    if @options.env then @env-path! else './xlibs/components'
+
+  env-path: ->
+    ['./xlibs', @options.env,  'components'].join '/'
+
 
   validate: ->
     unless typeof! @name is 'String'

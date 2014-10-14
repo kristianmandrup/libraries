@@ -12,9 +12,15 @@ lines = (build) ->
 
 module.exports = class Generator implements FileIO
   (@options = {}) ->
+    @options.path ||= @build-file!
     @options.env  ||= process.env.environment || 'dev'
-    @options.path ||= './xlibs/builds'
     @
+
+  build-file: ->
+    if @options.env then @env-file! else './xlibs/builds'
+
+  env-path: ->
+    ['./xlibs', @options.env,  'builds'].join '/'
 
   build: (cb) ->
     @selector!.build cb
@@ -48,7 +54,6 @@ module.exports = class Generator implements FileIO
 
   unpacked: (build) ->
     flatten build
-    # [].concat.apply([],build);
 
   wrapped: (build) ->
     """
@@ -59,6 +64,5 @@ module.exports = class Generator implements FileIO
 }).call(this);
     """
 
-  # TODO
   success: ->
     chalk.green "#{@options.env} build generated @ #{@target-path!}"

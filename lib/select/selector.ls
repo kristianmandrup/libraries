@@ -9,11 +9,17 @@ unless String.prototype.trim
 
 module.exports = class Select implements FileIO, ListMutator
   (@options = {}) ->
-    @file = @options.file or './xlibs/selected'
+    @file = @options.select-file or @selected-file!
     @validate!
     @read!
     @content = @options.select or @content
     @
+
+  selected-file: ->
+    if @options.env then @env-file! else './xlibs/selected'
+
+  env-file: ->
+    ['./xlibs', @options.env,  'selected'].join '/'
 
   validate: ->
     if @file and not @exists!
@@ -51,16 +57,17 @@ module.exports = class Select implements FileIO, ListMutator
     @installs.push name
     name
 
-  registry: ->
-    @_registry ||= new Registry
+  registry: (options) ->
+    options ||= @options
+    @_registry ||= new Registry options
 
-  build: (cb) ->
+  build: (cb, options) ->
     @install!
-    for lib in @list!
-      @config(lib).build cb
+    @configurator(options).build cb
 
-  config: (lib) ->
-    new Configurator
+  configurator: (options) ->
+    options ||= @options
+    new Configurator options
 
   # cache lines!
   lines: ->

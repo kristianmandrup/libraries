@@ -211,11 +211,11 @@ module.exports = app.toTree();
 
 Add a library to selection
 
-`library add bootstrap`
+`library select bootstrap`
 
 Remove a library from selection
 
-`library rm bootstrap`
+`library unselect bootstrap`
 
 Install all library configs selected that are not part of local library configuration repo
 Missing configurations are fetched from remote repo/repository and installed locally!
@@ -255,7 +255,7 @@ When your test environment is ready for production
  
 `library transfer prod` 
 
-This feature is ready for beta testing ;)
+This feature is ready for almost beta testing ;)
 
 ### Customization
 
