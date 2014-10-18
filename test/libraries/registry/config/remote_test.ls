@@ -1,8 +1,3 @@
-/**
- * User: kristianmandrup
- * Date: 12/10/14
- * Time: 12:46
- */
 expect = require 'chai' .expect
 
 ConfigLoader      = require '../../../../lib/registry/config-loader/remote'

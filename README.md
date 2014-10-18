@@ -257,6 +257,10 @@ When your test environment is ready for production
 
 This feature is ready for almost beta testing ;)
 
+### Component.js
+
+[using-component-js](http://blog.benmcmahen.com/post/55280740882/using-component-js)
+
 ### Customization
 
 The library API is very customizable. See the code for yourself! 
