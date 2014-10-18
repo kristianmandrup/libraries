@@ -24,12 +24,14 @@ describe 'UriAdapter' ->
         expect(-> new Adapter {}).to.not.throw
 
   describe 'valid instance' ->
+    var uri
     before ->
       adapter := new Adapter
+      uri := "https://raw.githubusercontent.com/kristianmandrup/libraries/master/registry"
 
     describe 'registry-uri' ->
       specify 'is path' ->
-        expect adapter.registry-uri .to.eql "https://raw.githubusercontent.com/kristianmandrup/libaries/master/registry"
+        expect adapter.registry-uri .to.eql uri
 
     describe 'local-registry-path' ->
       specify 'is path' ->
@@ -39,25 +41,19 @@ describe 'UriAdapter' ->
       specify 'is path' ->
         expect adapter.installer! .to.be.an.instance-of Installer
 
-#    describe 'index-file' ->
-#      specify 'is path' ->
-#        expect adapter.index-file! .to.eql "./xlibs/registry/index.json"
-#
-#    describe 'index' ->
-#      specify 'is json' ->
-#        expect adapter.index!.registry .to.include "bootstrap"
-#
-#    describe 'has' ->
-#      specify 'boostrap = true' ->
-#        expect adapter.has "bootstrap" .to.be.true
-#
-#      specify 'mak = false' ->
-#        expect adapter.has "mak" .to.be.false
-#
-#    describe 'config-file(name)' ->
-#      specify 'is path' ->
-#        expect adapter.config-file('bootstrap') .to.eql "./xlibs/registry/bootstrap.json"
-#
-#    describe 'target-config(name)' ->
-#      specify 'is path' ->
-#        expect adapter.target-config('bootstrap') .to.eql "./xlibs/components/bootstrap.json"
+    describe 'registry-uri-for' ->
+      specify 'bower returns remote file' ->
+        expect adapter.registry-libs-uri! .to.eql uri + "/bower-libs.json"
+
+    describe 'index-content' ->
+      specify 'is path' ->
+        expect adapter.index-content! .to.match /ember-i18n/
+
+    describe 'index' ->
+      specify 'is json' ->
+        expect adapter.index!["ember-i18n"].categories .to.include 'i18n'
+
+    describe 'list' ->
+      specify 'is json' ->
+        expect adapter.list! .to.include "ember-i18n"
+

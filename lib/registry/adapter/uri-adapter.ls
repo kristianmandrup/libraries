@@ -3,15 +3,23 @@ Installer     = require '../installer'
 BaseAdapter   = require './base-adapter'
 fs            = require 'fs-extra'
 
-remote          = require '../../remote'
-retrieveRemote  = remote.retrieveRemote
+# remote          = require '../../remote'
 
-registry-uri = 'https://raw.githubusercontent.com/kristianmandrup/libaries/master/registry'
+sync-request = require 'sync-request'
+
+Github  = require './repo/github'
 
 module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
   (@options = {}) ->
-    @registry-uri  = @options.registry or registry-uri
+    @registry-uri = @options.registry-uri or @default-uri!
+    @type ||= 'bower'
     super ...
+
+  default-uri: ->
+    @default-repo!.registry-path @options.repo
+
+  default-repo: ->
+    new Github
 
   validate: ->
     unless typeof! @registry-uri is 'String'
@@ -23,26 +31,28 @@ module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
   installer: ->
     @_installer ||= new Installer
 
-  install: (name, type = 'bower') ->
-    @installer.install source: @read-config(name, type), target: @target-config(name)
+  install: (name) ->
+    @installer.install source: @read-config(name), target: @target-config(name)
 
-  read-config: (name, type) ->
-    retrieveRemote @registry-uri-for(type), (body) ->
-      body
+  read-config: (name) ->
+    @index![name]
 
-  registry-uri-for: (type) ->
-    [@registry-uri, @registry-file(type)].join '/'
+  registry-libs-uri: ->
+    [@registry-uri, @libs-file!].join '/'
 
-  registry-file: (type) ->
-    "#{type}-libs.json"
+  libs-file: ->
+    "#{@type}-libs.json"
 
-  index-content: ->
-    @_index-content ||= retrieveRemote @registry-uri, (body) ->
-      body
+  # TODO: Make async! allow download for local caching!
+  index-content: (options = {})->
+    @_index-content ||= @retrieve!
+
+  retrieve: ->
+    sync-request('GET', @registry-libs-uri!).get-body!
 
   index: ->
-    @json @index-content!
+    JSON.parse @index-content!
 
   list: ->
-    @_list ||= @index!.registry
+    @_list ||= Object.keys @index!
 

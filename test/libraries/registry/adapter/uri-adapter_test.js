@@ -34,12 +34,14 @@
       });
     });
     return describe('valid instance', function(){
+      var uri;
       before(function(){
-        return adapter = new Adapter;
+        adapter = new Adapter;
+        return uri = "https://raw.githubusercontent.com/kristianmandrup/libraries/master/registry";
       });
       describe('registry-uri', function(){
         return specify('is path', function(){
-          return expect(adapter.registryUri).to.eql("https://raw.githubusercontent.com/kristianmandrup/libaries/master/registry");
+          return expect(adapter.registryUri).to.eql(uri);
         });
       });
       describe('local-registry-path', function(){
@@ -47,9 +49,29 @@
           return expect(adapter.localRegistryPath).to.eql('./xlibs/components');
         });
       });
-      return describe('installer', function(){
+      describe('installer', function(){
         return specify('is path', function(){
           return expect(adapter.installer()).to.be.an.instanceOf(Installer);
+        });
+      });
+      describe('registry-uri-for', function(){
+        return specify('bower returns remote file', function(){
+          return expect(adapter.registryLibsUri()).to.eql(uri + "/bower-libs.json");
+        });
+      });
+      describe('index-content', function(){
+        return specify('is path', function(){
+          return expect(adapter.indexContent()).to.match(/ember-i18n/);
+        });
+      });
+      describe('index', function(){
+        return specify('is json', function(){
+          return expect(adapter.index()["ember-i18n"].categories).to.include('i18n');
+        });
+      });
+      return describe('list', function(){
+        return specify('is json', function(){
+          return expect(adapter.list()).to.include("ember-i18n");
         });
       });
     });

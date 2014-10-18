@@ -7,6 +7,7 @@
 module.exports = class BaseInstaller
   (@name, @content, @file, @options = {}) ->
     @validate!
+    @log = @options.log || console.log
 
   validate: ->
     unless typeof! @name is 'String'
@@ -16,7 +17,7 @@ module.exports = class BaseInstaller
       throw new Error "Source of config must be a String, was: #{@content}"
 
   installing: ->
-    console.log "installing: #{@name}"
+    @log "installing: #{@name}"
 
   uninstalling: ->
-    console.log "uninstalling: #{@name}"
+    @log "uninstalling: #{@name}"
