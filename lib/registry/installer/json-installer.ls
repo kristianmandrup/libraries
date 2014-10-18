@@ -1,45 +1,53 @@
 fs              = require 'fs-extra'
 FileIO          = require '../../file-io'
 BaseInstaller   = require './base-installer'
+util            = require 'util'
+
+is-blank = (str) ->
+    !str or /^\s*$/.test str
 
 module.exports = class JsonInstaller extends BaseInstaller implements FileIO
-  (@name, @source, @file, @options = {}) ->
+  (@name, @source, @options = {}) ->
+    @file = @options.file || './xlibs/components.json'
+    super ...
     @convert!
     @validate!
+    @content = void
 
   convert: ->
+    if is-blank @source
+     throw new Error "Source must be an Object or a JSON string, was: #{util.inspect @source}"
     if typeof! @source is 'String'
-      @source = @jsonlint @source
+      try
+        @source = @jsonlint @source
+      catch e
+        @error "Can't convert source to valid JSON", e
+        throw new Error "Can't convert source to valid JSON"
 
   components: ->
-    @json!.components
+    @json!
 
   stringified: ->
-    JSON.stringify @source
+    JSON.stringify @components!, null, 4
 
-  install: ->
-    return void if @components![@name]
+  install: (force)->
+    return void if @components![@name] and not force
     try
       @installing!
       @components![@name] = @source
       @content = @stringified!
       @write-file!
-      return name
+      true
     catch err
       @error err
       void
 
-  uninstall-file: ->
-    try
-      @uninstalling name
-      fs.unlinkSync @file
-    catch err
-      @error err
-
-  uninstall-file: ->
+  uninstall: ->
     try
       delete @components![@name] if @components![@name]
+      @content = @stringified!
       @write-file!
+      true
     catch err
       @error err
 

@@ -51,9 +51,9 @@ module.exports =
     file ||= @file
     @_json ||= JSON.parse @read file
 
-  jsonlint: (file) ->
-    file ||= @file
-    @_jsonlint ||= jsonlint.parse @read file
+  jsonlint: (content) ->
+    content ||= @content
+    @_jsonlint ||= jsonlint.parse content
 
   print: (io = console.log) ->
     io @json!

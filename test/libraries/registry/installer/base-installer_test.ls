@@ -8,10 +8,6 @@ describe 'BaseInstaller' ->
   var installer
 
   describe 'create' ->
-#(@name, @content, @file, @options = {}) ->
-#    @validate!
-
-
     context 'invalid' ->
       specify 'bad nam throws' ->
         expect(-> new Installer 7).to.throw
@@ -29,7 +25,7 @@ describe 'BaseInstaller' ->
       io := (msg) ->
         msg
 
-      installer := new Installer 'bootstrap', ' ', 'bootstrap.json', log: io
+      installer := new Installer 'bootstrap', 'components.json', 'bootstrap.json', log: io
 
     describe 'installing' ->
       specify 'displays console install msg' ->

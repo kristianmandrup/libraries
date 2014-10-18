@@ -4,8 +4,14 @@ FileIO          = require '../../file-io'
 BaseInstaller   = require './base-installer'
 
 module.exports = class FileInstaller extends BaseInstaller implements FileIO
-  (@name, @content, @file, @options = {}) ->
+  (@name, @content, @options = {}) ->
     super ...
+
+  validate: ->
+    super!
+    unless typeof! @content is 'String'
+      throw new Error "Source of config must be a String, was: #{@content}"
+
 
   install: ->
     return void if @exists @file

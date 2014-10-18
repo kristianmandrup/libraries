@@ -33,7 +33,7 @@
         io = function(msg){
           return msg;
         };
-        return installer = new Installer('bootstrap', ' ', 'bootstrap.json', {
+        return installer = new Installer('bootstrap', 'components.json', 'bootstrap.json', {
           log: io
         });
       });

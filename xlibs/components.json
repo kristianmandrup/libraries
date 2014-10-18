@@ -3,30 +3,44 @@
         "dir": "dist",
         "scripts": {
             "dir": "js",
-            "files": ["bootstrap.js"]
+            "files": [
+                "bootstrap.js"
+            ]
         },
         "styles": {
             "dir": "css",
-            "files": ["bootstrap.css"]
+            "files": [
+                "bootstrap.css"
+            ]
         },
         "fonts": {
             "dir": "fonts",
-            "files": ["bootstrap.eof", "bootstrap.svg"]
+            "files": [
+                "bootstrap.eof",
+                "bootstrap.svg"
+            ]
         }
     },
     "foundation": {
         "dir": "dist",
         "scripts": {
             "dir": "js",
-            "files": ["foundation.js"]
+            "files": [
+                "foundation.js"
+            ]
         },
         "styles": {
             "dir": "css",
-            "files": ["foundation.css"]
+            "files": [
+                "foundation.css"
+            ]
         },
         "fonts": {
             "dir": "fonts",
-            "files": ["foundation.eof", "foundation.svg"]
+            "files": [
+                "foundation.eof",
+                "foundation.svg"
+            ]
         }
     }
 }
