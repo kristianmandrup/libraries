@@ -1,6 +1,6 @@
-fs              = require 'fs-extra'
 FileIO          = require '../../file-io'
 BaseInstaller   = require './base-installer'
+fs              = require 'fs-extra'
 util            = require 'util'
 
 is-blank = (str) ->

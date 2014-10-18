@@ -21,6 +21,8 @@
       "jsonlint": "x",
       "request": "x",
       "sync-request": "x",
-      "chalk": "x"
+      "chalk": "x",
+      "util": "x",
+      "bower-registry-client": "x"
     }
 }

@@ -13,12 +13,12 @@ module.exports = class RemoteConfigLoader extends BaseConfigLoader
 
   config-file: (name) ->
     name ||= @name
-    @registry!.config-file name
+    @registry!.read-config name
 
   has-config: (name) ->
     name ||= @name
     @registry!.has name
 
   registry: ->
-    @_registry ||= new Registry
+    @_registry ||= new Registry 'uri'
 

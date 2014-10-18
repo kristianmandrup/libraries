@@ -19,7 +19,7 @@ module.exports = class Registry
 
   adapters:
     file: FileAdapter
-    uri: UriAdapter
+    uri:  UriAdapter
 
   bad-adapter: ->
     @error "Registry adapter #{@type} has not been registered"

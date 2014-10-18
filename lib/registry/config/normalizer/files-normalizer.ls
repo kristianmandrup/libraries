@@ -17,7 +17,6 @@ module.exports = class FilesNormalizer
     for file in @files
       @normalize-one file
 
-
     # TODO: find root, then normalize all paths accordingly
     root = @find-root-path path.dirname file[0]
     unless is-blank root

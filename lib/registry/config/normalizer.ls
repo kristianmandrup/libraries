@@ -22,7 +22,9 @@
 BowerAdapter      = require 'bower-adapter'
 ComponentAdapter  = require 'component-adapter'
 
-module.exports = class ConfigNormalizer
+FilesNormalizer   = require './normalize/files-normalizer'
+
+module.exports = class Normalizer
   (@config, @type = 'bower') ->
     @validate!
 
@@ -31,6 +33,10 @@ module.exports = class ConfigNormalizer
       throw new Error "Config to normalize must be an Object, was: #{@config}"
 
   normalize: ->
+    @files-normalizer.normalize!
+
+  files-normalizer: ->
+    new FilesNormalizer @config
 
   adapter: ->
     @adapters[@type] or @bad-adapter!

@@ -18,11 +18,11 @@ module.exports = class Component
       throw new Error "component must be an Object, was: #{util.inspect @comp}"
 
   location-obj: ->
-    @_location-obj ||= @__location-obj!
+    @_location-obj ||= @_loc-obj!
 
-  __location-obj: ->
+  _loc-obj: ->
     obj = {}
-    for name in ['scripts', 'styles', 'sass', 'fonts']
+    for name in ['main', 'scripts', 'styles', 'images', 'fonts', 'files']
       paths = @locations name
       obj[name] = paths if paths
     obj

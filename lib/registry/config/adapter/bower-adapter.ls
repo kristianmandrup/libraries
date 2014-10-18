@@ -1,1 +1,0 @@
-# knows how to read a bower.json file and convert into a normalized library component config
