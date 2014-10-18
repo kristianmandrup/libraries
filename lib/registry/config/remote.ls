@@ -15,8 +15,6 @@ module.exports = class RemoteConfigLoader extends BaseConfigLoader
     name ||= @name
     @registry!.config-file name
 
-  # TODO: can we test on config file similar as for local
-  # then we could extract into BaseLoader
   has-config: (name) ->
     name ||= @name
     @registry!.has name

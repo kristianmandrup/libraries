@@ -10,14 +10,19 @@ module.exports = class Installer
     unless typeof! @type is 'String'
       throw new Error "Type must be a String, was: #{@type}"
 
-  adapter: ->
+  installer: ->
     new @selected-installer! ...@args
 
-  select-adapter: ->
-    switch @type
-    when 'file'
-      FileInstaller
-    when 'json'
-      JsonInstaller
-    else
-      throw new Error "unknown Installer #{@type}"
+  selected-installer: ->
+    @installers[@type] or @bad-adapter!
+
+  bad-installer: ->
+    @error "Installer #{@type} has not been registered"
+
+  error: (msg) ->
+    console.error msg
+    throw new Error msg
+
+  installers: ->
+    file: FileInstaller
+    json: JsonInstaller

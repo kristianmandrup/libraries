@@ -1,12 +1,9 @@
-/**
- * User: kristianmandrup
- * Date: 12/10/14
- * Time: 12:30
- */
-BaseConfigLoader = require './base'
+# loads config from file of same name
 
-module.exports = class LocalConfigLoader extends BaseConfigLoader
-  (@name, @path) ->
+BaseConfigLoader = require './base-loader'
+
+module.exports = class FileConfigLoader extends BaseConfigLoader
+  (@name, @path, @options = {}) ->
     super ...
     @validate!
     @
@@ -18,6 +15,9 @@ module.exports = class LocalConfigLoader extends BaseConfigLoader
   has-config: (name) ->
     name ||= @name
     @exists @config-file(name)
+
+  load-config: (name) ->
+    @json @config-file(name)
 
   config-file: (name) ->
     name ||= @name

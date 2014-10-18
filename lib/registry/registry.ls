@@ -14,14 +14,18 @@ module.exports = class Registry
   adapter: ->
     new @selected-adapter! @options
 
-  select-adapter: ->
-    switch @type
-    when 'file'
-      FileAdapter
-    when 'uri'
-      UriAdapter
-    else
-      throw new Error "unknown Registry adapter #{@type}"
+  selected-adapter: ->
+    adapters[@type] or @bad-adapter!
+
+  adapters:
+    file: FileAdapter
+    uri: UriAdapter
+
+  bad-adapter: ->
+    @error "Registry adapter #{@type} has not been registered"
+
+  error: (msg)->
+    throw new Error
 
 
 
