@@ -1,0 +1,8 @@
+{
+  "ember-mongoose": {
+    "repo": "kelonye/ember-mongoose",
+    "files": [
+      "lib/client/index.js"
+    ]
+  }
+}

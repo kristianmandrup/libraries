@@ -7,8 +7,9 @@ BaseConfigLoader  = require './base'
 Registry          = require '../registry'
 
 module.exports = class RemoteConfigLoader extends BaseConfigLoader
-  (@name) ->
+  (@name, registry) ->
     super ...
+    @_registry = registry if registry
 
   config-file: (name) ->
     name ||= @name

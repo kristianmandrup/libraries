@@ -1,0 +1,9 @@
+{
+  "mongoose adapter":{
+    "categories":[
+      "data",
+      "adapter"
+    ],
+    "name":"ember-mongoose"
+  }
+}

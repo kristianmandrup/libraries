@@ -18,7 +18,8 @@
       "cli": "x",
       "fs-extra": "x",
       "commander": "x",
-      "util": "x",
+      "jsonlint": "x",
+      "request": "x",
       "chalk": "x"
     }
 }

@@ -4,64 +4,25 @@
  * Time: 14:06
  */
 
-FileIO  = require '../file-io'
-# fs    = require 'fs'
-fs      = require 'fs-extra'
 
-module.exports = class Registry implements FileIO
-  (@options = {}) ->
-    @registry-uri         = @options.registry or './xlibs/registry'
-    @local-registry-path  = @options.local    or './xlibs/components'
-    @validate!
-    @
+FileAdapter   = require './adapter/file-adapter'
+UriAdapter    = require './adapter/uri-adapter'
 
-  validate: ->
-    unless typeof! @registry-uri is 'String'
-      throw new Error "registryUri must be a String"
+module.exports = class Registry
+  (@type, @options = {}) ->
 
-    unless typeof! @local-registry-path is 'String'
-      throw new Error "localRegistryPath must be a String, was #{@local-registry-path}"
+  adapter: ->
+    new @selected-adapter! @options
 
-  index-file: ->
-    [@registry-uri, 'index.json'].join '/'
+  select-adapter: ->
+    switch @type
+    when 'file'
+      FileAdapter
+    when 'uri'
+      UriAdapter
+    else
+      throw new Error "unknown Registry adapter #{@type}"
 
-  index: ->
-    @_index ||= @json @index-file!
 
-  list: ->
-    @_list ||= @index!.registry
 
-  has: (name) ->
-    @list!.index-of(name) > -1
 
-  config-file: (name) ->
-    [@registry-uri, "#{name}.json"].join '/'
-
-  target-config: (name) ->
-    [@local-registry-path, "#{name}.json"].join '/'
-
-  error: (msg) ->
-    console.error msg
-
-  install: (name) ->
-    return void if @exists @target-config(name)
-    try
-      @installing name
-      fs.copySync @config-file(name), @target-config(name)
-      return name
-    catch err
-      @error err
-      void
-
-  installing: (name) ->
-    console.log "installing: #{name}"
-
-  uninstall: (name) ->
-    try
-      @uninstalling name
-      fs.unlinkSync @target-config(name)
-    catch err
-      @error err
-
-  uninstalling: (name) ->
-    console.log "uninstalling: #{name}"

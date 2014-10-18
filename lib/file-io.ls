@@ -1,5 +1,6 @@
-fs     = require 'fs-extra'
-FileIO = require './file-io'
+fs        = require 'fs-extra'
+jsonlint  = require 'jsonlint'
+FileIO    = require './file-io'
 
 module.exports =
   read: (file) ->
@@ -13,8 +14,13 @@ module.exports =
 
   write-file: (file, content) ->
     file ||= @file
+    content ||= @content
     @create-path file
-    fs.writeFileSync file, content
+    fs.writeFileSync file, content, 'utf8'
+
+  remove-file: (file) ->
+    file ||= @file
+    fs.unlinkSync file
 
   create-path: (file) ->
     file ||= @file
@@ -45,9 +51,14 @@ module.exports =
     file ||= @file
     @_json ||= JSON.parse @read file
 
+  jsonlint: (file) ->
+    file ||= @file
+    @_jsonlint ||= jsonlint.parse @read file
+
   print: (io = console.log) ->
     io @json!
     @
 
   error: (msg) ->
     console.error msg
+
