@@ -257,51 +257,43 @@ When your test environment is ready for production
 
 This feature is ready for almost beta testing ;)
 
-### Component.js
+### Normalizer
 
-[using-component-js](http://blog.benmcmahen.com/post/55280740882/using-component-js)
+The files normalizer can be used to normalize a configuration entry for a package manager, 
+such as the `component.json` or `bower.json` file. 
 
-We can search similar to `bower search`
+### Package manager adapters 
 
-```bash
-$ component search datastore
+Comes with adapter functionality for package managers
+Currently we include adapters for Component.js and Bower. Roll you own ;)
 
-      search : updating local cache
-      search : local cache size: 2.56mb
+- Component.js
+- Bower
 
-  bredele/datastore
-  url: https://github.com/bredele/datastore
-  desc: store component (inspired by olives.js)
-  ★ 70
-```
+### Registry adapters
 
-Using the Search API
+Comes with adapter functionality for any registry you like. 
+Currently we include adapters for Uri and local File. Roll you own ;)
 
-```js
-var co = require('co');
-var utils = require('component-consoler');
-var search = co(require('component-search2'));
+- UriAdapter
+- FileAdapter
 
-var query = {
-  text: program.args.join(' '),
-  limit: 5,
-  maxage: 1000 * 3600,
-  verbose: true,
-}
+### Installation adapters
 
-search(query, function (err, pkgs) {
-  if (err) utils.fatal(err);
-  if (!pkgs.length) return utils.log('search', 'no matching components found');
-  return pkgs;
-})
+Comes with installer adapter to install as either single json file into one big Json file
+You can roll your own Install adapter to suit your needs
 
-function verbose(pkgs) {
-  console.log();
-  pkgs.forEach(function(pkg){
-    console.log(util.inspect(pkg));
-  })
-})
-```
+- FileInstaller
+- JsonInstaller
+
+### Loader adapters
+
+Comes with loader adapters to suit the Install adapters
+You can roll your own Loader adapter to suit your needs for loading the config from any source
+
+- FileLoader
+- JsonLoader
+- CompositeLoader
 
 ### Customization
 

@@ -56,6 +56,7 @@ module.exports = class BowerAdapter implements FileIO
     @bower ||= @retrieve!.then (body) ->
       jsonlint.parse body
 
+  # Async
   retrieve: ->
     @repo-uri!.then (uri) ~>
       @retrieve-body uri
@@ -66,6 +67,7 @@ module.exports = class BowerAdapter implements FileIO
     deferred.promise.then (body) ~>
       body
 
+  # Sync
   retrieve-sync: ->
     @repo-uri!.then (uri) ~>
       @retrieved ||= sync-request('GET', uri).get-body!

@@ -1,4 +1,48 @@
-see [repo](https://github.com/componentjs/component)
+See [repo](https://github.com/componentjs/component)
+
+[using-component-js](http://blog.benmcmahen.com/post/55280740882/using-component-js)
+
+We can search similar to `bower search`
+
+```bash
+$ component search datastore
+
+      search : updating local cache
+      search : local cache size: 2.56mb
+
+  bredele/datastore
+  url: https://github.com/bredele/datastore
+  desc: store component (inspired by olives.js)
+  ★ 70
+```
+
+Using the Search API
+
+```js
+var co = require('co');
+var utils = require('component-consoler');
+var search = co(require('component-search2'));
+
+var query = {
+  text: program.args.join(' '),
+  limit: 5,
+  maxage: 1000 * 3600,
+  verbose: true,
+}
+
+search(query, function (err, pkgs) {
+  if (err) utils.fatal(err);
+  if (!pkgs.length) return utils.log('search', 'no matching components found');
+  return pkgs;
+})
+
+function verbose(pkgs) {
+  console.log();
+  pkgs.forEach(function(pkg){
+    console.log(util.inspect(pkg));
+  })
+})
+```
 
 - Add support for [ComponentJS](https://github.com/componentjs/component) 
 - Also support [Duo](http://duojs.org/) which uses `componenet.json` as well... 

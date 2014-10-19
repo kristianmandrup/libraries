@@ -47,6 +47,7 @@ module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
   index-content: (options = {})->
     @_index-content ||= @retrieve!
 
+  # TODO: Make async
   retrieve: ->
     sync-request('GET', @registry-libs-uri!).get-body!
 
