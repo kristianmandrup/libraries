@@ -1,0 +1,1 @@
+PathShortener = require '../../../../lib/registry/config/normalizer/path-shortener'

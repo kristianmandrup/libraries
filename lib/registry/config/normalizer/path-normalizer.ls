@@ -1,13 +1,15 @@
 PathShortener      = require './path-shortener'
 
-module.export = class RootPathNormalizer
+module.export = class PathNormalizer
   (@config) ->
 
   normalize: ->
-    root = @find-root-path path.dirname file[0]
-    unless is-blank root
-      @config.dir = root
+    unless is-blank @root!
+      @config.dir = @root!
       @path-shortener!.shorten-paths!
+
+  root: ->
+    @_root ||= @find-root-path path.dirname file[0]
 
   # can be reused for script root etc
   find-root-path: (file-path, lv = 0, root) ->

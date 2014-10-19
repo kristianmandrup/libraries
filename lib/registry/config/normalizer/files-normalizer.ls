@@ -29,10 +29,12 @@ module.exports = class FilesNormalizer
     new RootPathNormalizer @normalized
 
   normalized:
-    script: {}
+    main: {}
+    scripts: {}
     styles: {}
     fonts: {}
-
+    images: {}
+    files: {}
 
 
 

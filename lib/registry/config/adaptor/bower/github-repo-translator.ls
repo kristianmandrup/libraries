@@ -1,15 +1,22 @@
+util = require 'util'
+
 module.exports = class GithubRepoTranslator
-  (@repo) ->
+  (@repo-uri) ->
+    @validate!
+    @
+
+  validate: ->
+    unless typeof! @repo-uri is 'String'
+      throw new Error "repo-uri uri to translate must be a String, was: #{util.inspect @repo-uri}"
 
   extract-repo: ->
-    @matches ||= @repo!.match /github.com\/(.*)\/(.*)\./
+    @matches ||= @repo-uri.match /github.com\/(.*)\/(.*)\./
 
   repo-account: ->
-    @matches.0
+    @extract-repo!.1
 
   repo-name: ->
-    @matches.1
+    @extract-repo!.2
 
   translate: ->
-    @extract-repo!
     "https://raw.githubusercontent.com/#{@repo-account!}/#{@repo-name!}/master/bower.json"

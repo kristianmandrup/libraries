@@ -21,32 +21,20 @@ module.exports = class BowerAdapter implements FileIO
 
   # It is recommended that you use "index.js" for the main component file,
   # however if you use another filename, you MUST define a "main" field for that.
-  main: ->
-    @component!.main
 
   # ["index.js", "template.js"],
   # The scripts field explicitly specifies the JavaScript files that this component relies on. These MUST be regular JavaScript, not CoffeeScript, LiveScript or similar compiled languages.
-  scripts:
-   @component!.scripts
 
   # The styles field explicitly specifies the stylesheets for this component, and follow the same
   # rules as scripts, compilers such as Stylus or SASS may be used to compile down to
   # regular CSS, however it is not recommended.
   # ["tip.css"]
-  styles: ->
-    @component!.styles
 
   # The images field MUST be supported and fetched upon installation,
   # this allows component build tools to rewrite stylesheet url()s in order to
   # accommodate various file serving techniques.
-  images: ->
-    @component!.images
 
   # same as for images
-  fonts: ->
-    @component!.fonts
 
   # In the future we will classify more file types, however for those which are not treated
   # uniquely such as fonts may be placed in a files array to aid build and installation tools.
-  files: ->
-    @component!.files
