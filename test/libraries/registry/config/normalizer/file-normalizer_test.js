@@ -2,7 +2,7 @@
 (function(){
   var expect, FileNormalizer, log;
   expect = require('chai').expect;
-  FileNormalizer = require('../../../../lib/registry/config/normalizer/file-normalizer');
+  FileNormalizer = require('../../../../../lib/registry/config/normalizer/file-normalizer');
   log = console.log;
   describe('FileNormalizer', function(){
     describe('create(@file)', function(){
@@ -24,13 +24,42 @@
     return context('instance', function(){
       var normalizer;
       beforeEach(function(){
-        return normalizer = new FileNormalizer;
+        return normalizer = new FileNormalizer('dist/js/bootstrap.js');
       });
-      describe('normalize(file)', function(){});
-      describe('find-type', function(){});
+      describe('normalized', function(){
+        return specify('js file normalized to script entry', function(){
+          return expect(normalizer.normalized.scripts).to.eql({});
+        });
+      });
+      describe('normalize(file)', function(){
+        beforeEach(function(){
+          return normalizer.normalize();
+        });
+        return specify('js file normalized to script entry', function(){
+          return expect(normalizer.normalized.scripts.files).to.include('dist/js/bootstrap.js');
+        });
+      });
+      describe('find-type(ext, file)', function(){
+        return specify('identifies js as a scripts ext', function(){
+          return expect(normalizer.findType('js')).to.eql('scripts');
+        });
+      });
+      describe('extension-of(file)', function(){
+        return specify('.js file is js ext', function(){
+          return expect(normalizer.extensionOf('dist/js/bootstrap.js')).to.eql('js');
+        });
+      });
       describe('types', function(){});
-      describe('add-file', function(){});
-      return describe('set-dir', function(){});
+      describe('add-file', function(){
+        return specify('js file normalized to script entry', function(){
+          return expect(normalizer.addFile('scripts').normalized.scripts.files).to.include('dist/js/bootstrap.js');
+        });
+      });
+      return describe('set-dir', function(){
+        return specify('js file normalized to script entry', function(){
+          return expect(normalizer.setDir('scripts').normalized.scripts.dir).to.eql('dist/js');
+        });
+      });
     });
   });
 }).call(this);
