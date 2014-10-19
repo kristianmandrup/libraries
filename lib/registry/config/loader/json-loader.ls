@@ -1,6 +1,6 @@
 # loads config from components file by key entry
 
-BaseConfigLoader = require './base'
+BaseConfigLoader = require './base-loader'
 
 module.exports = class JsonConfigLoader extends BaseConfigLoader
   (@name, @path, @options = {}) ->
@@ -12,10 +12,17 @@ module.exports = class JsonConfigLoader extends BaseConfigLoader
     unless typeof! @path is 'String'
       throw new Error "Path of config to load must be a String, was: #{@path}"
 
-    unless @exisits @config-file!
+    unless @exists @config-file!
       throw new Error "Components file #{@config-file!} does not exist"
 
+  list: ->
+    Object.keys @json-config!
+
   load-config: (name) ->
+    name ||= @name
+    unless @json-config![name]
+      throw Error "No entry for #{name}"
+
     @json-config![name]
 
   has-config: (name) ->
@@ -23,8 +30,7 @@ module.exports = class JsonConfigLoader extends BaseConfigLoader
     !!@load-config! name
 
   json-config: ->
-    name ||= @name
-    @_json-conf ||- @json @config-file!
+    @_json-conf ||= @json @config-file!
 
   config-file: ->
-    [@path, "components.json"].join '/'
+    [@path, "index.json"].join '/'

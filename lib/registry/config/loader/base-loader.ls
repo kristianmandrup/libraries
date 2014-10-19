@@ -1,4 +1,6 @@
-module.exports = class BaseConfigLoader
+FileIO     = require '../../../file-io'
+
+module.exports = class BaseConfigLoader implements FileIO
   (@name, @path, @options = {}) ->
     @path ||= './xlibs/components'
     @validate!

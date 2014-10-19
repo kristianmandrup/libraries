@@ -1,8 +1,8 @@
 # loads config from file of same name
 
-BaseConfigLoader = require './base-loader'
+BaseLoader = require './base-loader'
 
-module.exports = class FileConfigLoader extends BaseConfigLoader
+module.exports = class FileConfigLoader extends BaseLoader
   (@name, @path, @options = {}) ->
     super ...
     @validate!

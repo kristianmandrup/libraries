@@ -1,8 +1,3 @@
-/**
- * User: kristianmandrup
- * Date: 12/10/14
- * Time: 12:46
- */
 expect = require 'chai' .expect
 
 ConfigLoader        = require '../../../../lib/registry/config-loader/base'
@@ -15,7 +10,6 @@ describe 'BaseConfigLoader' ->
   config =
     local:  './xlibs/components/bootstrap.json'
     remote: './xlibs/registry/bootstrap.json'
-
 
   describe 'create' ->
     context 'invalid' ->

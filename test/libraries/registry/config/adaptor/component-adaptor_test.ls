@@ -6,7 +6,7 @@ chai.use chai-as-promised
 
 util = require 'util'
 
-Adaptor     = require '../../../../../lib/registry/config/adaptor/component-adaptor'
+Adaptor = require '../../../../../lib/registry/config/adaptor/component-adaptor'
 
 log = console.log
 
