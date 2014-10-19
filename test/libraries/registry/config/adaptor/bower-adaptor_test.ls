@@ -31,10 +31,14 @@ describe 'BowerAdapter' ->
       adaptor := new Adaptor 'bootstrap'
 
     describe 'adapt' ->
-
-    describe 'main' ->
+      specify 'get obj with 7 files' ->
+        adaptor.adapt!.then (obj) ->
+          expect obj.files.length .to.eql 7
 
     describe 'files' ->
+      specify 'has 7 files' ->
+        adaptor.files!.then (files) ->
+          expect files.length .to.eql 7
 
     describe 'has-main' ->
       specify 'gets bower.json body' ->

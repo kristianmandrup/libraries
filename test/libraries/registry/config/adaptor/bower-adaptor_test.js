@@ -34,9 +34,20 @@
       beforeEach(function(){
         return adaptor = new Adaptor('bootstrap');
       });
-      describe('adapt', function(){});
-      describe('main', function(){});
-      describe('files', function(){});
+      describe('adapt', function(){
+        return specify('get obj with 7 files', function(){
+          return adaptor.adapt().then(function(obj){
+            return expect(obj.files.length).to.eql(7);
+          });
+        });
+      });
+      describe('files', function(){
+        return specify('has 7 files', function(){
+          return adaptor.files().then(function(files){
+            return expect(files.length).to.eql(7);
+          });
+        });
+      });
       describe('has-main', function(){
         return specify('gets bower.json body', function(){
           return adaptor.hasMain().then(function(has){

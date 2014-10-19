@@ -38,11 +38,8 @@ module.exports = class BowerAdapter implements FileIO
       throw new Error "Name of bower component must be a String, was: #{util.inspect @name}"
 
   adapt: ->
-    main: @main!
-    files: @files[1 to -1]
-
-  main: ->
-    @files!.0
+    @files!.then (files) ->
+      files: files
 
   files: ->
     if @has-main! then @main-files! else []
