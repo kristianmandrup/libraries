@@ -4,21 +4,28 @@ FileIO          = require '../../../file-io'
 
 RegistryClient = require 'bower-registry-client'
 
-registry       = new RegistryClient strictSsl: false, timeout: 5000
+registry       = new RegistryClient strictSsl: false, timeout: 12000
 search         = registry.lookup
 
-# console.log 'config', registry._config
-# console.log 'search', search
-
 sync-request = require 'sync-request'
+retrieve     = require '../../../remote' .retrieve
 
 fs              = require 'fs-extra'
 util            = require 'util'
+jsonlint        = require 'jsonlint'
 
 Q = require 'q'
 
 is-blank = (str) ->
     !str or /^\s*$/.test str
+
+escape-reg-exp = (str) ->
+  str.replace /([.*+?^${}()|\[\]\/\\])/g, "\\$1"
+
+GithubRepoTranslator  = require './bower/github-repo-translator'
+
+logx = (msg) ->
+  console.log util.inspect(msg)
 
 module.exports = class BowerAdapter implements FileIO
   (@name, @options = {}) ->
@@ -41,34 +48,63 @@ module.exports = class BowerAdapter implements FileIO
     if @has-main! then @main-files! else []
 
   has-main: ->
-    !!@main-files!
+    @main-files!.then (files) ->
+      files && files.length > 0
 
   main-files: ->
-    @bower-json!.main
+    @bower-json!.then (json) ->
+      json.main
 
   bower-json: ->
-    @bower ||= jsonlint @retrieve!
+    @bower ||= @retrieve!.then (body) ->
+      jsonlint.parse body
 
   retrieve: ->
-    @extract-repo!
-    @retrieved ||= sync-request('GET', @repo-uri!).get-body!
+    @repo-uri!.then (uri) ~>
+      @retrieve-body uri
 
-  repo-translator: ->
-    new GithubRepoTranslator @repo!
+  retrieve-body: (uri) ->
+    deferred = Q.defer!
+    retrieve uri, deferred.make-node-resolver!
+    deferred.promise.then (body) ~>
+      body
+
+  retrieve-sync: ->
+    @repo-uri!.then (uri) ~>
+      @retrieved ||= sync-request('GET', uri).get-body!
+
+  repo-translator: (repo) ->
+    new GithubRepoTranslator repo
 
   repo-uri: ->
-    @repo-translator!.translate!
+    @repo!.then (repo) ~>
+      @_repo = repo
+      @repo-translator(repo).translate!
 
   repos: []
 
   # for now just use first repo
   repo: ->
-    @find-repos! if @repos!.length is 0
-    @repos.0
+    @find-repos (repos) ->
+      if repos.length is 0 then @repos.0 else repos.0
 
-  find-repos: ->
-    find (repos) ->
-      @repos.push repos
+  filtered: ->
+    @_filtered ||= @found-repos.filter (repo) ~>
+      name = escape-reg-exp @name
+      repo.match new RegExp "#{name}.git$"
+
+  find-repos: (cb) ->
+    @find!.promise.then (found-repos) ~>
+      @found-repos = @map found-repos
+      cb @filtered!
+
+  map: (repos) ->
+    switch typeof! repos
+    when 'Object'
+      [repos.url]
+    when 'Array'
+      repos.map (repo) ~>
+        @map repo
 
   find: ->
     deferred = Q.defer!
