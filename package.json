@@ -15,6 +15,7 @@
     "devDependencies": {
       "mocha": "x",
       "chai": "x",
+      "chai-as-promised": "x",
       "cli": "x",
       "fs-extra": "x",
       "commander": "x",
@@ -23,6 +24,7 @@
       "sync-request": "x",
       "chalk": "x",
       "util": "x",
+      "q": "x",
       "bower-registry-client": "x"
     }
 }

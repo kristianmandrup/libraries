@@ -2,13 +2,20 @@
 
 FileIO          = require '../../../file-io'
 
-bower-client = require 'bower-registry-client'
-search       = bower-client.search
+RegistryClient = require 'bower-registry-client'
+
+registry       = new RegistryClient strictSsl: false, timeout: 5000
+search         = registry.lookup
+
+# console.log 'config', registry._config
+# console.log 'search', search
 
 sync-request = require 'sync-request'
 
 fs              = require 'fs-extra'
 util            = require 'util'
+
+Q = require 'q'
 
 is-blank = (str) ->
     !str or /^\s*$/.test str
@@ -28,7 +35,7 @@ module.exports = class BowerAdapter implements FileIO
     files: @files[1 to -1]
 
   main: ->
-    @files.0
+    @files!.0
 
   files: ->
     if @has-main! then @main-files! else []
@@ -63,12 +70,7 @@ module.exports = class BowerAdapter implements FileIO
     find (repos) ->
       @repos.push repos
 
-  find: (cb) ->
-    search @name, (err, data) ->
-      if err
-        console.err err
-        throw new Error "Error on bower search: #{name}"
-      cb data
-
-  load: ->
-
+  find: ->
+    deferred = Q.defer!
+    registry.lookup @name, deferred.make-node-resolver!
+    deferred

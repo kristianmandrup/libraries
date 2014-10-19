@@ -1,9 +1,14 @@
-expect = require 'chai' .expect
+chai   = require 'chai'
+expect = chai.expect
+
+chai-as-promised = require "chai-as-promised"
+chai.use chai-as-promised
+
+util = require 'util'
 
 Adaptor = require '../../../../../lib/registry/config/adaptor/bower-adaptor'
 
 log = console.log
-
 
 describe 'BowerAdapter' ->
   describe 'create(@name, @options = {})' ->
@@ -15,28 +20,37 @@ describe 'BowerAdapter' ->
       specify 'string arg - ok' ->
         expect -> new Adaptor 'x' .to.not.throw
 
-  describe 'adapt' ->
+  context 'instance' ->
+    var adaptor
 
-  describe 'main' ->
+    before-each ->
+      adaptor := new Adaptor 'ember-bootstrap'
 
-  describe 'files' ->
+    describe 'adapt' ->
 
-  describe 'has-main' ->
+    describe 'main' ->
 
-  describe 'main-files' ->
+    describe 'files' ->
 
-  describe 'bower-json' ->
+    describe 'has-main' ->
 
-  describe 'retrieve' ->
+    describe 'main-files' ->
 
-  describe 'repo-translator' ->
-    # expect adapter.repo-translator .to.be.an.instance-of GithubRepoTranslator
+    describe 'bower-json' ->
 
-  describe 'repo-uri' ->
+    describe 'retrieve' ->
 
-  # for now just use first repo
-  describe 'repo' ->
+    describe 'repo-translator' ->
+      # expect adapter.repo-translator .to.be.an.instance-of GithubRepoTranslator
 
-  describe 'find-repos' ->
+    describe 'repo-uri' ->
 
-  describe 'find(cb)' ->
+    # for now just use first repo
+    describe 'repo' ->
+
+    describe 'find-repos' ->
+
+    # http://chaijs.com/plugins/chai-as-promised
+    describe 'find(cb)' ->
+      specify 'finds bower repo uri' ->
+        expect adaptor.find!.promise .to.eventually.eql {type: 'alias', url: 'git://github.com/emberjs-addons/ember-bootstrap.git'}
