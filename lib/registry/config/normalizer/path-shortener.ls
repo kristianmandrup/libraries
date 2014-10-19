@@ -3,14 +3,21 @@ module.exports = class PathShortener
 
   shorten-paths: ->
     for key of @config
-      shorten-paths-for @config[key]
+      @shorten-paths-for key, @config[key]
+    @config
 
   # can be reused at at lv with files
-  shorten-paths-for: (entry) ->
-    shortened-files = []
+  shorten-paths-for: (key, entry) ->
+    short-files = []
+    return unless typeof! entry is 'Object'
     for file in entry.files
-      shortened.push @shorten-path(file)
-    @config[key].files = shortened-files
+      short-files.push @shorten-path(file)
+    @config[key].files = short-files
+    @config[key]
 
   shorten-path: (file)->
-    file.slice(@config.root.length)
+    root = @config.dir || ''
+    matches = file.match new RegExp "^(#{root}\/?)"
+    if matches
+      file = file.slice matches[1].length
+    file
