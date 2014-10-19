@@ -19,6 +19,8 @@
       "cli": "x",
       "fs-extra": "x",
       "commander": "x",
+      "co": "x",
+      "component-search2": "x",
       "jsonlint": "x",
       "request": "x",
       "sync-request": "x",

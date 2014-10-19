@@ -1,6 +1,21 @@
-# knows how to read a bower.json file and convert into a normalized library component config
+# knows how to search for a component and convert into a normalized library component config
 
-module.exports = class BowerAdapter implements FileIO
+co      = require 'co'
+search  = co(require 'component-search2')
+
+warning = (msg) ->
+  throw Error msg
+
+registry =
+  search: (query, cb) ->
+    search query, (err, pkgs) ->
+      cb err if err
+      cb 'no matching components found' if !pkgs.length
+      cb null, pkgs
+
+Q = require 'q'
+
+module.exports = class ComponentAdapter
   (@name, @options = {}) ->
     @validate!
     @repos.push @options.repo if @options.repo
@@ -10,12 +25,35 @@ module.exports = class BowerAdapter implements FileIO
     unless typeof! @name is 'String'
       throw new Error "Name of bower component must be a String, was: #{util.inspect @name}"
 
-  adapted: {}
+  adapted:
+    main: {}
+    scripts: {}
+    styles: {}
+    fonts: {}
+    images: {}
+    files: {}
 
-  adapt: ->
-    for key in ['main', 'scripts', 'styles', 'images', 'fonts', 'files']
-      @adapted[key] = @[key]!
-    @adapted
+  configure: (pkg) ->
+    for key of @adapted
+      @adapted[key].files = pkg[key] if pkg[key]
+
+  retrieve: ->
+    @find!.promise.then (pkgs) ~>
+      @configure pkgs[0]
+
+  query: ->
+    @_query ||=
+      text: @name
+      limit: 5
+      maxage: 1000 * 3600
+      verbose: true
+
+  # https://github.com/componentjs/search.js/blob/master/node/search.js
+  # https://github.com/componentjs/search.js/blob/master/client/search.js
+  find: ->
+    deferred = Q.defer!
+    registry.search @query!, deferred.make-node-resolver!
+    deferred
 
   # See https://github.com/componentjs/component/wiki/Spec
 
