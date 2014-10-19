@@ -3,8 +3,8 @@
  * Date: 12/10/14
  * Time: 12:26
  */
-RemoteConfigLoader  = require './config-loader/remote'
-LocalConfigLoader   = require './config-loader/local'
+RemoteConfigLoader  = require './config/remote'
+LocalConfigLoader   = require './config/local'
 
 module.exports = class ConfigLoader
   (@name, @path, @options = {}) ->

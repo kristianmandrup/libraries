@@ -6,6 +6,7 @@ fs            = require 'fs-extra'
 # remote          = require '../../remote'
 
 sync-request = require 'sync-request'
+retrieve     = require '../../../remote' .retrieve
 
 Github  = require './repo/github'
 
@@ -43,17 +44,24 @@ module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
   libs-file: ->
     "#{@type}-libs.json"
 
-  # TODO: Make async! allow download for local caching!
   index-content: (options = {})->
-    @_index-content ||= @retrieve!
+    @_index-content ||= @retrieve!.then (body) ->
+      body
 
-  # TODO: Make async
   retrieve: ->
+    deferred = Q.defer!
+    retrieve @registry-libs-uri!, deferred.make-node-resolver!
+    deferred.promise.then (body) ~>
+      body
+
+  retrieve-sync: ->
     sync-request('GET', @registry-libs-uri!).get-body!
 
   index: ->
-    JSON.parse @index-content!
+    @index-content!.then (body) ->
+      jsonlint.parse body
 
   list: ->
-    @_list ||= Object.keys @index!
+    @_list ||= @index!.then (obj) ->
+      Object.keys obj
 
