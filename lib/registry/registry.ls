@@ -10,6 +10,16 @@ UriAdapter    = require './adapter/uri-adapter'
 
 module.exports = class Registry
   (@type, @options = {}) ->
+    @type ||= 'file'
+    @validate!
+    @
+
+  validate: ->
+    unless typeof! @name is 'String'
+      throw new Error "Type must be a String, was: #{@type}"
+
+  install: (name) ->
+    @adapter!.install name
 
   adapter: ->
     new @selected-adapter! @options

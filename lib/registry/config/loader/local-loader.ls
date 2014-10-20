@@ -13,7 +13,7 @@ module.exports = class LocalLoader
     unless typeof! @type is 'String'
       throw new Error "Type must be a String, was: #{@type}"
 
-  load: ->
+  load-config: ->
     @normalize @adapted!
 
   normalize: (config) ->

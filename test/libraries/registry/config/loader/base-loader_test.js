@@ -41,21 +41,9 @@
           return true;
         };
       });
-      describe('load-config', function(){
+      return describe('load-config', function(){
         return specify('loads config', function(){
           return expect(loader.loadConfig().dir).to.eql('dist');
-        });
-      });
-      return describe('load', function(){
-        specify('loads json from local', function(){
-          return expect(function(){
-            return config.load(config.local);
-          }).to.not['throw'];
-        });
-        return specify('no json to load - fails', function(){
-          return expect(function(){
-            return config.load(config.remote);
-          }).to['throw'];
         });
       });
     });

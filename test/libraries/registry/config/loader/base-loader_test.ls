@@ -35,9 +35,9 @@ describe 'BaseConfigLoader' ->
       specify 'loads config' ->
         expect loader.load-config!.dir .to.eql 'dist'
 
-    describe 'load' ->
-      specify 'loads json from local' ->
-        expect( -> config.load config.local).to.not.throw
-
-      specify 'no json to load - fails' ->
-        expect( -> config.load config.remote).to.throw
+#    describe 'load' ->
+#      specify 'loads json from local' ->
+#        expect( -> config.load config.local).to.not.throw
+#
+#      specify 'no json to load - fails' ->
+#        expect( -> config.load config.remote).to.throw
