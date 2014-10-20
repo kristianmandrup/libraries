@@ -4,9 +4,12 @@ ConfigLoader  = require '../registry/config-loader'
 fs            = require 'fs'
 util          = require 'util'
 
+GlobalConfig = require '../../../../global-config'
+gconf        = new GlobalConfig
+
 module.exports = class ComponentConfig implements FileIO
   (@name, @path) ->
-    @path ||= './xlibs/components'
+    @path ||= gconf.components.dir!
     @validate!
     @
 

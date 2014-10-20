@@ -12,7 +12,7 @@ Github  = require './repo/github'
 
 module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
   (@options = {}) ->
-    @registry-uri = @options.registry-uri or @default-uri!
+    @registry-uri = @options.uri or @default-uri!
     @installer-type = @options.installer || 'file'
     @type ||= 'bower'
     super ...

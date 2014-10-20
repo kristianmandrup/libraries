@@ -7,10 +7,13 @@
 FileIO      = require '../../util/file-io'
 Installer   = require '../config/installer'
 
+GlobalConfig  = require '../../global-config'
+gconf         = new GlobalConfig
+
 module.exports = class BaseAdapter implements FileIO
   (@options = {}) ->
     @registry-uri         ||= @options.registry
-    @local-registry-path  = @options.local    or './xlibs/components'
+    @local-registry-path  = @options.local or gconf.components.dir!
     @validate!
     @
 

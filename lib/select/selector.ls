@@ -3,6 +3,9 @@ ListMutator     = require '../list-mutator'
 Configurator    = require '../config/configurator'
 Registry        = require '../registry/registry'
 
+GlobalConfig  = require '../global-config'
+gconf         = new GlobalConfig
+
 unless String.prototype.trim
   String.prototype.trim = ->
     @replace /^\s+|\s+$/g, ''
@@ -16,10 +19,10 @@ module.exports = class Select implements FileIO, ListMutator
     @
 
   selected-file: ->
-    if @options.env then @env-file! else './xlibs/selected'
+    if @options.env then @env-file! else gconf.selected.file!
 
   env-file: ->
-    ['./xlibs', @options.env,  'selected'].join '/'
+    [gconf.dir, @options.env,  'selected'].join '/'
 
   validate: ->
     if @file and not @exists!

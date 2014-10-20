@@ -11,9 +11,12 @@ ListMutator   = require '../list-mutator'
 fs            = require 'fs'
 util          = require 'util'
 
+GlobalConfig = require '../../../../global-config'
+gconf       = new GlobalConfig
+
 module.exports = class Components implements ListMutator
   (@list, @path) ->
-    @path ||= './xlibs/components'
+    @path ||= gconf.components.dir
     @validate!
     @listed-components!
     @

@@ -3,10 +3,13 @@ Installer     = require '../config/installer'
 BaseAdapter   = require './base-adapter'
 fs            = require 'fs-extra'
 
+GlobalConfig  = require '../../../../global-config'
+gconf         = new GlobalConfig
+
 module.exports = class RegistryFileAdapter extends BaseAdapter implements FileIO
   (@options = {}) ->
-    @registry-uri         = @options.registry or './xlibs/registry'
-    @local-registry-path  = @options.local    or './xlibs/components'
+    @registry-uri         = @options.registry or gconf.registry.dir!
+    @local-registry-path  = @options.local    or gconf.components.dir!
     @validate!
     @
 

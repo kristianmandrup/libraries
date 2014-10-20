@@ -29,12 +29,12 @@ module.exports = class LocalLoader
     new @selected-loader! @name, @path, @options
 
   selected-loader: ->
-    switch @type
-    when 'file'
-      FileLoader
-    when 'json'
-      JsonLoader
-    when 'composite'
-      CompositeLoader
-    else
-      throw new Error "unknown Installer #{@type}"
+    @loaders[@type] or @bad-loader!
+
+  loaders: ->
+    file: FileLoader
+    json: JsonLoader
+    composite: CompositeLoader
+
+  bad-loader: ->
+    throw new Error "unknown Installer #{@type}"

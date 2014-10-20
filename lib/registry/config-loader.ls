@@ -1,11 +1,9 @@
-/**
- * User: kristianmandrup
- * Date: 12/10/14
- * Time: 12:26
- */
 RemoteLoader      = require './config/loader/remote-loader'
 LocalLoader       = require './config/loader/local-loader'
 CompositeLoader   = require './config/loader/composite-loader'
+
+GlobalConfig  = require '../global-config'
+gconf         = new GlobalConfig
 
 module.exports = class ConfigLoader
   (@name, @path, @options = {}) ->
@@ -14,10 +12,10 @@ module.exports = class ConfigLoader
     @
 
   components-path: ->
-    if @options.env then @env-path! else './xlibs/components'
+    if @options.env then @env-path! else gconf.components.dir!
 
   env-path: ->
-    ['./xlibs', @options.env,  'components'].join '/'
+    [gconf.dir, @options.env,  'components'].join '/'
 
 
   validate: ->

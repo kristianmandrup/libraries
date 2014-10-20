@@ -10,6 +10,9 @@ is-blank = (str) ->
 lines = (build) ->
   build.join '\n    '
 
+GlobalConfig  = require '../../../../global-config'
+gconf         = new GlobalConfig
+
 module.exports = class Generator implements FileIO
   (@options = {}) ->
     @options.path ||= @build-file!
@@ -17,10 +20,10 @@ module.exports = class Generator implements FileIO
     @
 
   build-file: ->
-    if @options.env then @env-file! else './xlibs/builds'
+    if @options.env then @env-file! else gconf.builds.dir
 
   env-path: ->
-    ['./xlibs', @options.env,  'builds'].join '/'
+    [gconf.dir, @options.env,  'builds'].join '/'
 
   build: (cb) ->
     @selector!.build cb

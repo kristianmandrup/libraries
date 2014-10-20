@@ -3,6 +3,9 @@ Components    = require '../component/components'
 Container     = require './container'
 Containers    = require './containers'
 
+GlobalConfig = require '../../../../global-config'
+gconf       = new GlobalConfig
+
 module.exports = class Configurator implements FileIO
   (@options = {}) ->
     @file = @options.config-file or @config-file!
@@ -12,10 +15,10 @@ module.exports = class Configurator implements FileIO
     @
 
   config-file: ->
-    if @options.env then @env-file! else './xlibs/config.json'
+    if @options.env then @env-file! else gconf.config.file
 
   env-file: ->
-    ['./xlibs', @options.env,  'config'].join '/'
+    [gconf.dir, @options.env,  'config.json'].join '/'
 
 
   validate: ->

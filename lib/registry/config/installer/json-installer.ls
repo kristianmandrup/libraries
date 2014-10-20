@@ -6,9 +6,12 @@ util            = require 'util'
 is-blank = (str) ->
     !str or /^\s*$/.test str
 
+GlobalConfig  = require '../../../../global-config'
+gconf         = new GlobalConfig
+
 module.exports = class JsonInstaller extends BaseInstaller implements FileIO
   (@name, @source, @options = {}) ->
-    @file = @options.file || './xlibs/components.json'
+    @file = @options.file or gconf.components-file!
     super ...
     @convert!
     @validate!

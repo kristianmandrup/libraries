@@ -239,11 +239,11 @@ For typical project, you would decide which `imports-` files to share between te
 the `imports-prod` would for sure not be in the `.gitignore`, but be the one that has been tested and approved to go
 into production. The `imports-dev` and `imports-test` can be used for development and testing...  
 
-### Roadmap
+## Roadmap
 
 The next version of libraries will add the following features:
 
-*better environment encapsulation*
+## Environment encapsulation*
 
 Divide `xlibs` into `xlibs/dev`, `xlibs/test` and `xlibs/prod` and configure environments individually.
  
@@ -256,6 +256,16 @@ When your test environment is ready for production
 `library transfer prod` 
 
 This feature is ready for almost beta testing ;)
+
+### Adapters
+
+Include various adapters and infrastructure to support your own adapters.
+
+### Async for maximum performance
+
+Use `async` library to perform most operations asynchronously to massively increase performance!!
+Especially important when using bower/component adapter to find the package config file from a remote 
+repo or when installing configs from one or more remote registries...
 
 ### Normalizer
 

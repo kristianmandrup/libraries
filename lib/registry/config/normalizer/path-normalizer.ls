@@ -6,6 +6,7 @@ is-blank = (str) ->
 
 module.exports = class PathNormalizer
   (@config, @files) ->
+    @config-keys = Objec.keys @config
     @validate!
 
   validate: ->
@@ -18,7 +19,9 @@ module.exports = class PathNormalizer
   normalize: ->
     unless is-blank @root!
       @config.dir = @root!
-      @path-shortener!.shorten-paths!
+      @path-shortener!(@config).shorten-paths!
+    for key in @config-keys
+      @path-shortener!(@config[key]).shorten-paths!
 
   root: ->
     @_root ||= @find-root-path path.dirname @files[0]
@@ -31,6 +34,7 @@ module.exports = class PathNormalizer
       return root unless file.match new RegExp "^#{path}"
     return @find-root-path file, lv+1, path
 
-  path-shortener: ->
+  path-shortener: (config) ->
+    config ||= @config
     new PathShortener @config
 

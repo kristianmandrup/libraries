@@ -5,10 +5,12 @@
  */
 FileIO          = require '../util/file-io'
 
+GlobalConfig  = require '../../../../global-config'
+gconf         = new GlobalConfig
 
 module.exports = class Transferer implements FileIO
   (@env) ->
-    @path = './xlibs'
+    @path = gconf.dir
 
   transfer: ->
     @copy-select!
