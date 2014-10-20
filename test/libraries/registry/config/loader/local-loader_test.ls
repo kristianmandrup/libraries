@@ -30,7 +30,7 @@ describe 'LocalConfigLoader' ->
 
     describe 'load-config' ->
       specify 'loads config' ->
-        expect loader.load-config!.dir .to.eql 'dist'
+        expect loader.config-file!.dir .to.eql 'dist'
 
     describe 'has-local' ->
       specify 'bootstrap is in local repo' ->
@@ -54,7 +54,7 @@ describe 'LocalConfigLoader' ->
       specify 'loads config from local repo' ->
         expect loader.load('./xlibs/components/bootstrap.json').dir .to.eql 'dist'
 
-    describe.only 'selected-loader' ->
+    describe 'selected-loader' ->
       specify 'selects a loader' ->
         expect loader.selected-loader! .to.eql CompositeLoader
 
@@ -70,10 +70,10 @@ describe 'LocalConfigLoader' ->
       specify 'normalizes a loader' ->
         expect loader.normalizer(config) .to.be.an.instance-of Normalizer
 
-    describe 'adapted' ->
+    describe 'loaded-config' ->
       specify 'is an adapted config' ->
-        expect loader.adapted! .to.eql {}
+        expect loader.loaded-config! .to.eql {}
 
     describe 'adapter' ->
       specify 'is an Adapter' ->
-        expect loader.adapter! .to.be.an.instance-of CompositeLoader
+        expect loader.loader! .to.be.an.instance-of CompositeLoader

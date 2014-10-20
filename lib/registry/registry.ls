@@ -1,10 +1,3 @@
-/**
- * User: kristianmandrup
- * Date: 06/10/14
- * Time: 14:06
- */
-
-
 FileAdapter   = require './adapter/file-adapter'
 UriAdapter    = require './adapter/uri-adapter'
 

@@ -8,9 +8,6 @@ BaseLoader        = require './base-loader'
 module.exports = class CompositeLoader extends BaseLoader
   (@name, @options = {}) ->
     super ...
-    @loader     = @options.loader || 'composite'
-    @component  = @options.component || 'bower'
-    @path       = @options.path
     @validate!
     @
 

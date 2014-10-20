@@ -1,14 +1,7 @@
-/**
- * User: kristianmandrup
- * Date: 06/10/14
- * Time: 14:38
- */
-
-expect = require 'chai' .expect
+expect  = require 'chai' .expect
+log     = console.log
 
 Selector = require '../../../lib/select/selector'
-
-log = console.log
 
 describe 'Selector' ->
   var selector, select

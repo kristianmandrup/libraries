@@ -2,8 +2,12 @@
 
 BaseLoader = require '../base-loader'
 
+GlobalConfig  = require '../../../../global-config'
+gconf         = new GlobalConfig
+
 module.exports = class JsonConfigLoader extends BaseLoader
   (@name, @path, @options = {}) ->
+    @path ||= gconf.components!.dir!
     super ...
     @validate!
     @

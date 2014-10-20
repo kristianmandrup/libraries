@@ -4,23 +4,26 @@ JsonLoader      = require './local/json-loader'
 CompositeLoader = require './local/composite-loader'
 Normalizer      = require '../normalizer'
 
+GlobalConfig  = require '../../../global-config'
+gconf         = new GlobalConfig
+
 module.exports = class LocalLoader extends BaseLoader
   (@name, @options = {}) ->
     super ...
-    @loader     = @options.loader or 'composite'
+    @type       = @options.type or 'composite'
     @component  = @options.component or 'bower'
-    @path       = @options.path
+    @path       = @options.path or gconf.components!.dir!
     @validate!
     @
 
   validate: ->
 
-  load-config: ->
-    @normalize @adapted!
+  config-file: ->
+    @normalize @loaded-config!
 
   has-config: (name) ->
     name ||= @name
-    @adapted!.has-config name
+    @loader!.has-config name
 
   normalize: (config) ->
     @normalizer config .normalize!
@@ -28,14 +31,15 @@ module.exports = class LocalLoader extends BaseLoader
   normalizer: (config) ->
     new Normalizer config, @component
 
-  adapted: ->
-    @adapter!.adapt!
+  loaded-config: ->
+    @loader!.load-config!
 
-  adapter: ->
-    new @selected-loader! @name, @path, @options
+  loader: ->
+    clazz = @selected-loader!
+    new clazz @name, @path, @options
 
   selected-loader: ->
-    @loaders![@loader] or @bad-loader!
+    @loaders![@type] or @bad-loader!
 
   loaders: ->
     file: FileLoader
@@ -43,4 +47,4 @@ module.exports = class LocalLoader extends BaseLoader
     composite: CompositeLoader
 
   bad-loader: ->
-    throw new Error "unknown Loader #{@loader}"
+    throw new Error "unknown Loader #{@type}"

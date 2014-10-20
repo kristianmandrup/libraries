@@ -39,7 +39,7 @@
       });
       describe('load-config', function(){
         return specify('loads config', function(){
-          return expect(loader.loadConfig().dir).to.eql('dist');
+          return expect(loader.configFile().dir).to.eql('dist');
         });
       });
       describe('has-local', function(){
@@ -68,7 +68,7 @@
           return expect(loader.load('./xlibs/components/bootstrap.json').dir).to.eql('dist');
         });
       });
-      describe.only('selected-loader', function(){
+      describe('selected-loader', function(){
         return specify('selects a loader', function(){
           return expect(loader.selectedLoader()).to.eql(CompositeLoader);
         });
@@ -88,14 +88,14 @@
           return expect(loader.normalizer(config)).to.be.an.instanceOf(Normalizer);
         });
       });
-      describe('adapted', function(){
+      describe('loaded-config', function(){
         return specify('is an adapted config', function(){
-          return expect(loader.adapted()).to.eql({});
+          return expect(loader.loadedConfig()).to.eql({});
         });
       });
       return describe('adapter', function(){
         return specify('is an Adapter', function(){
-          return expect(loader.adapter()).to.be.an.instanceOf(CompositeLoader);
+          return expect(loader.loader()).to.be.an.instanceOf(CompositeLoader);
         });
       });
     });
