@@ -273,27 +273,33 @@ Currently we include adapters for Component.js and Bower. Roll you own ;)
 ### Registry adapters
 
 Comes with adapter functionality for any registry you like. 
-Currently we include adapters for Uri and local File. Roll you own ;)
+Currently we include adapters for Uri and local File. You are free to roll you own adapter ;)
 
 - UriAdapter
 - FileAdapter
 
+The UriAdapter will find a component configuration from a remote registry such as a file in a Github repo.
+It will then install the component configuration locally.
+
 ### Installation adapters
 
-Comes with installer adapter to install as either single json file into one big Json file
-You can roll your own Install adapter to suit your needs
+The installer adapters can install a component config in your local repository either as a single JSON file 
+or into one big JSON file. You can even "roll your own" Install adapter to suit your needs if you like.
 
 - FileInstaller
 - JsonInstaller
 
 ### Loader adapters
 
-Comes with loader adapters to suit the Install adapters
-You can roll your own Loader adapter to suit your needs for loading the config from any source
+Comes with loader adapters to load a config from each (or either) of the Installation targets of the Install adapters.
+You can roll your own Loader adapter to suit your needs, to load a config from any source such as a Database etc.
 
 - FileLoader
 - JsonLoader
 - CompositeLoader
+
+The CompositeLoader will try to load a Component config using each of the registered loader adapters in succession until 
+one of them succeeds in finding the requested Component config.
 
 ### Customization
 

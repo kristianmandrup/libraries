@@ -10,7 +10,6 @@ module.exports = class RegistryFileAdapter extends BaseAdapter implements FileIO
     @validate!
     @
 
-
   installer: ->
     @_installer ||= new Installer
 

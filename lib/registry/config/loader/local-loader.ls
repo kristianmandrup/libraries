@@ -2,7 +2,7 @@ FileLoader      = require 'adater/file-loader'
 JsonLoader      = require 'adater/json-loader'
 CompositeLoader = require 'adater/composite-loader'
 
-module.exports = class ConfigLoader
+module.exports = class LocalLoader
   (@name, @options = {}) ->
     @loader     = @options.loader || 'composite'
     @component  = @options.component || 'bower'

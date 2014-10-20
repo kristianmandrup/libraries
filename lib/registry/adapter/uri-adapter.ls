@@ -13,6 +13,7 @@ Github  = require './repo/github'
 module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
   (@options = {}) ->
     @registry-uri = @options.registry-uri or @default-uri!
+    @installer-type = @options.installer || 'file'
     @type ||= 'bower'
     super ...
 
@@ -29,11 +30,12 @@ module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
     unless typeof! @local-registry-path is 'String'
       throw new Error "localRegistryPath must be a String, was #{@local-registry-path}"
 
-  installer: ->
-    @_installer ||= new Installer
+  installer: (type) ->
+    type ||= @installer-type
+    @_installer ||= new Installer type
 
   install: (name) ->
-    @installer.install source: @read-config(name), target: @target-config(name)
+    @installer!.install source: @read-config(name), target: @target-config(name)
 
   read-config: (name) ->
     @index![name]

@@ -3,8 +3,9 @@
  * Date: 12/10/14
  * Time: 12:26
  */
-RemoteConfigLoader  = require './config/remote'
-LocalConfigLoader   = require './config/local'
+RemoteLoader      = require './config/loader/remote-loader'
+LocalLoader       = require './config/loader/local-loader'
+CompositeLoader   = require './config/loader/composite-loader'
 
 module.exports = class ConfigLoader
   (@name, @path, @options = {}) ->
@@ -29,11 +30,14 @@ module.exports = class ConfigLoader
   load-config: ->
     @local!.load-config! or @remote!.load-config! or @none-loaded!
 
+  composite: ->
+    @_composite ||= new CompositeLoader @name, @path, @options
+
   local: ->
-    @_local ||= new LocalConfigLoader @name, @path
+    @_local ||= new LocalLoader @name, @path, @options
 
   remote: ->
-    @_remote ||= new RemoteConfigLoader @name
+    @_remote ||= new RemoteLoader @name, @options
 
   none-loaded: ->
     @error "Component config for #{@name} could not be found in either local or global component configuration registries"
