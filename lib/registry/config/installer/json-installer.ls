@@ -6,7 +6,7 @@ util            = require 'util'
 is-blank = (str) ->
     !str or /^\s*$/.test str
 
-GlobalConfig  = require '../../../../global-config'
+GlobalConfig  = require '../../../global-config'
 gconf         = new GlobalConfig
 
 module.exports = class JsonInstaller extends BaseInstaller implements FileIO

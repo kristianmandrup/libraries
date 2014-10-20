@@ -1,48 +1,61 @@
 # loads global config from .librariesrc
 
-jsonlint = require 'jsonlint'
+FileIO      = require './util/file-io'
+fs          = require 'fs-extra'
+jsonlint    = require 'jsonlint'
 
-module.exports = class GlobalConfig
+module.exports = class GlobalConfig implements FileIO
   (@options) ->
     @librariesrc = './.librariesrc'
+    @
 
   rc-json: ->
     @_rc-json ||= jsonlint.parse @load-rc!
 
   load-rc: ->
-    @rc ||= fs.read-file-sync @librariesrc, 'utf-8'
+    @read @librariesrc
 
-  components-dir: ->
-    @rc-json!.components-dir or @default.components.dir
+  select:
+    file: ~>
+      @rc-json!.select.file or @default.select!.file!
 
-  default:
+  builds: ->
+    dir: ~>
+      @rc-json!.builds.dir or @default.builds!.dir!
+
+  components: ->
+    dir: ~>
+      @rc-json!.components.dir or @default.components!.dir!
+
+    file: ~>
+      @rc-json!.components.file or @default.components!.file!
+
+  config: ->
+    file: ~>
+      @rc-json!.config.file or @default.config!.file
+
+  registries: ->
+    @parse-registries @rc-json!.registries or @default.registries
+
+  parse-registries: (regs) ->
+    regs
+
+  default: ->
     dir: './xlibs/'
-    builds:
+    builds: ->
       dir: ~>
         [@dir, 'builds'].join '/'
-    components:
+    components: ->
       dir: ~>
         [@dir, 'components'].join '/'
       file: ->
         [@dir, 'index.json'].join '/'
-    selected:
+    select: ->
       file: ~>
-        [@dir, 'selected'].join '/'
-    config: ~>
-      [@dir, 'config.json'].join '/'
+        [@dir, 'select'].join '/'
+    config: ->
+      file: ~>
+        [@dir, 'config.json'].join '/'
     registries: [
-      {'libraries-official': {type: 'uri', repo: 'kristianmandrup/libraries'}}
+      {name: 'libraries-official', type: 'uri', repo: 'kristianmandrup/libraries'}
     ]
-
-
-  components-file: ->
-    @rc-json!.components-file or @default.components.file
-
-  config-file: ->
-    @rc-json!.config-file or @default.config.file
-
-  registries: ->
-    parse-registries @rc-json!.registries or @default.registries
-
-  parse-registries: (regs) ->
-    regs

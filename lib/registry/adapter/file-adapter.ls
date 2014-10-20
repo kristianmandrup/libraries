@@ -3,7 +3,7 @@ Installer     = require '../config/installer'
 BaseAdapter   = require './base-adapter'
 fs            = require 'fs-extra'
 
-GlobalConfig  = require '../../../../global-config'
+GlobalConfig  = require '../../global-config'
 gconf         = new GlobalConfig
 
 module.exports = class RegistryFileAdapter extends BaseAdapter implements FileIO

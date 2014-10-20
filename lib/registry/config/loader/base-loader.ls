@@ -1,11 +1,11 @@
 FileIO     = require '../../../util/file-io'
 
-GlobalConfig  = require '../../../../global-config'
+GlobalConfig  = require '../../../global-config'
 gconf         = new GlobalConfig
 
 module.exports = class BaseConfigLoader implements FileIO
   (@name, @path, @options = {}) ->
-    @path ||= gconf.components.dir!
+    @path ||= gconf.components!.dir!
     @validate!
     @
 

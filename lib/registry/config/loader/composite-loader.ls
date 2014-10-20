@@ -1,9 +1,9 @@
 # will try to load from local cache. If not found in cache, will install from remote,
 # then load installed config from cache
 
-RemoteLoader      = require './config/loader/remote-loader'
-LocalLoader       = require './config/loader/local-loader'
-BaseLoader        = require './config/loader/base-loader'
+RemoteLoader      = require './remote-loader'
+LocalLoader       = require './local-loader'
+BaseLoader        = require './base-loader'
 
 module.exports = class CompositeLoader extends BaseLoader
   (@name, @options = {}) ->

@@ -1,0 +1,24 @@
+{
+  "dir": "./xlibs",
+  "builds": {
+    "dir": "builds"
+  },
+
+  "components": {
+    "dir": "components",
+    "file": "index.json"
+  },
+  "select": {
+    "file": "select"
+  },
+  "config": {
+    "file": "config.json"
+  },
+  "registries": [
+    {
+      "name": "libraries-official",
+      "type": "uri",
+      "repo": "kristianmandrup/libraries"
+    }
+  ]
+}

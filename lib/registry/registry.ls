@@ -9,10 +9,14 @@ FileAdapter   = require './adapter/file-adapter'
 UriAdapter    = require './adapter/uri-adapter'
 
 module.exports = class Registry
-  (@type, @options = {}) ->
-    @type ||= 'file'
+  (@options = {}) ->
+    @parse!
     @validate!
     @
+
+  parse-options: ->
+    @type ||= @options.type or 'file'
+
 
   validate: ->
     unless typeof! @name is 'String'
