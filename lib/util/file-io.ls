@@ -1,6 +1,5 @@
 fs        = require 'fs-extra'
 jsonlint  = require 'jsonlint'
-FileIO    = require './file-io'
 
 module.exports =
   read: (file) ->

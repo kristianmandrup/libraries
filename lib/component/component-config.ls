@@ -1,4 +1,4 @@
-FileIO        = require '../file-io'
+FileIO        = require '../util/file-io'
 Registry      = require '../registry/registry'
 ConfigLoader  = require '../registry/config-loader'
 fs            = require 'fs'

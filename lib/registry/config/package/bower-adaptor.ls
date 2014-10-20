@@ -1,6 +1,6 @@
 # knows how to read a bower.json file and convert into a normalized library component config
 
-FileIO          = require '../../../file-io'
+FileIO          = require '../../../util/file-io'
 
 RegistryClient = require 'bower-registry-client'
 

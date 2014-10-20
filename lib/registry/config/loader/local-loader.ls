@@ -1,6 +1,6 @@
-FileLoader      = require 'adater/file-loader'
-JsonLoader      = require 'adater/json-loader'
-CompositeLoader = require 'adater/composite-loader'
+FileLoader      = require './local/file-loader'
+JsonLoader      = require './local/json-loader'
+CompositeLoader = require './local/composite-loader'
 
 module.exports = class LocalLoader
   (@name, @options = {}) ->

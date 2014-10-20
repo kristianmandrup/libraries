@@ -1,8 +1,8 @@
 # loads config from components file by key entry
 
-BaseConfigLoader = require './base-loader'
+BaseLoader = require '../base-loader'
 
-module.exports = class JsonConfigLoader extends BaseConfigLoader
+module.exports = class JsonConfigLoader extends BaseLoader
   (@name, @path, @options = {}) ->
     super ...
     @validate!

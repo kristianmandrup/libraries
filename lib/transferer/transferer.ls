@@ -3,7 +3,7 @@
  * Date: 14/10/14
  * Time: 00:13
  */
-FileIO          = require '../file-io'
+FileIO          = require '../util/file-io'
 
 
 module.exports = class Transferer implements FileIO

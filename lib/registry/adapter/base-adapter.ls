@@ -4,8 +4,8 @@
  * Time: 20:31
  */
 
-FileIO      = require '../../file-io'
-Installer   = require '../installer'
+FileIO      = require '../../util/file-io'
+Installer   = require '../config/installer'
 
 module.exports = class BaseAdapter implements FileIO
   (@options = {}) ->

@@ -1,12 +1,7 @@
-/**
- * User: kristianmandrup
- * Date: 12/10/14
- * Time: 12:30
- */
-BaseConfigLoader  = require './base'
-Registry          = require '../registry'
+BaseLoader  = require './base-loader'
+Registry    = require '../../registry'
 
-module.exports = class RemoteConfigLoader extends BaseConfigLoader
+module.exports = class RemoteConfigLoader extends BaseLoader
   (@name, registry) ->
     super ...
     @_registry = registry if registry

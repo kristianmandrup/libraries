@@ -1,5 +1,5 @@
-FileIO        = require '../../file-io'
-Installer     = require '../installer'
+FileIO        = require '../../util/file-io'
+Installer     = require '../config/installer'
 BaseAdapter   = require './base-adapter'
 fs            = require 'fs-extra'
 

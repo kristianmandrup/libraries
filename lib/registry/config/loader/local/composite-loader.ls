@@ -1,6 +1,6 @@
-BaseLoader    = require './base-loader'
+BaseLoader    = require '../base-loader'
 FileLoader    = require './file-loader'
-JsonLoader    = require 'adater/json-loader'
+JsonLoader    = require './json-loader'
 
 module.exports = class CompositeConfigLoader extends BaseLoader
   (@name, @path, @options = {}) ->

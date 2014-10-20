@@ -1,6 +1,6 @@
 fs              = require 'fs-extra'
 jsonlint        = require 'jsonlint'
-FileIO          = require '../../file-io'
+FileIO          = require '../../../util/file-io'
 BaseInstaller   = require './base-installer'
 
 module.exports = class FileInstaller extends BaseInstaller implements FileIO

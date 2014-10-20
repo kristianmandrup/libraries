@@ -1,4 +1,4 @@
-FileIO        = require '../file-io'
+FileIO        = require '../util/file-io'
 Components    = require '../component/components'
 Container     = require './container'
 Containers    = require './containers'

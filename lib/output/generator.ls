@@ -1,4 +1,4 @@
-FileIO    = require '../file-io'
+FileIO    = require '../util/file-io'
 Selector  = require '../select/selector'
 chalk     = require 'chalk'
 util      = require 'util'

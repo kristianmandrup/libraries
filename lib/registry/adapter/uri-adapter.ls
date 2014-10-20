@@ -1,12 +1,12 @@
-FileIO        = require '../../file-io'
-Installer     = require '../installer'
+FileIO        = require '../../util/file-io'
+Installer     = require '../config/installer'
 BaseAdapter   = require './base-adapter'
 fs            = require 'fs-extra'
 
 # remote          = require '../../remote'
 
 sync-request = require 'sync-request'
-retrieve     = require '../../../remote' .retrieve
+retrieve     = require '../../util/remote' .retrieve
 
 Github  = require './repo/github'
 

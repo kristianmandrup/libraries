@@ -1,4 +1,4 @@
-FileIO     = require '../../../file-io'
+FileIO     = require '../../../util/file-io'
 
 module.exports = class BaseConfigLoader implements FileIO
   (@name, @path, @options = {}) ->

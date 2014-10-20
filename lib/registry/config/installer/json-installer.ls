@@ -1,4 +1,4 @@
-FileIO          = require '../../file-io'
+FileIO          = require '../../../util/file-io'
 BaseInstaller   = require './base-installer'
 fs              = require 'fs-extra'
 util            = require 'util'
