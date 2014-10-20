@@ -4,7 +4,7 @@ is-blank = (str) ->
   !str or /^\s*$/.test str
 
 FileNormalizer     = require './file-normalizer'
-RootPathNormalizer = require './root-path-normalizer'
+PathNormalizer = require './path-normalizer'
 
 module.exports = class FilesNormalizer
   (@config) ->
@@ -20,13 +20,13 @@ module.exports = class FilesNormalizer
     for file in @files
       @file-normalizer!.normalize file
 
-    @root-path-normalizer!.normalize!
+    @path-normalizer!.normalize!
 
   file-normalizer: ->
     new FileNormalizer @normalized
 
-  root-path-normalizer: ->
-    new RootPathNormalizer @normalized
+  path-normalizer: ->
+    new PathNormalizer @normalized
 
   normalized:
     main: {}

@@ -1,15 +1,14 @@
 expect = require 'chai' .expect
 
-ConfigLoader        = require '../../../../lib/registry/config-loader/local'
+ConfigLoader      = require '../../../../../lib/registry/config/loader/local-loader'
+CompositeLoader   = require '../../../../../lib/registry/config/loader/local/composite-loader'
+Normalizer        = require '../../../../../lib/registry/config/normalizer'
 
 log = console.log
 
 describe 'LocalConfigLoader' ->
-  var loader
-
   config =
-    local:  './xlibs/components/bootstrap.json'
-    remote: './xlibs/registry/bootstrap.json'
+    files:  ['dist/js/bootstrap.json']
 
   describe 'create' ->
     context 'invalid' ->
@@ -24,7 +23,9 @@ describe 'LocalConfigLoader' ->
         expect(-> new ConfigLoader 'x', 'y').to.not.throw
 
   describe 'valid instance' ->
-    before ->
+    var loader
+
+    before-each ->
       loader := new ConfigLoader 'bootstrap'
 
     describe 'load-config' ->
@@ -52,3 +53,27 @@ describe 'LocalConfigLoader' ->
     describe 'load' ->
       specify 'loads config from local repo' ->
         expect loader.load('./xlibs/components/bootstrap.json').dir .to.eql 'dist'
+
+    describe.only 'selected-loader' ->
+      specify 'selects a loader' ->
+        expect loader.selected-loader! .to.eql CompositeLoader
+
+    describe 'loaders' ->
+      specify 'selects a loader' ->
+        expect Object.keys(loader.loaders!) .to.include 'composite'
+
+    describe 'normalize' ->
+      specify 'normalizes a loader' ->
+        expect loader.normalize(config) .to.include 'composite'
+
+    describe 'normalizer' ->
+      specify 'normalizes a loader' ->
+        expect loader.normalizer(config) .to.be.an.instance-of Normalizer
+
+    describe 'adapted' ->
+      specify 'is an adapted config' ->
+        expect loader.adapted! .to.eql {}
+
+    describe 'adapter' ->
+      specify 'is an Adapter' ->
+        expect loader.adapter! .to.be.an.instance-of CompositeLoader

@@ -6,15 +6,15 @@ chai.use chai-as-promised
 
 util = require 'util'
 
-Adaptor     = require '../../../../../lib/registry/config/adaptor/bower-adaptor'
-Translator  = require '../../../../../lib/registry/config/adaptor/bower/github-repo-translator'
+Adaptor     = require '../../../../../lib/registry/config/package/bower/remote-bower'
+Translator  = require '../../../../../lib/registry/config/package/bower/github-repo-translator'
 
 log = console.log
 
 logx = (msg) ->
   console.log util.inspect(msg)
 
-describe 'BowerAdapter' ->
+describe 'RemoteBowerAdapter' ->
   describe 'create(@name, @options = {})' ->
     describe 'invalid' ->
       specify 'throws' ->

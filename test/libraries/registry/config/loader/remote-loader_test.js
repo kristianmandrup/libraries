@@ -2,10 +2,10 @@
 (function(){
   var expect, ConfigLoader, Registry, log;
   expect = require('chai').expect;
-  ConfigLoader = require('../../../../lib/registry/config-loader/remote');
+  ConfigLoader = require('../../../../lib/registry/config/loader/remote-loader');
   Registry = require('../../../../lib/registry/registry');
   log = console.log;
-  describe('LocalConfigLoader', function(){
+  describe('RemoteConfigLoader', function(){
     var loader, config, component, remoteLocation;
     config = {
       local: './xlibs/components/bootstrap.json',

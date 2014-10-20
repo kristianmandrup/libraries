@@ -5,8 +5,8 @@ is-blank = (str) ->
   !str or /^\s*$/.test str
 
 module.exports = class PathNormalizer
-  (@config, @files) ->
-    @config-keys = Objec.keys @config
+  (@config, @files = []) ->
+    @config-keys = Object.keys @config
     @validate!
 
   validate: ->

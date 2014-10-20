@@ -19,13 +19,18 @@
 # It should also consult the bower.json of the library via bower search api, and check the "main" property
 # and use it as default if there
 
-BowerAdapter      = require 'bower-adapter'
-ComponentAdapter  = require 'component-adapter'
+LocalBowerAdapter         = require './package/bower/local-bower'
+RemoteBowerAdapter        = require './package/bower/remote-bower'
 
-FilesNormalizer   = require './normalize/files-normalizer'
+RemoteComponentAdapter    = require './package/component/remote-component'
+LocalComponentAdapter     = require './package/component/local-component'
+
+FilesNormalizer     = require './normalizer/files-normalizer'
 
 module.exports = class Normalizer
-  (@config, @type = 'bower') ->
+  (@config, @options = {}) ->
+    @type = @options.type or 'bower'
+    @from = @options.from or 'local'
     @validate!
 
   validate: ->
@@ -33,20 +38,25 @@ module.exports = class Normalizer
       throw new Error "Config to normalize must be an Object, was: #{@config}"
 
   normalize: ->
-    @files-normalizer.normalize!
+    @files-normalizer!.normalize!
 
   files-normalizer: ->
     new FilesNormalizer @config
 
   adapter: ->
-    @adapters[@type] or @bad-adapter!
+    @adapters[@from][@type] or @bad-adapter!
 
   bad-adapter: ->
-    @error "Adapter for #{@type} has not been registered"
+    @error "Adapter #{@from} for #{@type} has not been registered"
 
   error: (msg) ->
     console.error msg
 
   adapters:
-    bower: BowerAdapter
-    component: BowerAdapter
+    local:
+      bower:      LocalBowerAdapter
+      component:  LocalComponentAdapter
+    remote:
+      bower:      RemoteBowerAdapter
+      component:  RemoteComponentAdapter
+

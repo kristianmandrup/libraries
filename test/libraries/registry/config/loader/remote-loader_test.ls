@@ -1,11 +1,11 @@
 expect = require 'chai' .expect
 
-ConfigLoader      = require '../../../../lib/registry/config-loader/remote'
+ConfigLoader      = require '../../../../lib/registry/config/loader/remote-loader'
 Registry          = require '../../../../lib/registry/registry'
 
 log = console.log
 
-describe 'LocalConfigLoader' ->
+describe 'RemoteConfigLoader' ->
   var loader
 
   config =

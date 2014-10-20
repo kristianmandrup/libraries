@@ -13,33 +13,11 @@ registry =
       cb 'no matching components found' if !pkgs.length
       cb null, pkgs
 
-Q = require 'q'
+BaseComponentAdapter  = require './base-component'
 
-module.exports = class ComponentAdapter
+module.exports = class RemoteComponentAdapter extends BaseComponentAdapter
   (@name, @options = {}) ->
-    @validate!
-    @repos.push @options.repo if @options.repo
-    @
-
-  validate: ->
-    unless typeof! @name is 'String'
-      throw new Error "Name of bower component must be a String, was: #{util.inspect @name}"
-
-  adapted:
-    main: {}
-    scripts: {}
-    styles: {}
-    fonts: {}
-    images: {}
-    files: {}
-
-  configure: (pkg) ->
-    for key of @adapted
-      @adapted[key].files = pkg[key] if pkg[key]
-
-  retrieve: ->
-    @find!.promise.then (pkgs) ~>
-      @configure pkgs[0]
+    super ...
 
   query: ->
     @_query ||=

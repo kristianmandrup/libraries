@@ -6,7 +6,7 @@
   chaiAsPromised = require("chai-as-promised");
   chai.use(chaiAsPromised);
   util = require('util');
-  Adaptor = require('../../../../../lib/registry/config/adaptor/component-adaptor');
+  Adaptor = require('../../../../../lib/registry/config/package/component/remote-component');
   log = console.log;
   logx = function(msg){
     return console.log(util.inspect(msg));

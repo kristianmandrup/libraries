@@ -1,6 +1,6 @@
 expect = require 'chai' .expect
 
-ConfigLoader        = require '../../../../lib/registry/config-loader/base'
+ConfigLoader        = require '../../../../../lib/registry/config/loader/base-loader'
 
 log = console.log
 
@@ -31,9 +31,9 @@ describe 'BaseConfigLoader' ->
       loader.has-config = ->
         true
 
-    describe 'load-config' ->
-      specify 'loads config' ->
-        expect loader.load-config!.dir .to.eql 'dist'
+#    describe 'load-config' ->
+#      specify 'loads config' ->
+#        expect loader.load-config!.dir .to.eql 'dist'
 
 #    describe 'load' ->
 #      specify 'loads json from local' ->

@@ -277,7 +277,13 @@ such as the `component.json` or `bower.json` file.
 Comes with adapter functionality for package managers
 Currently we include adapters for Component.js and Bower. Roll you own ;)
 
+*Remote*
+
 - Component.js
+- Bower
+
+*Local*
+
 - Bower
 
 ### Registry adapters

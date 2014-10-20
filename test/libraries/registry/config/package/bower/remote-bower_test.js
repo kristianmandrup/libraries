@@ -6,13 +6,13 @@
   chaiAsPromised = require("chai-as-promised");
   chai.use(chaiAsPromised);
   util = require('util');
-  Adaptor = require('../../../../../lib/registry/config/adaptor/bower-adaptor');
-  Translator = require('../../../../../lib/registry/config/adaptor/bower/github-repo-translator');
+  Adaptor = require('../../../../../lib/registry/config/package/bower/remote-bower');
+  Translator = require('../../../../../lib/registry/config/package/bower/github-repo-translator');
   log = console.log;
   logx = function(msg){
     return console.log(util.inspect(msg));
   };
-  describe('BowerAdapter', function(){
+  describe('RemoteBowerAdapter', function(){
     describe('create(@name, @options = {})', function(){
       describe('invalid', function(){
         return specify('throws', function(){

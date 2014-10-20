@@ -1,0 +1,6 @@
+{
+  "name": "dummy",
+  "devDependencies": {
+    "bootstrap": "3.2.0"
+  }
+}

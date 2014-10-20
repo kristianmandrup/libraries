@@ -2,7 +2,7 @@
 (function(){
   var expect, ConfigLoader, log;
   expect = require('chai').expect;
-  ConfigLoader = require('../../../../lib/registry/config-loader/base');
+  ConfigLoader = require('../../../../../lib/registry/config/loader/base-loader');
   log = console.log;
   describe('BaseConfigLoader', function(){
     var loader, config;
@@ -32,7 +32,7 @@
       });
     });
     return describe('valid instance', function(){
-      before(function(){
+      return before(function(){
         loader = new ConfigLoader('bootstrap');
         loader.configFile = function(){
           return config.local;
@@ -40,11 +40,6 @@
         return loader.hasConfig = function(){
           return true;
         };
-      });
-      return describe('load-config', function(){
-        return specify('loads config', function(){
-          return expect(loader.loadConfig().dir).to.eql('dist');
-        });
       });
     });
   });
