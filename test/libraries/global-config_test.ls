@@ -17,3 +17,31 @@ describe 'GlobalConfig' ->
     describe 'librariesrc' ->
       specify 'is .librariesrc' ->
         expect gconf.librariesrc .to.eql './.librariesrc'
+
+    describe 'location-of' ->
+      var config
+      before-each ->
+        config := {builds: {dir: 'xlibs/build' }}
+
+      specify 'gets location' ->
+        expect gconf.location-of('builds.dir', config) .to.eql 'xlibs/build'
+
+    describe 'select.file' ->
+      specify 'gets location' ->
+        expect gconf.select!file! .to.eql './xlibs/select'
+
+    describe 'builds.dir' ->
+      specify 'gets location' ->
+        expect gconf.builds!dir! .to.eql './xlibs/builds'
+
+    describe 'components.dir' ->
+      specify 'gets location' ->
+        expect gconf.components!dir! .to.eql './xlibs/components'
+
+    describe 'components.file' ->
+      specify 'gets location' ->
+        expect gconf.components!file! .to.eql './xlibs/components/index.json'
+
+    describe 'config.file' ->
+      specify 'gets location' ->
+        expect gconf.config!file! .to.eql './xlibs/config.json'

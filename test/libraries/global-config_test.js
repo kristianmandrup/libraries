@@ -17,9 +17,47 @@
       beforeEach(function(){
         return gconf = new GlobalConfig;
       });
-      return describe('librariesrc', function(){
+      describe('librariesrc', function(){
         return specify('is .librariesrc', function(){
           return expect(gconf.librariesrc).to.eql('./.librariesrc');
+        });
+      });
+      describe('location-of', function(){
+        var config;
+        beforeEach(function(){
+          return config = {
+            builds: {
+              dir: 'xlibs/build'
+            }
+          };
+        });
+        return specify('gets location', function(){
+          return expect(gconf.locationOf('builds.dir', config)).to.eql('xlibs/build');
+        });
+      });
+      describe('select.file', function(){
+        return specify('gets location', function(){
+          return expect(gconf.select().file()).to.eql('./xlibs/select');
+        });
+      });
+      describe('builds.dir', function(){
+        return specify('gets location', function(){
+          return expect(gconf.builds().dir()).to.eql('./xlibs/builds');
+        });
+      });
+      describe('components.dir', function(){
+        return specify('gets location', function(){
+          return expect(gconf.components().dir()).to.eql('./xlibs/components');
+        });
+      });
+      describe('components.file', function(){
+        return specify('gets location', function(){
+          return expect(gconf.components().file()).to.eql('./xlibs/components/index.json');
+        });
+      });
+      return describe('config.file', function(){
+        return specify('gets location', function(){
+          return expect(gconf.config().file()).to.eql('./xlibs/config.json');
         });
       });
     });
