@@ -1,4 +1,5 @@
 Q = require 'q'
+util = require 'util'
 
 module.exports = class BaseComponentAdapter
   (@name, @options = {}) ->

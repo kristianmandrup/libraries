@@ -43,7 +43,11 @@ module.exports = class Normalizer
   files-normalizer: ->
     new FilesNormalizer @config
 
-  adapter: ->
+  adapter: (name)->
+    clazz = @adapter-clazz!
+    new clazz name
+
+  adapter-clazz: ->
     @adapters[@from][@type] or @bad-adapter!
 
   bad-adapter: ->
