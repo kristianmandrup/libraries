@@ -26,9 +26,12 @@
         files = config.simple.scripts.files;
         return rootPath = new RootPath(files);
       });
-      return describe('shorten-paths', function(){
-        return specify('shortens all paths', function(){
+      return describe('find root path', function(){
+        specify('longest common path is dist/js', function(){
           return expect(rootPath.find('dist/js/bootstrap.js')).to.eql('dist/js');
+        });
+        return specify('no common path is undefined', function(){
+          return expect(rootPath.find('bootstrap.js')).to.eql(void 8);
         });
       });
     });

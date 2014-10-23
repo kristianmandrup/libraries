@@ -24,6 +24,9 @@ describe 'RootPath' ->
       files     := config.simple.scripts.files
       root-path := new RootPath files
 
-    describe 'shorten-paths' ->
-      specify 'shortens all paths' ->
+    describe 'find root path' ->
+      specify 'longest common path is dist/js' ->
         expect root-path.find 'dist/js/bootstrap.js' .to.eql 'dist/js'
+
+      specify 'no common path is undefined' ->
+        expect root-path.find 'bootstrap.js' .to.eql void

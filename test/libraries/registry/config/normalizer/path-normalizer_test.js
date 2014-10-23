@@ -13,31 +13,40 @@
         files: ['dist/js/bootstrap.js']
       },
       scripts: {
-        files: ['bootstrap.js']
+        files: ['dist/js/bootstrap.js']
+      },
+      styles: {
+        files: ['dist/css/bootstrap.css']
       }
     };
     describe('create(@config)', function(){});
     return context('instance', function(){
       var normalizer;
-      beforeEach(function(){
-        return normalizer = new PathNormalizer(config.simple, ['dist/js/bootstrap.js', 'dist/js/init.js', 'dist/js/boot/config.js']);
+      before(function(){
+        return normalizer = new PathNormalizer(config.simple, ['dist/js/bootstrap.js', 'dist/js/bootstrap.js', 'dist/css/bootstrap.css']);
       });
       describe('normalize', function(){
         var config;
-        beforeEach(function(){
+        before(function(){
           return config = normalizer.normalize();
         });
-        specify('sets root dir', function(){
-          return expect(config.dir).to.eql("dist/js");
+        specify('sets root dir to dist', function(){
+          return expect(config.dir).to.eql("dist");
         });
-        return specify('shortens main files by root', function(){
+        specify('shortens main files to file name', function(){
           return expect(config.main.files[0]).to.eql("bootstrap.js");
         });
-      });
-      describe('normalize-for(key)', function(){});
-      describe('root', function(){
-        return specify('finds root', function(){
-          return expect(normalizer.root()).to.eql("dist/js");
+        specify('main dir = js', function(){
+          return expect(config.main.dir).to.eql("js");
+        });
+        specify('styles dir = css', function(){
+          return expect(config.styles.dir).to.eql('css');
+        });
+        specify('scripts dir = js', function(){
+          return expect(config.styles.dir).to.eql('css');
+        });
+        return specify('scripts dir = js', function(){
+          return expect(config.styles.files[0]).to.eql('bootstrap.css');
         });
       });
       return describe('path-shortener', function(){

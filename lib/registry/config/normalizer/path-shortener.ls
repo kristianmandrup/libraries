@@ -1,21 +1,31 @@
+is-blank = (str) ->
+  !str or /^\s*$/.test str
+
 module.exports = class PathShortener
-  (@config) ->
-    console.log 'config', config
+  (@config, @root) ->
 
   shorten-paths: ->
-    for key of @config
-      @shorten-paths-for key, @config[key]
+    @shorten!
+    @config
+
+  shorten: ->
+    if @root then @shorten-dir! else @shorten-file-paths!
+
+  # can be reused at at lv with files
+  shorten-dir: ->
+    return if is-blank @root
+    return unless typeof! @config.dir is 'String'
+    @config.dir = @config.dir.slice (@root + '/').length
     @config
 
   # can be reused at at lv with files
-  shorten-paths-for: (key, entry) ->
+  shorten-file-paths: ->
     short-files = []
-    return unless typeof! entry is 'Object' and typeof! entry.files is 'Array'
-    console.log 'entry', key, entry, @config
-    for file in entry.files
-      short-files.push @shorten-path(file)
-    @config[key].files = short-files
-    @config[key]
+    return unless typeof! @config.files is 'Array'
+    for file in @config.files
+      short-files.push @shorten-path file
+    @config.files = short-files
+    @config
 
   shorten-path: (file)->
     root = @config.dir || ''
