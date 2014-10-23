@@ -24,7 +24,7 @@ describe 'ConfigNormalizer' ->
         files: ['dist/js/bootstrap.js', 'dist/css/bootstrap.css']
 
       normalizer := new Normalizer config
-      log 'normalizer', normalizer
+      # log 'normalizer', normalizer
 
     describe 'normalize' ->
       specify 'normalizes config' ->
@@ -39,14 +39,26 @@ describe 'ConfigNormalizer' ->
         expect normalizer.path-normalizer! .to.be.an.instance-of PathNormalizer
 
     describe.only 'normalized' ->
-      before-each ->
-        normalizer.normalize!
-        log 'normalized', normalizer.normalized
+      before ->
+        config :=
+          files: ['dist/js/bootstrap.js', 'dist/css/bootstrap.css']
 
-      specify 'is a normalized config' ->
-        expect normalizer.normalized.scripts .to.equal {
-          dir: 'dist/js'
+        normalizer := new Normalizer config
+        normalizer.normalize!
+        # log 'normalized', normalizer.normalized
+
+      specify 'root is dist' ->
+        expect normalizer.normalized.dir .to.equal 'dist'
+
+      specify 'scripts normalized to have js as relative root dir' ->
+        expect normalizer.normalized.scripts .to.eql {
+          dir: 'js'
           files: ['bootstrap.js']
         }
 
+      specify 'styles is normalized to have css as relative root dir' ->
+        expect normalizer.normalized.styles .to.eql {
+          dir: 'css'
+          files: ['bootstrap.css']
+        }
 

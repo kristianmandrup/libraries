@@ -2,7 +2,11 @@ path  = require 'path'
 
 module.exports = class RootPath
   (@files) ->
+    @convert!
     @validate!
+
+  convert: ->
+    @files = @files.filter (file) -> !!file
 
   validate: ->
     unless typeof! @files is 'Array'
@@ -23,10 +27,12 @@ module.exports = class RootPath
   find-root-path: (file-path, lv = 0, root) ->
     paths = file-path.split '/'
     path = paths[0 to lv].join '/'
-    # console.log paths, path, root, lv
     return root if lv >= paths.length
 
     for file in @files
+      unless typeof! file is 'String'
+        console.log 'file', file, @files
+        break
       return root unless file.match new RegExp "^#{path}"
 
     return @find-root-path file-path, lv+1, path

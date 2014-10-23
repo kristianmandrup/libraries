@@ -29,8 +29,7 @@
         config = {
           files: ['dist/js/bootstrap.js', 'dist/css/bootstrap.css']
         };
-        normalizer = new Normalizer(config);
-        return log('normalizer', normalizer);
+        return normalizer = new Normalizer(config);
       });
       describe('normalize', function(){
         return specify('normalizes config', function(){
@@ -48,14 +47,26 @@
         });
       });
       return describe.only('normalized', function(){
-        beforeEach(function(){
-          normalizer.normalize();
-          return log('normalized', normalizer.normalized);
+        before(function(){
+          config = {
+            files: ['dist/js/bootstrap.js', 'dist/css/bootstrap.css']
+          };
+          normalizer = new Normalizer(config);
+          return normalizer.normalize();
         });
-        return specify('is a normalized config', function(){
-          return expect(normalizer.normalized.scripts).to.equal({
-            dir: 'dist/js',
+        specify('root is dist', function(){
+          return expect(normalizer.normalized.dir).to.equal('dist');
+        });
+        specify('scripts normalized to have js as relative root dir', function(){
+          return expect(normalizer.normalized.scripts).to.eql({
+            dir: 'js',
             files: ['bootstrap.js']
+          });
+        });
+        return specify('styles is normalized to have css as relative root dir', function(){
+          return expect(normalizer.normalized.styles).to.eql({
+            dir: 'css',
+            files: ['bootstrap.css']
           });
         });
       });
