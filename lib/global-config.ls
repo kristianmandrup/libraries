@@ -12,19 +12,28 @@ module.exports = class GlobalConfig implements FileIO
   rc-json: ->
     @_rc-json ||= jsonlint.parse @load-rc!
 
+  default-location-of: (paths) ->
+    @location-of paths, @default!, true
+
   location-of: (paths, obj, d) ->
     paths = paths.split('.') if typeof! paths is 'String'
     path  = paths.shift!
     val = obj[path]
+    val = val! if typeof! val is 'Function'
     if d and path isnt 'dir'
       dir = obj.dir
+      dir = dir! if typeof! dir is 'Function'
+      val = path if typeof! val isnt 'String'
       val = [dir, val].join \/ if typeof! dir is 'String'
     return val if paths.length is 0 or typeof! val is 'String'
     @location-of paths, val, true
 
+  find-location-of: (path, obj) ->
+    @location-of(path, @rc-json!) or @default-location-of(path)
+
   location: (path) ->
     loc = [@rc-json!.dir]
-    path = @location-of path, @rc-json!
+    path = @find-location-of path, @rc-json!
     loc = loc.concat path
     loc = loc.join '/'
 
@@ -37,33 +46,29 @@ module.exports = class GlobalConfig implements FileIO
 
   builds: ->
     dir: ~>
-      @location 'builds.dir' # or @default!.builds!.dir!
+      @location 'builds.dir'
 
   components: ->
     dir: ~>
-      @location 'components.dir' # @default!.components!.dir!
+      @location 'components.dir'
 
     file: ~>
       @location 'components.file'
-      # @default!.components!.file!
 
   config: ->
     file: ~>
       @location 'config.file'
-      # @rc-json!.config.file or @default!.config!.file
 
   registries: ->
-
-    @parse-registries @location 'components.file' # @default!.registries
+    @parse-registries @location 'registries'
 
   parse-registries: (regs) ->
     regs
 
   default: ->
-    dir: './xlibs/'
+    dir: './xlibs'
     builds: ->
       dir: ~>
-        console.log 'ctx', @
         [@dir, 'builds'].join '/'
     components: ->
       dir: ~>

@@ -18,6 +18,14 @@ describe 'GlobalConfig' ->
       specify 'is .librariesrc' ->
         expect gconf.librariesrc .to.eql './.librariesrc'
 
+    describe 'default ...' ->
+      specify 'gets location' ->
+        expect gconf.default!.components!.dir! .to.eql './xlibs/components'
+
+    describe 'default-location-of' ->
+      specify 'gets location' ->
+        expect gconf.default-location-of 'components.dir' .to.eql './xlibs/components'
+
     describe 'location-of' ->
       var config
       before-each ->

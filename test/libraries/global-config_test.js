@@ -22,6 +22,16 @@
           return expect(gconf.librariesrc).to.eql('./.librariesrc');
         });
       });
+      describe('default ...', function(){
+        return specify('gets location', function(){
+          return expect(gconf['default']().components().dir()).to.eql('./xlibs/components');
+        });
+      });
+      describe('default-location-of', function(){
+        return specify('gets location', function(){
+          return expect(gconf.defaultLocationOf('components.dir')).to.eql('./xlibs/components');
+        });
+      });
       describe('location-of', function(){
         var config;
         beforeEach(function(){
