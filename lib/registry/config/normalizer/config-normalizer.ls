@@ -6,10 +6,11 @@ is-blank = (str) ->
 FileNormalizer     = require './file-normalizer'
 PathNormalizer = require './path-normalizer'
 
-module.exports = class FilesNormalizer
+module.exports = class ConfigNormalizer
   (@config) ->
     @validate!
     @files = @config.files
+    @
 
   validate: ->
     unless typeof! @config is 'Object'
@@ -26,7 +27,7 @@ module.exports = class FilesNormalizer
     new FileNormalizer @normalized
 
   path-normalizer: ->
-    new PathNormalizer @normalized
+    new PathNormalizer @normalized, @files
 
   normalized:
     main: {}

@@ -3,7 +3,7 @@ log     = console.log
 
 Normalizer              = require '../../../../lib/registry/config/normalizer'
 LocalComponentAdapter   = require '../../../../lib/registry/config/package/component/local-component'
-FilesNormalizer         = require '../../../../lib/registry/config/normalizer/files-normalizer'
+ConfigNormalizer        = require '../../../../lib/registry/config/normalizer/config-normalizer'
 
 describe 'Normalizer' ->
   describe 'create(@config, @options = {})' ->
@@ -42,11 +42,11 @@ describe 'Normalizer' ->
 
       describe 'adapter' ->
         specify 'gets one' ->
-          expect normalizer.adapter! .to.be.an.instance-of LocalComponentAdapter
+          expect normalizer.adapter('bootstrap') .to.be.an.instance-of LocalComponentAdapter
 
-      describe 'files-normalizer' ->
+      describe 'config-normalizer' ->
         specify 'creates one' ->
-          expect normalizer.files-normalizer! .to.be.an.instance-of FilesNormalizer
+          expect normalizer.config-normalizer! .to.be.an.instance-of ConfigNormalizer
 
 
 

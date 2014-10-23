@@ -6,6 +6,11 @@ log = console.log
 
 describe 'FileNormalizer' ->
 
+  config = {}
+  config.simple =
+    main: {}
+    scripts: {}
+
   describe 'create(@file)' ->
     describe 'invalid' ->
       specify 'no args invalid' ->
@@ -18,18 +23,22 @@ describe 'FileNormalizer' ->
   context 'instance' ->
     var normalizer
     before-each ->
-      normalizer := new FileNormalizer 'dist/js/bootstrap.js'
+      normalizer := new FileNormalizer config.simple
 
     describe 'normalized' ->
-      specify 'js file normalized to script entry' ->
+      specify 'js file normalized to scripts entry' ->
         expect normalizer.normalized.scripts .to.eql {}
 
-    describe 'normalize(file)' ->
+    describe.only 'normalize(file)' ->
       before-each ->
-        normalizer.normalize!
+        normalizer.normalize 'dist/js/bootstrap.js'
+        # console.log 'normalized', normalizer.normalized
 
       specify 'js file normalized to script entry' ->
         expect normalizer.normalized.scripts.files .to.include 'dist/js/bootstrap.js'
+
+      xspecify 'js dir normalized' ->
+        expect normalizer.normalized.scripts.dir .to.eql 'dist/js'
 
     describe 'find-type(ext, file)' ->
       specify 'identifies js as a scripts ext' ->

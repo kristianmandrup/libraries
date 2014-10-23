@@ -25,8 +25,12 @@ RemoteBowerAdapter        = require './package/bower/remote-bower'
 RemoteComponentAdapter    = require './package/component/remote-component'
 LocalComponentAdapter     = require './package/component/local-component'
 
-FilesNormalizer     = require './normalizer/files-normalizer'
+ConfigNormalizer          = require './normalizer/config-normalizer'
 
+# Takes a config object such as a Bower or Component configuration and normalizes it to the
+# Library config format using ConfigNormalizer
+
+# Not yet sure if it should deal with adapters or if that should be controlled and passed in from the outside
 module.exports = class Normalizer
   (@config, @options = {}) ->
     @type = @options.type or 'bower'
@@ -40,8 +44,8 @@ module.exports = class Normalizer
   normalize: ->
     @files-normalizer!.normalize!
 
-  files-normalizer: ->
-    new FilesNormalizer @config
+  config-normalizer: ->
+    new ConfigNormalizer @config
 
   adapter: (name)->
     clazz = @adapter-clazz!

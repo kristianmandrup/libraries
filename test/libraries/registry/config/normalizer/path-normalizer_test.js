@@ -34,14 +34,10 @@
           return expect(config.main.files[0]).to.eql("bootstrap.js");
         });
       });
+      describe('normalize-for(key)', function(){});
       describe('root', function(){
         return specify('finds root', function(){
           return expect(normalizer.root()).to.eql("dist/js");
-        });
-      });
-      describe('find-root-path(file-path, lv = 0, root)', function(){
-        return specify('finds best root path', function(){
-          return expect(normalizer.findRootPath('dist/js/bootstrap.js')).to.eql('dist/js');
         });
       });
       return describe('path-shortener', function(){

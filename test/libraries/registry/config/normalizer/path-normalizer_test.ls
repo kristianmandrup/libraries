@@ -26,6 +26,7 @@ describe 'PathNormalizer' ->
 
       before-each ->
         config := normalizer.normalize!
+        # log 'config', config
 
       specify 'sets root dir' ->
         expect config.dir .to.eql "dist/js"
@@ -33,14 +34,11 @@ describe 'PathNormalizer' ->
       specify 'shortens main files by root' ->
         expect config.main.files.0 .to.eql "bootstrap.js"
 
+    describe 'normalize-for(key)' ->
+
     describe 'root' ->
       specify 'finds root' ->
         expect normalizer.root! .to.eql "dist/js"
-
-    # can be reused for script root etc
-    describe 'find-root-path(file-path, lv = 0, root)' ->
-      specify 'finds best root path' ->
-        expect normalizer.find-root-path('dist/js/bootstrap.js') .to.eql 'dist/js'
 
     describe 'path-shortener' ->
       specify 'is a PathShortener' ->

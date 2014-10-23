@@ -1,5 +1,6 @@
 module.exports = class PathShortener
   (@config) ->
+    console.log 'config', config
 
   shorten-paths: ->
     for key of @config
@@ -9,7 +10,8 @@ module.exports = class PathShortener
   # can be reused at at lv with files
   shorten-paths-for: (key, entry) ->
     short-files = []
-    return unless typeof! entry is 'Object'
+    return unless typeof! entry is 'Object' and typeof! entry.files is 'Array'
+    console.log 'entry', key, entry, @config
     for file in entry.files
       short-files.push @shorten-path(file)
     @config[key].files = short-files

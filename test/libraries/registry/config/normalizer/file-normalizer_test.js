@@ -5,6 +5,12 @@
   FileNormalizer = require('../../../../../lib/registry/config/normalizer/file-normalizer');
   log = console.log;
   describe('FileNormalizer', function(){
+    var config;
+    config = {};
+    config.simple = {
+      main: {},
+      scripts: {}
+    };
     describe('create(@file)', function(){
       describe('invalid', function(){
         return specify('no args invalid', function(){
@@ -24,19 +30,22 @@
     return context('instance', function(){
       var normalizer;
       beforeEach(function(){
-        return normalizer = new FileNormalizer('dist/js/bootstrap.js');
+        return normalizer = new FileNormalizer(config.simple);
       });
       describe('normalized', function(){
-        return specify('js file normalized to script entry', function(){
+        return specify('js file normalized to scripts entry', function(){
           return expect(normalizer.normalized.scripts).to.eql({});
         });
       });
-      describe('normalize(file)', function(){
+      describe.only('normalize(file)', function(){
         beforeEach(function(){
-          return normalizer.normalize();
+          return normalizer.normalize('dist/js/bootstrap.js');
         });
-        return specify('js file normalized to script entry', function(){
+        specify('js file normalized to script entry', function(){
           return expect(normalizer.normalized.scripts.files).to.include('dist/js/bootstrap.js');
+        });
+        return xspecify('js dir normalized', function(){
+          return expect(normalizer.normalized.scripts.dir).to.eql('dist/js');
         });
       });
       describe('find-type(ext, file)', function(){
