@@ -21,18 +21,25 @@ describe 'PathShortener' ->
     var shortener
 
     before-each ->
-      shortener := new PathShortener config.simple
+      shortener := new PathShortener config.simple.scripts
 
-    describe 'shorten-paths' ->
-      specify 'shortens all paths' ->
-        expect shortener.shorten-paths!.scripts.files .to.include 'bootstrap.js'
+    describe 'shorten-file-paths' ->
+      specify 'shortens all file paths' ->
+        expect shortener.shorten-file-paths!.files .to.include 'bootstrap.js'
 
-    # can be reused at at lv with files
-    describe 'shorten-paths-for(entry)' ->
-      specify 'shortens all paths' ->
-        expect shortener.shorten-paths-for('scripts', config.simple.scripts).files .to.include 'bootstrap.js'
+    describe 'shorten-dir' ->
+      specify 'shortens dir path' ->
+        expect shortener.shorten-dir('dist').dir .to.eql 'js'
 
     describe 'shorten-path(file)' ->
-      specify 'shortens path of file' ->
-        expect shortener.shorten-path('dist/js/bootstrap.js') .to.eql 'bootstrap.js'
+      context 'with non-matching root dir' ->
+        specify 'can not shorten path of file' ->
+          expect shortener.shorten-path('dist/js/bootstrap.js') .to.eql 'dist/js/bootstrap.js'
+
+      context 'with matching root dir' ->
+        before-each ->
+          shortener.config.dir = 'dist/js'
+
+        specify 'shortens path of file' ->
+          expect shortener.shorten-path('dist/js/bootstrap.js') .to.eql 'bootstrap.js'
 

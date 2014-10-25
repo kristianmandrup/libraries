@@ -15,11 +15,11 @@ module.exports = class CompositeConfigLoader extends BaseLoader
   has-config: (name) ->
     name ||= @name
     for loader in @loaders!
-      return true if @loader!.has-config name
+      return true if loader.has-config name
 
   load-config: (name) ->
     for loader in @loaders!
-      conf = @loader!.load-config name
+      conf = loader.load-config name
       return conf if conf
 
   loaders: ->

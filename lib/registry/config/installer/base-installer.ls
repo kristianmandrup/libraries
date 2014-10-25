@@ -9,6 +9,7 @@ module.exports = class BaseInstaller
     @file ||= @options.file
     @validate!
     @log = @options.log || console.log
+    @
 
   validate: ->
     unless @exists @file

@@ -21,21 +21,31 @@
     return context('instance', function(){
       var shortener;
       beforeEach(function(){
-        return shortener = new PathShortener(config.simple);
+        return shortener = new PathShortener(config.simple.scripts);
       });
-      describe('shorten-paths', function(){
-        return specify('shortens all paths', function(){
-          return expect(shortener.shortenPaths().scripts.files).to.include('bootstrap.js');
+      describe('shorten-file-paths', function(){
+        return specify('shortens all file paths', function(){
+          return expect(shortener.shortenFilePaths().files).to.include('bootstrap.js');
         });
       });
-      describe('shorten-paths-for(entry)', function(){
-        return specify('shortens all paths', function(){
-          return expect(shortener.shortenPathsFor('scripts', config.simple.scripts).files).to.include('bootstrap.js');
+      describe('shorten-dir', function(){
+        return specify('shortens dir path', function(){
+          return expect(shortener.shortenDir('dist').dir).to.eql('js');
         });
       });
       return describe('shorten-path(file)', function(){
-        return specify('shortens path of file', function(){
-          return expect(shortener.shortenPath('dist/js/bootstrap.js')).to.eql('bootstrap.js');
+        context('with non-matching root dir', function(){
+          return specify('can not shorten path of file', function(){
+            return expect(shortener.shortenPath('dist/js/bootstrap.js')).to.eql('dist/js/bootstrap.js');
+          });
+        });
+        return context('with matching root dir', function(){
+          beforeEach(function(){
+            return shortener.config.dir = 'dist/js';
+          });
+          return specify('shortens path of file', function(){
+            return expect(shortener.shortenPath('dist/js/bootstrap.js')).to.eql('bootstrap.js');
+          });
         });
       });
     });

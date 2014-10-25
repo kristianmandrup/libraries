@@ -42,7 +42,7 @@ module.exports = class Normalizer
       throw new Error "Config to normalize must be an Object, was: #{@config}"
 
   normalize: ->
-    @files-normalizer!.normalize!
+    @config-normalizer!.normalize!
 
   config-normalizer: ->
     new ConfigNormalizer @config

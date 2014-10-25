@@ -71,8 +71,15 @@ describe 'LocalConfigLoader' ->
         expect loader.normalizer(config) .to.be.an.instance-of Normalizer
 
     describe 'loaded-config' ->
-      specify 'is an adapted config' ->
-        expect loader.loaded-config! .to.eql {}
+      var conf
+      before ->
+        conf := loader.loaded-config!
+
+      specify 'dir is dist' ->
+        expect conf.dir .to.eql 'dist'
+
+      specify 'fonts files has eof and svg' ->
+        expect conf.fonts.files .to.include 'bootstrap.eof' #, 'bootstrap.svg'
 
     describe 'adapter' ->
       specify 'is an Adapter' ->

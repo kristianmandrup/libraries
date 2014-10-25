@@ -2,7 +2,7 @@
 (function(){
   var expect, Installer, log, toString$ = {}.toString;
   expect = require('chai').expect;
-  Installer = require('../../../../lib/registry/installer/json-installer');
+  Installer = require('../../../../../lib/registry/config/installer/json-installer');
   log = console.log;
   describe('JsonInstaller', function(){
     var installer, config;

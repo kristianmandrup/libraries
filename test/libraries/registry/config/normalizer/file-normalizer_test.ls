@@ -29,7 +29,7 @@ describe 'FileNormalizer' ->
       specify 'js file normalized to scripts entry' ->
         expect normalizer.normalized.scripts .to.eql {}
 
-    describe.only 'normalize(file)' ->
+    describe 'normalize(file)' ->
       before-each ->
         normalizer.normalize 'dist/js/bootstrap.js'
         # console.log 'normalized', normalizer.normalized
@@ -44,9 +44,9 @@ describe 'FileNormalizer' ->
       specify 'identifies js as a scripts ext' ->
         expect normalizer.find-type('js') .to.eql 'scripts'
 
-    describe 'extension-of(file)' ->
+    describe 'extension(file)' ->
       specify '.js file is js ext' ->
-        expect normalizer.extension-of('dist/js/bootstrap.js') .to.eql 'js'
+        expect normalizer.extension('dist/js/bootstrap.js') .to.eql 'js'
 
     describe 'types' ->
 
@@ -54,6 +54,6 @@ describe 'FileNormalizer' ->
       specify 'js file normalized to script entry' ->
         expect normalizer.add-file('scripts').normalized.scripts.files .to.include 'dist/js/bootstrap.js'
 
-    describe 'set-dir' ->
+    xdescribe 'set-dir' ->
       specify 'js file normalized to script entry' ->
         expect normalizer.set-dir('scripts').normalized.scripts.dir .to.eql 'dist/js'

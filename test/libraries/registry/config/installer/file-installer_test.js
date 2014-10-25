@@ -2,7 +2,7 @@
 (function(){
   var expect, Installer, log;
   expect = require('chai').expect;
-  Installer = require('../../../../lib/registry/installer/file-installer');
+  Installer = require('../../../../../lib/registry/config/installer/file-installer');
   log = console.log;
   describe('FileInstaller', function(){
     var installer;
@@ -33,7 +33,7 @@
         io = function(msg){
           return msg;
         };
-        return installer = new Installer('bootstrap', ' ', 'bootstrap.json', {
+        return installer = new Installer('bootstrap', ' ', {
           log: io
         });
       });

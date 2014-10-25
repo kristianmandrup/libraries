@@ -1,6 +1,6 @@
 expect = require 'chai' .expect
 
-Installer = require '../../../../lib/registry/installer/file-installer'
+Installer = require '../../../../../lib/registry/config/installer/file-installer'
 
 log = console.log
 
@@ -25,7 +25,7 @@ describe 'FileInstaller' ->
       io := (msg) ->
         msg
 
-      installer := new Installer 'bootstrap', ' ', 'bootstrap.json', log: io
+      installer := new Installer 'bootstrap', ' ', log: io
 
     describe 'installing' ->
       specify 'displays console install msg' ->

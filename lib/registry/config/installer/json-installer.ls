@@ -11,7 +11,7 @@ gconf         = new GlobalConfig
 
 module.exports = class JsonInstaller extends BaseInstaller implements FileIO
   (@name, @source, @options = {}) ->
-    @file = @options.file or gconf.components-file!
+    @file = @options.file or gconf.components!file!
     super ...
     @convert!
     @validate!

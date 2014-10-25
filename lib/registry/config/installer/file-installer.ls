@@ -16,7 +16,7 @@ module.exports = class FileInstaller extends BaseInstaller implements FileIO
   install: ->
     return void if @exists @file
     try
-      @installing
+      @installing!
       @write-file!
       return @name
     catch err
@@ -25,7 +25,7 @@ module.exports = class FileInstaller extends BaseInstaller implements FileIO
 
   uninstall: ->
     try
-      @uninstalling
+      @uninstalling!
       @remove-file!
     catch err
       @error err

@@ -89,8 +89,15 @@
         });
       });
       describe('loaded-config', function(){
-        return specify('is an adapted config', function(){
-          return expect(loader.loadedConfig()).to.eql({});
+        var conf;
+        before(function(){
+          return conf = loader.loadedConfig();
+        });
+        specify('dir is dist', function(){
+          return expect(conf.dir).to.eql('dist');
+        });
+        return specify('fonts files has eof and svg', function(){
+          return expect(conf.fonts.files).to.include('bootstrap.eof');
         });
       });
       return describe('adapter', function(){
