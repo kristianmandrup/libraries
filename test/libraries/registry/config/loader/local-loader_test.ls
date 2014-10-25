@@ -48,7 +48,7 @@ describe 'LocalConfigLoader' ->
         expect loader.config-file! .to.eql './xlibs/components/bootstrap.json'
 
       specify 'blip is non-existing file path' ->
-        expect loader.config-file('blip') .to.eql './xlibs/components/blip.json'
+        expect -> loader.config-file('blip') .to.throw
 
     describe 'load' ->
       specify 'loads config from local repo' ->

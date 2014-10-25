@@ -2,7 +2,7 @@
 (function(){
   var expect, ConfigLoader, log;
   expect = require('chai').expect;
-  ConfigLoader = require('../../../../../lib/registry/config/loader/json-loader');
+  ConfigLoader = require('../../../../../../lib/registry/config/loader/local/json-loader');
   log = console.log;
   describe('JsonLoader', function(){
     var loader;
@@ -36,9 +36,16 @@
           return expect(loader.loadConfig().dir).to.eql('dist');
         });
       });
+      describe('has-config', function(){
+        specify('has bootstrap', function(){
+          return expect(loader.hasConfig('bootstrap')).to.be['true'];
+        });
+        return specify('does not have blip', function(){
+          return expect(loader.hasConfig('blip')).to.be['false'];
+        });
+      });
       describe('list', function(){
         specify('has 2 entries', function(){
-          console.log(loader.list());
           return expect(loader.list().length).to.eql(2);
         });
         return specify('has a bootstrap entry', function(){
@@ -47,7 +54,6 @@
       });
       describe('json-config', function(){
         return specify('loads json for config', function(){
-          console.log('json config', loader.jsonConfig());
           return expect(loader.jsonConfig()).to.be.an('Object');
         });
       });

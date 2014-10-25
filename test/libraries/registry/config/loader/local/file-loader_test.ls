@@ -1,6 +1,6 @@
 expect = require 'chai' .expect
 
-ConfigLoader        = require '../../../../../lib/registry/config/loader/file-loader'
+ConfigLoader        = require '../../../../../../lib/registry/config/loader/local/file-loader'
 
 log = console.log
 
@@ -30,6 +30,13 @@ describe 'FileLoader' ->
     describe 'load-config' ->
       specify 'loads config' ->
         expect loader.load-config!.dir .to.eql 'dist'
+
+    describe 'has-config' ->
+      specify 'has bootstrap' ->
+        expect loader.has-config 'bootstrap' .to.be.true
+
+      specify 'does not have blip' ->
+        expect loader.has-config 'blip' .to.be.false
 
     describe 'config-file' ->
       specify 'is component config file' ->

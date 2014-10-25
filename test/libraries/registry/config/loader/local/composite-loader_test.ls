@@ -1,6 +1,8 @@
 expect = require 'chai' .expect
 
-ConfigLoader        = require '../../../../../lib/registry/config/loader/composite-loader'
+ConfigLoader        = require '../../../../../../lib/registry/config/loader/local/composite-loader'
+FileLoader          = require '../../../../../../lib/registry/config/loader/local/file-loader'
+JsonLoader          = require '../../../../../../lib/registry/config/loader/local/json-loader'
 
 log = console.log
 
@@ -26,10 +28,6 @@ describe 'JsonLoader' ->
   describe 'valid instance' ->
     before ->
       loader := new ConfigLoader 'bootstrap'
-      loader.config-file = ->
-        config.local
-      loader.has-config = ->
-        true
 
     describe 'load' ->
       specify 'loads json from local' ->
@@ -39,8 +37,11 @@ describe 'JsonLoader' ->
         expect( -> config.load config.remote).to.throw
 
     describe 'has-config' ->
-      specify 'has config' ->
-        expect loader.has-config! .to.be.true
+      specify 'has bootsrap' ->
+        expect loader.has-config 'bootstrap' .to.be.true
+
+      specify 'does not have blip' ->
+        expect loader.has-config 'blip' .to.be.false
 
     describe 'load-config' ->
       specify 'loads config' ->

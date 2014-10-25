@@ -60,7 +60,9 @@
           return expect(loader.configFile()).to.eql('./xlibs/components/bootstrap.json');
         });
         return specify('blip is non-existing file path', function(){
-          return expect(loader.configFile('blip')).to.eql('./xlibs/components/blip.json');
+          return expect(function(){
+            return loader.configFile('blip').to['throw'];
+          });
         });
       });
       describe('load', function(){

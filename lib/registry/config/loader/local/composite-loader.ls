@@ -16,6 +16,7 @@ module.exports = class CompositeConfigLoader extends BaseLoader
     name ||= @name
     for loader in @loaders!
       return true if loader.has-config name
+    false
 
   load-config: (name) ->
     for loader in @loaders!

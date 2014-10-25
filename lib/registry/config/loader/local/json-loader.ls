@@ -31,7 +31,10 @@ module.exports = class JsonConfigLoader extends BaseLoader
 
   has-config: (name) ->
     name ||= @name
-    !!@load-config! name
+    try
+      !!@load-config(name)
+    catch e
+      false
 
   json-config: ->
     @_json-conf ||= @json @config-file!

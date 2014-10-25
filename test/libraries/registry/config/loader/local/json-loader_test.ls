@@ -1,6 +1,6 @@
 expect = require 'chai' .expect
 
-ConfigLoader        = require '../../../../../lib/registry/config/loader/json-loader'
+ConfigLoader        = require '../../../../../../lib/registry/config/loader/local/json-loader'
 
 log = console.log
 
@@ -27,9 +27,15 @@ describe 'JsonLoader' ->
       specify 'loads config' ->
         expect loader.load-config!.dir .to.eql 'dist'
 
+    describe 'has-config' ->
+      specify 'has bootstrap' ->
+        expect loader.has-config 'bootstrap' .to.be.true
+
+      specify 'does not have blip' ->
+        expect loader.has-config 'blip' .to.be.false
+
     describe 'list' ->
       specify 'has 2 entries' ->
-        console.log loader.list!
         expect loader.list!.length .to.eql 2
 
       specify 'has a bootstrap entry' ->
@@ -37,7 +43,6 @@ describe 'JsonLoader' ->
 
     describe 'json-config' ->
       specify 'loads json for config' ->
-        console.log 'json config', loader.json-config!
         expect loader.json-config! .to.be.an 'Object'
 
     describe 'config-file' ->
