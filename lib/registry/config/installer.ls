@@ -11,10 +11,11 @@ module.exports = class Installer
       throw new Error "Type must be a String, was: #{@type}"
 
   installer: ->
-    new @selected-installer! ...@args
+    clazz = @selected-installer!
+    new clazz ...@args
 
   selected-installer: ->
-    @installers[@type] or @bad-adapter!
+    @installers[@type] or @bad-installer!
 
   bad-installer: ->
     @error "Installer #{@type} has not been registered"
@@ -23,6 +24,6 @@ module.exports = class Installer
     console.error msg
     throw new Error msg
 
-  installers: ->
+  installers:
     file: FileInstaller
     json: JsonInstaller

@@ -4,8 +4,10 @@ FileIO          = require '../../../util/file-io'
 BaseInstaller   = require './base-installer'
 
 module.exports = class FileInstaller extends BaseInstaller implements FileIO
-  (@name, @content, @options = {}) ->
+  (@name, @source, @options = {}) ->
     super ...
+    @content = source
+    @
 
   validate: ->
     super!
