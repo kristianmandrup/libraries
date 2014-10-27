@@ -22,6 +22,7 @@ module.exports = class ConfigNormalizer
       @file-normalizer!.normalize file
 
     @path-normalizer!.normalize!
+    @normalized
 
   file-normalizer: ->
     new FileNormalizer @normalized

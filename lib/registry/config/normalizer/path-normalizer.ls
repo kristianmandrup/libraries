@@ -23,8 +23,6 @@ module.exports = class PathNormalizer
     @normalize-key-files!
     @normalize-key-dirs!
     @config
-    #
-
 
   set-root: ->
     root = @root-path-of(@dirs!).find!
@@ -60,12 +58,12 @@ module.exports = class PathNormalizer
     root = @root-path-of(config.files).find!
     unless is-blank root
       config.dir = root
-      @config[key] = @path-shortener(config).shorten-paths!
+      @config[key] = @path-shortener(config).shorten-files!
 
   normalize-dir-for: (key, config) ->
     return if key is 'dir'
     return unless config.dir
-    @config[key] = @path-shortener(config, @root).shorten-paths!
+    @config[key] = @path-shortener(config).shorten-dir @root
 
   root-path-of: (files) ->
     new RootPath files

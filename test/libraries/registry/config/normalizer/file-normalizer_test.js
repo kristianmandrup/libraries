@@ -41,16 +41,16 @@
         beforeEach(function(){
           return normalizer.normalize('dist/js/bootstrap.js');
         });
-        specify('js file normalized to script entry', function(){
+        return specify('js file normalized to script entry', function(){
           return expect(normalizer.normalized.scripts.files).to.include('dist/js/bootstrap.js');
-        });
-        return xspecify('js dir normalized', function(){
-          return expect(normalizer.normalized.scripts.dir).to.eql('dist/js');
         });
       });
       describe('find-type(ext, file)', function(){
-        return specify('identifies js as a scripts ext', function(){
+        specify('identifies js as a scripts ext', function(){
           return expect(normalizer.findType('js')).to.eql('scripts');
+        });
+        return specify('identifies json as a files ext', function(){
+          return expect(normalizer.findType('json')).to.eql('files');
         });
       });
       describe('extension(file)', function(){
@@ -59,14 +59,9 @@
         });
       });
       describe('types', function(){});
-      describe('add-file', function(){
+      return describe('add-file', function(){
         return specify('js file normalized to script entry', function(){
           return expect(normalizer.addFile('scripts').normalized.scripts.files).to.include('dist/js/bootstrap.js');
-        });
-      });
-      return xdescribe('set-dir', function(){
-        return specify('js file normalized to script entry', function(){
-          return expect(normalizer.setDir('scripts').normalized.scripts.dir).to.eql('dist/js');
         });
       });
     });

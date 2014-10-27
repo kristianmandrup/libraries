@@ -18,7 +18,7 @@ module.exports = class LocalLoader extends BaseLoader
 
   validate: ->
 
-  config-file: ->
+  load-config: ->
     @normalize @loaded-config!
 
   has-config: (name) ->

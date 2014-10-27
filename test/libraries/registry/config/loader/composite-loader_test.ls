@@ -14,7 +14,7 @@ describe 'CompositeLoader' ->
 
   describe 'create' ->
     context 'invalid' ->
-      specify 'bad nam throws' ->
+      specify 'number throws' ->
         expect(-> new CompositeLoader 7).to.throw
 
     context 'valid' ->

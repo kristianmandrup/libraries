@@ -7,13 +7,13 @@ module.exports = class PathShortener
 
   # can be reused at at lv with files
   shorten-dir: (@root) ->
-    return if is-blank @root
+    return @config if is-blank @root
     return unless typeof! @config.dir is 'String'
     @config.dir = @config.dir.slice (@root + '/').length
     @config
 
   # can be reused at at lv with files
-  shorten-file-paths: ->
+  shorten-files: ->
     short-files = []
     return unless typeof! @config.files is 'Array'
     for file in @config.files

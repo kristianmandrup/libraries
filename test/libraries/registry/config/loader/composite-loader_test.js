@@ -13,7 +13,7 @@
     };
     describe('create', function(){
       context('invalid', function(){
-        return specify('bad nam throws', function(){
+        return specify('number throws', function(){
           return expect(function(){
             return new CompositeLoader(7);
           }).to['throw'];

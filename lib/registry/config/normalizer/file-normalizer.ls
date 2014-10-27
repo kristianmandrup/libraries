@@ -19,7 +19,6 @@ module.exports = class FileNormalizer
     @type = @find-type!
     if @type
       @add-file!
-      # @set-dir!
     @normalized
 
   extension: (file) ->
@@ -31,7 +30,8 @@ module.exports = class FileNormalizer
     @ext  ||= ext
     for key, value of @types
       return key if value.index-of(@ext) > -1
-    console.error "Unknown file type: #{@ext} for #{@file}"
+    # put in files if unknown extension
+    \files
 
   types:
     scripts: ['js', 'coffee', 'ls']
@@ -44,16 +44,6 @@ module.exports = class FileNormalizer
     entry = @normalized[@type]
     entry.files ||= []
     entry.files.push @file unless entry.files.index-of(@file) > -1
-    @
-
-  set-dir: (type) ->
-    @type ||= type
-    dir = path.dirname @file
-    entry = @normalized[@type]
-    if entry.dir is void
-      entry.dir = dir
-    if entry.dir isnt dir
-      entry.dir = ''
     @
 
   own-normalized:

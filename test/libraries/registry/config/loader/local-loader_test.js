@@ -9,7 +9,7 @@
   describe('LocalConfigLoader', function(){
     var config;
     config = {
-      files: ['dist/js/bootstrap.json']
+      files: ['dist/js/bootstrap.js']
     };
     describe('create', function(){
       context('invalid', function(){
@@ -39,7 +39,7 @@
       });
       describe('load-config', function(){
         return specify('loads config', function(){
-          return expect(loader.configFile().dir).to.eql('dist');
+          return expect(loader.loadConfig().dir).to.eql('dist');
         });
       });
       describe('has-local', function(){
@@ -55,19 +55,17 @@
           return expect(loader.hasConfig('blip')).to.be['false'];
         });
       });
-      describe('config-file', function(){
+      describe('load-config', function(){
+        before(function(){
+          return log(loader.loadConfig());
+        });
         specify('is combined into a local repo file path', function(){
-          return expect(loader.configFile()).to.eql('./xlibs/components/bootstrap.json');
+          return expect(loader.loadConfig().dir).to.eql('dist');
         });
         return specify('blip is non-existing file path', function(){
           return expect(function(){
-            return loader.configFile('blip').to['throw'];
+            return loader.loadConfig('blip').to['throw'];
           });
-        });
-      });
-      describe('load', function(){
-        return specify('loads config from local repo', function(){
-          return expect(loader.load('./xlibs/components/bootstrap.json').dir).to.eql('dist');
         });
       });
       describe('selected-loader', function(){
@@ -80,9 +78,9 @@
           return expect(Object.keys(loader.loaders())).to.include('composite');
         });
       });
-      describe('normalize', function(){
+      describe.only('normalize', function(){
         return specify('normalizes a loader', function(){
-          return expect(loader.normalize(config)).to.include('composite');
+          return expect(loader.normalize(config).scripts.files).to.eql(['bootstrap.js']);
         });
       });
       describe('normalizer', function(){

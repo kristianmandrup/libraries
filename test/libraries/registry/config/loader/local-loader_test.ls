@@ -8,7 +8,7 @@ log = console.log
 
 describe 'LocalConfigLoader' ->
   config =
-    files:  ['dist/js/bootstrap.json']
+    files:  ['dist/js/bootstrap.js']
 
   describe 'create' ->
     context 'invalid' ->
@@ -30,7 +30,7 @@ describe 'LocalConfigLoader' ->
 
     describe 'load-config' ->
       specify 'loads config' ->
-        expect loader.config-file!.dir .to.eql 'dist'
+        expect loader.load-config!.dir .to.eql 'dist'
 
     describe 'has-local' ->
       specify 'bootstrap is in local repo' ->
@@ -43,16 +43,15 @@ describe 'LocalConfigLoader' ->
       specify 'blip is not in local repo' ->
         expect loader.has-config 'blip' .to.be.false
 
-    describe 'config-file' ->
+    describe 'load-config' ->
+      before ->
+        log loader.load-config!
+
       specify 'is combined into a local repo file path' ->
-        expect loader.config-file! .to.eql './xlibs/components/bootstrap.json'
+        expect loader.load-config!.dir .to.eql 'dist'
 
       specify 'blip is non-existing file path' ->
-        expect -> loader.config-file('blip') .to.throw
-
-    describe 'load' ->
-      specify 'loads config from local repo' ->
-        expect loader.load('./xlibs/components/bootstrap.json').dir .to.eql 'dist'
+        expect -> loader.load-config('blip') .to.throw
 
     describe 'selected-loader' ->
       specify 'selects a loader' ->
@@ -62,9 +61,9 @@ describe 'LocalConfigLoader' ->
       specify 'selects a loader' ->
         expect Object.keys(loader.loaders!) .to.include 'composite'
 
-    describe 'normalize' ->
+    describe.only 'normalize' ->
       specify 'normalizes a loader' ->
-        expect loader.normalize(config) .to.include 'composite'
+        expect loader.normalize(config).scripts.files .to.eql ['bootstrap.js']
 
     describe 'normalizer' ->
       specify 'normalizes a loader' ->
