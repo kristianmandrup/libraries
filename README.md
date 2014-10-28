@@ -98,33 +98,23 @@ interesting things in the future... (see Notes + Design documents for some ideas
 
 ### Registry
 
-The global registry will contain an `index.js` file and a list of library config files.
+The global registry contains:
 
-Note: Currently it is a `json` file (for extensibility). It could perhaps be a simple line-divided text file 
-like the `selected` file if no other info is needed... 
+A single json file with keys for each library and values in the form of config Objects, very similar to a components file.
 
-```javascript
-// index.json
-{
-  registry: [
-    'bootstrap'
-  ]
-  ...
-}
-```
+See `registry/adapter/local/pkg-adapter` for this.
 
-Registry files: 
+For sample registries, see `/registry` such as `bower-libs.json`. The `libraries` library itself, will ship with these sample registries
+ which can be used directly as a local registry and will used as a fallback (default) repo to be considered unless a match is found
+ in another registry.
 
-```
-index.json
-bootstrap.json
-...
-```
+You can configure registries to be considered via your `.librariesrc` file
+via the `registries` key.
 
 On `library install`, the libraries you have selected which don't have a local library config in your local repo will
- be downloaded from the global registry.
+ be installed from a global registry.
  
-Then you just have can run `library build` to build the `imports.js` file which `libraries` will use to 
+You can then run `library build` to build the `imports.js` file which `libraries` will use to
 apply on your `app` to do the magic imports! *Awesome 8>)* 
 
 ```js

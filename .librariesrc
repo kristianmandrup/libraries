@@ -17,8 +17,13 @@
   "registries": [
     {
       "name": "libraries-official",
-      "type": "uri",
+      "type": "remote",
       "repo": "kristianmandrup/libraries"
+    },
+    {
+      "name": "libraries",
+      "type": "local",
+      "path": "registry/bower-libs.json"
     }
   ]
 }

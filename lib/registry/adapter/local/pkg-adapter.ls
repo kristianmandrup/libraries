@@ -1,27 +1,23 @@
-FileIO        = require '../../util/file-io'
-Installer     = require '../config/installer'
-BaseAdapter   = require './base-adapter'
+FileIO        = require '../../../util/file-io'
+Installer     = require '../../config/installer'
+BaseAdapter   = require '../../base-adapter'
 fs            = require 'fs-extra'
 
-# remote          = require '../../remote'
-
 sync-request = require 'sync-request'
-retrieve     = require '../../util/remote' .retrieve
+retrieve     = require '../../../util/remote' .retrieve
 
-Github  = require './repo/github'
+GlobalConfig  = require '../../../global-config'
+gconf         = new GlobalConfig
 
-module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
+module.exports = class RegistryPackageAdapter extends BaseAdapter implements FileIO
   (@options = {}) ->
-    @registry-uri = @options.uri or @default-uri!
-    @installer-type = @options.installer || 'file'
     @type ||= 'bower'
+    @installer-type = @options.installer || 'file'
+    @registry-path = @options.path or @default-path!
     super ...
 
-  default-uri: ->
-    @default-repo!.registry-path @options.repo
-
-  default-repo: ->
-    new Github
+  default-path: ->
+    gconf.dir-for @type
 
   validate: ->
     unless typeof! @registry-uri is 'String'
@@ -41,7 +37,14 @@ module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
     @index![name]
 
   registry-libs-uri: ->
-    [@registry-uri, @libs-file!].join '/'
+    @registry-location-parts!.join '/'
+
+  # filter out any undefined parts
+  registry-location-parts: ->
+    [@registry-uri, @registries-path!, @libs-file!].filter (part) -> !!part
+
+  registries-path: ->
+    'registries'
 
   libs-file: ->
     "#{@type}-libs.json"
@@ -51,13 +54,13 @@ module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
       body
 
   retrieve: ->
+    @retrieve-body @registry-libs-uri!
+
+  retrieve-body: (uri) ->
     deferred = Q.defer!
-    retrieve @registry-libs-uri!, deferred.make-node-resolver!
+    fs.readFile uri, deferred.make-node-resolver!
     deferred.promise.then (body) ~>
       body
-
-  retrieve-sync: ->
-    sync-request('GET', @registry-libs-uri!).get-body!
 
   index: ->
     @index-content!.then (body) ->
