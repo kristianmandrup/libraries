@@ -86,9 +86,14 @@
           return expect(gconf.registry().dir()).to.eql('./xlibs/registry');
         });
       });
-      return describe('default registry.dir', function(){
+      describe('default registry.dir', function(){
         return specify('gets location', function(){
           return expect(gconf['default']().registry().dir()).to.eql('./xlibs/registry');
+        });
+      });
+      return describe('dir-for', function(){
+        return specify('bower', function(){
+          return expect(gconf.dirFor('bower')).to.eql('bower_components');
         });
       });
     });

@@ -1,7 +1,8 @@
 expect = require 'chai' .expect
 log    = console.log
 
-Adapter    = require '../../../../../lib/registry/config/local/pkg-adapter'
+Adapter     = require '../../../../../lib/registry/adapter/local/pkg-adapter'
+Installer   = require '../../../../../lib/registry/config/installer'
 
 describe 'PkgAdapter' ->
   var adapter
@@ -25,32 +26,31 @@ describe 'PkgAdapter' ->
     var uri, path
     before ->
       adapter := new Adapter
-      path    := 'bower_components/libraries'
+      path    := 'bower_components/libraries/registry/bower-libs.json'
 
-    describe 'registry-uri' ->
+    describe 'pkg-path' ->
       specify 'is path' ->
-        expect adapter.registry-path .to.eql path
+        expect adapter.pkg-path .to.eql 'bower_components'
 
-    describe 'local-registry-path' ->
+    describe 'registry-libs-uri' ->
       specify 'is path' ->
-        expect adapter.local-registry-path .to.eql path
+        expect adapter.registry-libs-uri! .to.eql path
 
     describe 'installer' ->
       specify 'is path' ->
         expect adapter.installer! .to.be.an.instance-of Installer
 
-    describe 'registry-uri-for' ->
-      specify 'bower returns remote file' ->
-        expect adapter.registry-libs-uri! .to.eql path + "/bower-libs.json"
-
     describe 'index-content' ->
       specify 'is path' ->
-        expect adapter.index-content! .to.match /ember-i18n/
+        adapter.index-content!then (body) ->
+          expect body .to.match /ember-i18n/
 
     describe 'index' ->
       specify 'is json' ->
-        expect adapter.index!["ember-i18n"].categories .to.include 'i18n'
+        adapter.index!then (json) ->
+          expect json["ember-i18n"].categories .to.include 'i18n'
 
     describe 'list' ->
       specify 'is json' ->
-        expect adapter.list! .to.include "ember-i18n"
+        adapter.list!then (list) ->
+         expect list .to.include "ember-i18n"

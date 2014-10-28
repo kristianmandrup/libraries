@@ -1,7 +1,15 @@
 FileIO        = require '../../../util/file-io'
 Installer     = require '../../config/installer'
-BaseAdapter   = require '../../base-adapter'
-fs            = require 'fs-extra'
+BaseAdapter   = require '../base-adapter'
+
+fs              = require 'fs-extra'
+util            = require 'util'
+jsonlint        = require 'jsonlint'
+
+Q = require 'q'
+
+is-blank = (str) ->
+    !str or /^\s*$/.test str
 
 sync-request = require 'sync-request'
 retrieve     = require '../../../util/remote' .retrieve
@@ -12,16 +20,14 @@ gconf         = new GlobalConfig
 module.exports = class RegistryPackageAdapter extends BaseAdapter implements FileIO
   (@options = {}) ->
     @type ||= 'bower'
+    @pkg-name = @options.pkg-name or 'libraries'
     @installer-type = @options.installer || 'file'
-    @registry-path = @options.path or @default-path!
+    @pkg-path = gconf.dir-for @type
     super ...
 
-  default-path: ->
-    gconf.dir-for @type
-
   validate: ->
-    unless typeof! @registry-path is 'String'
-      throw new Error "registryUri must be a String, was:"
+    unless typeof! @pkg-path is 'String'
+      throw new Error "pkg path must be a String, was:"
 
   installer: (type) ->
     type ||= @installer-type
@@ -38,16 +44,16 @@ module.exports = class RegistryPackageAdapter extends BaseAdapter implements Fil
 
   # filter out any undefined parts
   registry-location-parts: ->
-    [@registry-uri, @registries-path!, @libs-file!].filter (part) -> !!part
+    [@pkg-path, @pkg-name, @registries-path!, @libs-file!].filter (part) -> !!part
 
   registries-path: ->
-    'registries'
+    'registry'
 
   libs-file: ->
     "#{@type}-libs.json"
 
   index-content: (options = {})->
-    @_index-content ||= @retrieve!.then (body) ->
+    @_index-content ||= @retrieve!then (body) ->
       body
 
   retrieve: ->
@@ -55,12 +61,12 @@ module.exports = class RegistryPackageAdapter extends BaseAdapter implements Fil
 
   retrieve-body: (uri) ->
     deferred = Q.defer!
-    fs.readFile uri, deferred.make-node-resolver!
+    fs.readFile uri, 'utf-8', deferred.make-node-resolver!
     deferred.promise.then (body) ~>
       body
 
   index: ->
-    @index-content!.then (body) ->
+    @index-content!then (body) ->
       jsonlint.parse body
 
   list: ->

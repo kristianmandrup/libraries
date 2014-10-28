@@ -10,7 +10,7 @@ module.exports = class GlobalConfig implements FileIO
     @
 
   dir-for: (type) ->
-    bower-dir(type) or components-dir(type) or npm-dir(type) or unknown-dir type
+    @bower-dir(type) or @components-dir(type) or @npm-dir(type) or @unknown-dir type
 
   bower-dir: (type) ->
     @configured-bower-dir! if type is 'bower'

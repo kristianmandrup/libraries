@@ -6,8 +6,8 @@ chai.use chai-as-promised
 
 util = require 'util'
 
-Adaptor     = require '../../../../../lib/registry/config/package/bower/remote-bower'
-Translator  = require '../../../../../lib/registry/config/package/bower/github-repo-translator'
+Adaptor     = require '../../../../../../lib/registry/config/package/bower/remote-bower'
+Translator  = require '../../../../../../lib/registry/config/package/bower/github-repo-translator'
 
 log = console.log
 

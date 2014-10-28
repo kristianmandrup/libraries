@@ -4,6 +4,8 @@ BaseBowerAdapter  = require './base-bower'
 GlobalConfig  = require '../../../../global-config'
 gconf         = new GlobalConfig
 
+jsonlint        = require 'jsonlint'
+
 module.exports = class LocalBowerAdapter implements FileIO
   (@name, @options = {}) ->
     @validate!

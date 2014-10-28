@@ -71,3 +71,7 @@ describe 'GlobalConfig' ->
     describe 'default registry.dir' ->
       specify 'gets location' ->
         expect gconf.default!registry!dir! .to.eql './xlibs/registry'
+
+    describe 'dir-for' ->
+      specify 'bower' ->
+        expect gconf.dir-for 'bower' .to.eql 'bower_components'

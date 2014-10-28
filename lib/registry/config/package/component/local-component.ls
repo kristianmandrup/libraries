@@ -9,7 +9,7 @@ warning = (msg) ->
 registry =
   search: (query, cb) ->
     location = ['./components', query.name, 'component.json']
-    fs.readFile location, (err, pkg) ->
+    fs.readFile location, 'utf-8', (err, pkg) ->
       cb err if err
       cb 'no matching components found' if !pkgs.length
       cb null, [jsonlint.parse pkg ]

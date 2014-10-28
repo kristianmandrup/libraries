@@ -6,8 +6,8 @@
   chaiAsPromised = require("chai-as-promised");
   chai.use(chaiAsPromised);
   util = require('util');
-  Adaptor = require('../../../../../lib/registry/config/package/bower/local-bower');
-  Translator = require('../../../../../lib/registry/config/package/bower/github-repo-translator');
+  Adaptor = require('../../../../../../lib/registry/config/package/bower/local-bower');
+  Translator = require('../../../../../../lib/registry/config/package/bower/github-repo-translator');
   log = console.log;
   logx = function(msg){
     return console.log(util.inspect(msg));
@@ -69,48 +69,9 @@
           });
         });
       });
-      describe('retrieve', function(){
+      return describe('retrieve', function(){
         return specify('gets bower.json body', function(){
           return expect(adaptor.retrieve()).to.eventually.match(/getbootstrap/);
-        });
-      });
-      describe('retrieve-body', function(){
-        var bow;
-        beforeEach(function(){
-          return bow = 'https://raw.githubusercontent.com/twbs/bootstrap/master/bower.json';
-        });
-        return specify('gets bower.json body', function(){
-          return expect(adaptor.retrieveBody(bow)).to.eventually.match(/getbootstrap/);
-        });
-      });
-      describe('repo-translator', function(){
-        return specify('is a Translator', function(){
-          return expect(adaptor.repoTranslator('x')).to.be.an.instanceOf(Translator);
-        });
-      });
-      describe('repo-uri', function(){
-        return specify('finds first matching repo uri', function(){
-          return expect(adaptor.repoUri()).to.eventually.eql("https://raw.githubusercontent.com/twbs/bootstrap/master/bower.json");
-        });
-      });
-      describe('repo', function(){
-        return specify('finds first matching repo uri', function(){
-          return expect(adaptor.repo()).to.eventually.eql("git://github.com/twbs/bootstrap.git");
-        });
-      });
-      describe('find-repos', function(){
-        return specify('finds bower repo uri', function(){
-          return adaptor.findRepos(function(repos){
-            return expect(repos).to.eql(["git://github.com/twbs/bootstrap.git"]);
-          });
-        });
-      });
-      return describe('find(cb)', function(){
-        return specify('finds bower repo uri', function(){
-          return expect(adaptor.find().promise).to.eventually.eql({
-            type: 'alias',
-            url: 'git://github.com/twbs/bootstrap.git'
-          });
         });
       });
     });

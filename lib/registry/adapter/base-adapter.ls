@@ -18,11 +18,11 @@ module.exports = class BaseAdapter implements FileIO
     @
 
   validate: ->
-    unless typeof! @registry-uri is 'String'
-      throw new Error "registryUri must be a String"
-
-    unless typeof! @local-registry-path is 'String'
-      throw new Error "localRegistryPath must be a String, was #{@local-registry-path}"
+#    unless typeof! @registry-uri is 'String'
+#      throw new Error "registryUri must be a String"
+#
+#    unless typeof! @local-registry-path is 'String'
+#      throw new Error "localRegistryPath must be a String, was #{@local-registry-path}"
 
   installer: ->
     @_installer ||= new Installer @options.installer
