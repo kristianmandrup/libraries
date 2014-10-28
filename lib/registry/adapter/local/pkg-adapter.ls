@@ -20,11 +20,8 @@ module.exports = class RegistryPackageAdapter extends BaseAdapter implements Fil
     gconf.dir-for @type
 
   validate: ->
-    unless typeof! @registry-uri is 'String'
+    unless typeof! @registry-path is 'String'
       throw new Error "registryUri must be a String, was:"
-
-    unless typeof! @local-registry-path is 'String'
-      throw new Error "localRegistryPath must be a String, was #{@local-registry-path}"
 
   installer: (type) ->
     type ||= @installer-type

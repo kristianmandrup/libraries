@@ -8,8 +8,8 @@ gconf         = new GlobalConfig
 
 module.exports = class RegistryFileAdapter extends BaseAdapter implements FileIO
   (@options = {}) ->
-    @registry-uri         = @options.registry or gconf.registry.dir!
-    @local-registry-path  = @options.local    or gconf.components.dir!
+    @registry-uri         = @options.registry or gconf.registry!dir!
+    @local-registry-path  = @options.local    or gconf.components!dir!
     @validate!
     @
 

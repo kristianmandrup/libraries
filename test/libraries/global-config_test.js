@@ -28,8 +28,11 @@
         });
       });
       describe('default-location-of', function(){
-        return specify('gets location', function(){
+        specify('gets default components dir', function(){
           return expect(gconf.defaultLocationOf('components.dir')).to.eql('./xlibs/components');
+        });
+        return specify('gets default registry dir', function(){
+          return expect(gconf.defaultLocationOf('registry.dir')).to.eql('./xlibs/registry');
         });
       });
       describe('location-of', function(){
@@ -41,8 +44,16 @@
             }
           };
         });
-        return specify('gets location', function(){
+        specify('gets builds dir location', function(){
           return expect(gconf.locationOf('builds.dir', config)).to.eql('xlibs/build');
+        });
+        return specify('can not get registry dir location', function(){
+          return expect(gconf.locationOf('registry.dir', config)).to.eql(void 8);
+        });
+      });
+      describe('location', function(){
+        return specify('can not get registry dir location', function(){
+          return expect(gconf.location('registry.dir')).to.eql('./xlibs/registry');
         });
       });
       describe('select.file', function(){
@@ -65,9 +76,19 @@
           return expect(gconf.components().file()).to.eql('./xlibs/components/index.json');
         });
       });
-      return describe('config.file', function(){
+      describe('config.file', function(){
         return specify('gets location', function(){
           return expect(gconf.config().file()).to.eql('./xlibs/config.json');
+        });
+      });
+      describe('registry.dir', function(){
+        return specify('gets location', function(){
+          return expect(gconf.registry().dir()).to.eql('./xlibs/registry');
+        });
+      });
+      return describe('default registry.dir', function(){
+        return specify('gets location', function(){
+          return expect(gconf['default']().registry().dir()).to.eql('./xlibs/registry');
         });
       });
     });

@@ -9,6 +9,28 @@ module.exports = class GlobalConfig implements FileIO
     @librariesrc = './.librariesrc'
     @
 
+  dir-for: (type) ->
+    bower-dir(type) or components-dir(type) or npm-dir(type) or unknown-dir type
+
+  bower-dir: (type) ->
+    @configured-bower-dir! if type is 'bower'
+
+  # TODO: read config as for bower
+  components-dir: (type) ->
+    'components' if type is 'component'
+
+  # TODO: read config as for bower
+  npm-dir: (type) ->
+    'node_modules' if type is 'npm'
+
+  unknown-dir: (type) ->
+    throw Error "Unknown package type: #{type}"
+
+  # read .bowerrc for configured directory key if present
+  configured-bower-dir: ->
+    return @json('.bowerrc').directory if @exists '.bowerrc'
+    'bower_components'
+
   rc-json: ->
     @_rc-json ||= jsonlint.parse @load-rc!
 
@@ -17,7 +39,9 @@ module.exports = class GlobalConfig implements FileIO
 
   location-of: (paths, obj, d) ->
     paths = paths.split('.') if typeof! paths is 'String'
+    return void if paths is void
     path  = paths.shift!
+    return void unless obj
     val = obj[path]
     val = val! if typeof! val is 'Function'
     if d and path isnt 'dir'
@@ -28,14 +52,16 @@ module.exports = class GlobalConfig implements FileIO
     return val if paths.length is 0 or typeof! val is 'String'
     @location-of paths, val, true
 
-  find-location-of: (path, obj) ->
-    @location-of(path, @rc-json!) or @default-location-of(path)
-
   location: (path) ->
-    loc = [@rc-json!.dir]
-    path = @find-location-of path, @rc-json!
-    loc = loc.concat path
-    loc = loc.join '/'
+    loc-path = @location-of path, @rc-json!
+    if loc-path
+      loc = [@rc-json!.dir]
+      loc = loc.concat loc-path
+      return loc.join '/'
+
+    @default-location-of path
+
+
 
   load-rc: ->
     @read @librariesrc
@@ -59,6 +85,10 @@ module.exports = class GlobalConfig implements FileIO
     file: ~>
       @location 'config.file'
 
+  registry: ->
+    dir: ~>
+      @location 'registry.dir'
+
   registries: ->
     @parse-registries @location 'registries'
 
@@ -81,6 +111,10 @@ module.exports = class GlobalConfig implements FileIO
     config: ->
       file: ~>
         [@dir, 'config.json'].join '/'
+    registry: ->
+      dir: ~>
+        [@dir, 'registry'].join '/'
+
     registries: [
       {name: 'libraries-official', type: 'uri', repo: 'kristianmandrup/libraries'}
     ]

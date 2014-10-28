@@ -13,7 +13,7 @@ gconf         = new GlobalConfig
 module.exports = class BaseAdapter implements FileIO
   (@options = {}) ->
     @registry-uri         ||= @options.registry
-    @local-registry-path  = @options.local or gconf.components.dir!
+    @local-registry-path  = @options.local or gconf.components!dir!
     @validate!
     @
 
@@ -28,7 +28,7 @@ module.exports = class BaseAdapter implements FileIO
     @_installer ||= new Installer @options.installer
 
   list: ->
-    @_list ||= @index!.registry
+    @_list ||= @index!registry
 
   has: (name) ->
     @list!.index-of(name) > -1

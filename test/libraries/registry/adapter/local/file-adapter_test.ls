@@ -1,7 +1,7 @@
 expect = require 'chai' .expect
 
-Adapter     = require '../../../../lib/registry/adapter/file-adapter'
-Installer   = require '../../../../lib/registry/installer'
+Adapter     = require '../../../../../lib/registry/adapter/local/file-adapter'
+Installer   = require '../../../../../lib/registry/config/installer'
 
 log = console.log
 

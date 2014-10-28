@@ -6,27 +6,29 @@ fs            = require 'fs-extra'
 sync-request = require 'sync-request'
 retrieve     = require '../../../util/remote' .retrieve
 
-Github  = require './repo/github'
-
 module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
   (@options = {}) ->
-    @registry-uri = @options.uri or @default-uri!
-    @installer-type = @options.installer || 'file'
+    @installer-type = @options.installer or 'file'
+    @repo-type = @options.repo-type or 'github'
     @type ||= 'bower'
+    @registry-uri = @options.uri or @repo-uri!
     super ...
+    validate!
+    @
 
-  default-uri: ->
-    @default-repo!.registry-path @options.repo
+  repo-uri: ->
+    clazz = @repo-clazz!
+    new clazz.registry-path @options.repo
 
-  default-repo: ->
-    new Github
+  repo-clazz: ->
+    @repos![@repo-type]
+
+  repos: ->
+    github: require './repo/github'
 
   validate: ->
     unless typeof! @registry-uri is 'String'
       throw new Error "registryUri must be a String, was:"
-
-    unless typeof! @local-registry-path is 'String'
-      throw new Error "localRegistryPath must be a String, was #{@local-registry-path}"
 
   installer: (type) ->
     type ||= @installer-type
