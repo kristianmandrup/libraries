@@ -6,6 +6,7 @@
 
 FileIO      = require '../../util/file-io'
 Installer   = require '../config/installer'
+Enricher    = require '../config/enricher'
 
 GlobalConfig  = require '../../global-config'
 gconf         = new GlobalConfig
@@ -24,8 +25,25 @@ module.exports = class BaseAdapter implements FileIO
 #    unless typeof! @local-registry-path is 'String'
 #      throw new Error "localRegistryPath must be a String, was #{@local-registry-path}"
 
-  installer: ->
-    @_installer ||= new Installer @options.installer
+  enricher: ->
+    new Enricher @options
+
+  # each step changes config
+  enrich-and-normalize: ->
+    @enricher!.enrich!
+    @normalizer!.normalize!
+    @config
+
+  install: (name) ->
+    @installer!.install source: @enriched-config(name), target: @target-config(name)
+
+  enriched-config: (name) ->
+    @read-config name
+    @enrich-and-normalize!
+
+  installer: (type) ->
+    type ||= @installer-type
+    @_installer ||= new Installer type
 
   list: ->
     @_list ||= @index!registry

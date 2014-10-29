@@ -13,14 +13,8 @@ module.exports = class RegistryFileAdapter extends BaseAdapter implements FileIO
     @validate!
     @
 
-  installer: ->
-    @_installer ||= new Installer
-
-  install: (name) ->
-    @installer.install source: @read-config(name), target: @target-config(name)
-
   read-config: (name) ->
-    fs.readFileSync @config-file(name)
+    @config ||= fs.readFileSync @config-file(name)
 
   index-file: ->
     [@registry-uri, 'index.json'].join '/'

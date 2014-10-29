@@ -38,7 +38,7 @@ describe 'ConfigNormalizer' ->
       specify 'creates one' ->
         expect normalizer.path-normalizer! .to.be.an.instance-of PathNormalizer
 
-    describe.only 'normalized' ->
+    describe 'normalized' ->
       before ->
         config :=
           files: ['dist/js/bootstrap.js', 'dist/css/bootstrap.css']
@@ -62,3 +62,14 @@ describe 'ConfigNormalizer' ->
           files: ['bootstrap.css']
         }
 
+  context.only 'normalize deeply nested file' ->
+    var normalizer
+    before-each ->
+      normalizer := new Normalizer {files: ['x/y/z.js']}, {type: 'component'}
+
+    describe 'normalize' ->
+      specify 'normalizes config' ->
+        expect normalizer.normalize!.scripts .to.eql {
+          dir: 'x/y',
+          files: ['z.js']
+        }

@@ -1,16 +1,5 @@
-is-blank = (str) ->
-  !str or /^\s*$/.test str
-
-# TODO: needs refactoring to have a more simple API
-module.exports = class PathShortener
+module.exports = class FileShortener
   (@config) ->
-
-  # can be reused at at lv with files
-  shorten-dir: (@root) ->
-    return @config if is-blank @root
-    return unless typeof! @config.dir is 'String'
-    @config.dir = @config.dir.slice (@root + '/').length
-    @config
 
   # can be reused at at lv with files
   shorten-files: ->

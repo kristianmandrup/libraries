@@ -1,11 +1,9 @@
-expect = require 'chai' .expect
+expect  = require 'chai' .expect
+log     = console.log
 
-PathShortener = require '../../../../../lib/registry/config/normalizer/path-shortener'
+FileShortener = require '../../../../../lib/registry/config/normalizer/file-shortener'
 
-log = console.log
-
-describe 'PathShortener' ->
-
+describe 'FileShortener' ->
   config = {}
   config.simple =
     dir: 'dist/js'
@@ -21,20 +19,16 @@ describe 'PathShortener' ->
     var shortener
 
     before-each ->
-      shortener := new PathShortener config.simple.scripts
+      shortener := new FileShortener config.simple.scripts
 
-    describe 'shorten-file-paths' ->
+    describe 'shorten-files' ->
       specify 'shortens all file paths' ->
-        expect shortener.shorten-file-paths!.files .to.include 'bootstrap.js'
-
-    describe 'shorten-dir' ->
-      specify 'shortens dir path' ->
-        expect shortener.shorten-dir('dist').dir .to.eql 'js'
+        expect shortener.shorten-files!.files .to.include 'bootstrap.js'
 
     describe 'shorten-path(file)' ->
       context 'with non-matching root dir' ->
         specify 'can not shorten path of file' ->
-          expect shortener.shorten-path('dist/js/bootstrap.js') .to.eql 'dist/js/bootstrap.js'
+          expect shortener.shorten-path('disto/js/bootstrap.js') .to.eql 'disto/js/bootstrap.js'
 
       context 'with matching root dir' ->
         before-each ->

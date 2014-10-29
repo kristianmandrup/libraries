@@ -23,7 +23,7 @@
         });
       });
     });
-    return context('valid instance', function(){
+    context('valid instance', function(){
       var normalizer, config;
       beforeEach(function(){
         config = {
@@ -46,7 +46,7 @@
           return expect(normalizer.pathNormalizer()).to.be.an.instanceOf(PathNormalizer);
         });
       });
-      return describe.only('normalized', function(){
+      return describe('normalized', function(){
         before(function(){
           config = {
             files: ['dist/js/bootstrap.js', 'dist/css/bootstrap.css']
@@ -67,6 +67,24 @@
           return expect(normalizer.normalized.styles).to.eql({
             dir: 'css',
             files: ['bootstrap.css']
+          });
+        });
+      });
+    });
+    return context.only('normalize deeply nested file', function(){
+      var normalizer;
+      beforeEach(function(){
+        return normalizer = new Normalizer({
+          files: ['x/y/z.js']
+        }, {
+          type: 'component'
+        });
+      });
+      return describe('normalize', function(){
+        return specify('normalizes config', function(){
+          return expect(normalizer.normalize().scripts).to.eql({
+            dir: 'x/y',
+            files: ['z.js']
           });
         });
       });

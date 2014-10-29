@@ -30,15 +30,8 @@ module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
     unless typeof! @registry-uri is 'String'
       throw new Error "registryUri must be a String, was:"
 
-  installer: (type) ->
-    type ||= @installer-type
-    @_installer ||= new Installer type
-
-  install: (name) ->
-    @installer!.install source: @read-config(name), target: @target-config(name)
-
   read-config: (name) ->
-    @index![name]
+    @config ||= @index![name]
 
   registry-libs-uri: ->
     @registry-location-parts!.join '/'

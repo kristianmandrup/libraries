@@ -1,4 +1,5 @@
-PathShortener      = require './path-shortener'
+FileShortener      = require './file-shortener'
+DirShortener       = require './dir-shortener'
 RootPath           = require './root-path'
 
 is-blank = (str) ->
@@ -63,12 +64,15 @@ module.exports = class PathNormalizer
   normalize-dir-for: (key, config) ->
     return if key is 'dir'
     return unless config.dir
-    @config[key] = @path-shortener(config).shorten-dir @root
+    @config[key] = @dir-shortener(config).shorten-dir @root
 
   root-path-of: (files) ->
     new RootPath files
 
-  path-shortener: (config, root) ->
+  path-shortener: (config) ->
     config ||= @config
-    new PathShortener config, root
+    new PathShortener config
 
+  dir-shortener: (config) ->
+    config ||= @config
+    new DirShortener config

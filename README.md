@@ -14,15 +14,32 @@ Most of the infrastructure is now in place.
 
 From [Registry.md](https://github.com/kristianmandrup/libraries/blob/master/lib/registry/Registry.md)
 
-_Currently the registry configs are installed "as is", which is only works if the full library configuration is present there.
+_Currently the registry configs are installed "as is", which only works if the full library configuration is present there.
 However for many components, sufficient information is already available from their manifest file, such as the `main` key in a `bower.json` file.
 We also have the package adapters which can take this info and a normalizer to normalize it.
 The next step is thus to load extra config information directly via the package adapter (if library package is present there) and merge it with the info in the registry
 before installing the full info in the local cache._
 
-_After the configs are cached they can be loaded from the cache.
-Currently it is only at the load step that configs are normalized.
-This needs to be fixed, so that entries are all stored in a normalized form._
+We are creating a new `config/enricher` to handle this. The `Enricher` can enrich a given config entry with extra information, typically via a package manager file.
+
+_After the configs are cached they can be loaded from the cache. Currently it is only at the load step that
+configs are normalized. This needs to be fixed, so that entries are all stored in a normalized form._
+
+This will now be handled by the registry adapter, via the `BaseAdapter` class which now has a function `enrichAndNormalize`
+which is called to enrich and normalize a config before it's installed.
+
+```js
+class BaseAdapter
+  # ...
+  install: (name) ->
+    @installer!.install source: @enriched-config(name), target: @target-config(name)
+
+  enriched-config: (name) ->
+    @read-config name
+    @enrich-and-normalize!
+```
+
+This is still a Work In Progress...
 
 You are encouraged to extend the API as you see fit and integrate more of the API as CLI commands to improve
 the overall user experience!

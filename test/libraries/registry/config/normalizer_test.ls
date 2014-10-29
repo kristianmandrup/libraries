@@ -1,8 +1,10 @@
 expect  = require 'chai' .expect
 log     = console.log
+util    = require 'util'
+inspect = (obj) ->
+  log util.inspect(obj)
 
 Normalizer              = require '../../../../lib/registry/config/normalizer'
-LocalComponentAdapter   = require '../../../../lib/registry/config/package/component/local-component'
 ConfigNormalizer        = require '../../../../lib/registry/config/normalizer/config-normalizer'
 
 describe 'Normalizer' ->
@@ -18,45 +20,44 @@ describe 'Normalizer' ->
       specify 'config obj ok' ->
         expect -> new Normalizer {}, {type: 'component'} .to.not.throw
 
+    describe 'should-normalize' ->
+      var normalizer, config
+
+      context 'only files key' ->
+        before-each ->
+          normalizer := new Normalizer {files: ['x/y.js']}, {type: 'component'}
+
+        specify 'it should' ->
+          expect normalizer.should-normalize! .to.be.true
+
+      context 'multiple keys or any non- files: key' ->
+        before-each ->
+          normalizer := new Normalizer {scripts: ['x/y.js']}, {type: 'component'}
+
+        specify 'it should not' ->
+          expect normalizer.should-normalize! .to.be.false
+
     context 'instance' ->
-      var normalizer
+      var normalizer, config
 
       before-each ->
-        normalizer := new Normalizer {}, {type: 'component'}
+        config :=
+          files: ['x/y/z.js']
 
-      describe 'type' ->
-        specify 'set to component' ->
-          expect normalizer.type .to.eql 'component'
-
-      describe 'from' ->
-        specify 'defaults to local' ->
-          expect normalizer.from .to.eql 'local'
-
-      describe 'bad-adapter' ->
-        specify 'throws' ->
-          expect normalizer.bad-adapter! .to.throw
-
-      describe 'adapter-clazz' ->
-        specify 'gets one' ->
-          expect normalizer.adapter-clazz! .to.eql LocalComponentAdapter
-
-      describe 'adapter' ->
-        specify 'gets one' ->
-          expect normalizer.adapter('bootstrap') .to.be.an.instance-of LocalComponentAdapter
+        normalizer := new Normalizer config, {type: 'component'}
 
       describe 'config-normalizer' ->
         specify 'creates one' ->
           expect normalizer.config-normalizer! .to.be.an.instance-of ConfigNormalizer
 
+      describe 'keys' ->
+        specify 'has one' ->
+          expect normalizer.keys! .to.eql ['files']
 
+      describe 'normalize' ->
+        specify 'has one' ->
+          expect normalizer.normalize!.scripts .to.eql {
+            dir: 'x/y',
+            files: ['z.js']
+          }
 
-#  normalize: ->
-#    @files-normalizer!.normalize!
-#
-#  files-normalizer: ->
-#    new FilesNormalizer @config
-#
-#  adapter: ->
-#    @adapters[@from][@type] or @bad-adapter!
-#
-#  bad-adapter: ->

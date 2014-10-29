@@ -29,15 +29,8 @@ module.exports = class RegistryPackageAdapter extends BaseAdapter implements Fil
     unless typeof! @pkg-path is 'String'
       throw new Error "pkg path must be a String, was:"
 
-  installer: (type) ->
-    type ||= @installer-type
-    @_installer ||= new Installer type
-
-  install: (name) ->
-    @installer!.install source: @read-config(name), target: @target-config(name)
-
   read-config: (name) ->
-    @index![name]
+    @config ||= @index![name]
 
   registry-libs-uri: ->
     @registry-location-parts!.join '/'
