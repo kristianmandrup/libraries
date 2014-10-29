@@ -3,7 +3,8 @@ UriAdapter  = require './remote/uri-adapter'
 module.exports = class RemoteRegistryAdapter
   (@options = {}) ->
     @type ||= @options.type or 'bower'
-    @adapter-type = 'pkg'
+    @installer-type = @options.installer or 'json'
+    @adapter-type = @options.adapter or 'pkg'
     super ...
     @validate!
     @
@@ -17,6 +18,9 @@ module.exports = class RemoteRegistryAdapter
 
   load: ->
     @adapter!.load!
+
+  install: ->
+    @adapter!.install @installer-type
 
   adapter: ->
     clazz = @selected-adapter!

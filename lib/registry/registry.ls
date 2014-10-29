@@ -7,9 +7,8 @@ module.exports = class Registry
     @validate!
     @
 
-  parse-options: ->
-    @type ||= @options.type or 'file'
-
+  parse: ->
+    @type ||= @options.type or 'local'
 
   validate: ->
     unless typeof! @name is 'String'
@@ -25,8 +24,8 @@ module.exports = class Registry
     adapters[@type] or @bad-adapter!
 
   adapters:
-    file: FileAdapter
-    uri:  UriAdapter
+    local:   LocalAdapter
+    remote:  RemoteAdapter
 
   bad-adapter: ->
     @error "Registry adapter #{@type} has not been registered"

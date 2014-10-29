@@ -21,7 +21,7 @@ module.exports = class RegistryPackageAdapter extends BaseAdapter implements Fil
   (@options = {}) ->
     @type ||= 'bower'
     @pkg-name = @options.pkg-name or 'libraries'
-    @installer-type = @options.installer || 'file'
+    @installer-type = @options.installer || 'json'
     @pkg-path = gconf.dir-for @type
     super ...
 

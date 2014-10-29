@@ -48,7 +48,7 @@ module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
   [@registry-uri, @registries-path!, @libs-file!].filter (part) -> !!part
 
   registries-path: ->
-    'registries'
+    'registry'
 
   libs-file: ->
     "#{@type}-libs.json"

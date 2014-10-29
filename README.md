@@ -3,17 +3,29 @@
 Libraries loader for Broccoli to make it easier and more efficient. 
 We should avoid re-packaging every javascript library as a simple Ember CLI addon wrapper!! 
 
-## Status
-
-It works :) 
- 
-You are encouraged to extend the API as you see fit and integrate more of the API as CLI commands to improve
-the user experience!
-
 ## Why?
 
 This project was created in response to ember-cli [#2177](https://github.com/stefanpenner/ember-cli/issues/2177).
 It aims to make it easier and more flexible to configure libraries to be imported by Broccoli.
+
+## Status
+
+Most of the infrastructure is now in place.
+
+From [Registry.md](https://github.com/kristianmandrup/libraries/blob/master/lib/registry/Registry.md)
+
+_Currently the registry configs are installed "as is", which is only works if the full library configuration is present there.
+However for many components, sufficient information is already available from their manifest file, such as the `main` key in a `bower.json` file.
+We also have the package adapters which can take this info and a normalizer to normalize it.
+The next step is thus to load extra config information directly via the package adapter (if library package is present there) and merge it with the info in the registry
+before installing the full info in the local cache._
+
+_After the configs are cached they can be loaded from the cache.
+Currently it is only at the load step that configs are normalized.
+This needs to be fixed, so that entries are all stored in a normalized form._
+
+You are encouraged to extend the API as you see fit and integrate more of the API as CLI commands to improve
+the overall user experience!
 
 ### Select libraries
 
@@ -139,8 +151,7 @@ When you build, it will build an`xlibs/builds/imports-dev.js` if your current en
 This way you can better manage which libraries have been tested to go into production without overwriting them 
 when in dev or test mode. Super bonus!
 
-Note: In future versions we might split up all configuration according to environment so you can opt-in to manage 
-libraries per environment.
+You can also split up configuration according to environment (`dev`, `test`, `prod`).
 
 ### Petal integration for ES6 goodness
 

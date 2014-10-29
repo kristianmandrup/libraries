@@ -1,10 +1,12 @@
 FileAdapter = require './local/file-adapter'
 PkgAdapter  = require './local/pkg-adapter'
 
+# TODO: use global config
 module.exports = class LocalRegistryAdapter
   (@options = {}) ->
     @type ||= @options.type or 'bower'
-    @adapter-type = @options.installer or 'pkg'
+    @installer-type = @options.installer or 'json'
+    @adapter-type = @options.adapter or 'pkg'
     super ...
     @validate!
     @
@@ -18,6 +20,9 @@ module.exports = class LocalRegistryAdapter
 
   load: ->
     @adapter!.load!
+
+  install: ->
+    @adapter!.install @installer-type
 
   adapter: ->
     clazz = @selected-adapter!
