@@ -18,9 +18,9 @@ module.exports = class Enricher
       throw new Error "Config must be an Object, was: #{@config}"
 
   enrich: ->
-    @adapt!
-    @config <<< @adapted!
-    @config
+    @adapt!then (res) ~>
+      @config <<< res # @adapted!
+      @config
 
   adapted: ->
     @_adapted or {}

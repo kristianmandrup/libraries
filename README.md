@@ -60,6 +60,9 @@ Add `library add foundation`
 
 Remove `library rm bootstrap`
 
+In fact, this is very similar to the [meteor](https://www.meteor.com/) package manager [atmosphere](https://atmospherejs.com/)
+with *isomorph* packages. Libraries has a very similar goal
+
 ### Configuration
 
 Libraries can be grouped by category (`bower`, `vendor`, `libs` etc.). 

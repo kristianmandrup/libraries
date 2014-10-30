@@ -1,8 +1,8 @@
-LocalBowerAdapter         = require './package/bower/local-bower'
-RemoteBowerAdapter        = require './package/bower/remote-bower'
+LocalBowerAdapter         = require './bower/local-bower'
+RemoteBowerAdapter        = require './bower/remote-bower'
 
-RemoteComponentAdapter    = require './package/component/remote-component'
-LocalComponentAdapter     = require './package/component/local-component'
+RemoteComponentAdapter    = require './component/remote-component'
+LocalComponentAdapter     = require './component/local-component'
 
 module.exports = class PkgAdapter
   (@options = {}) ->

@@ -1,7 +1,9 @@
-enricher = require '../../../../lib/registry/config/enricher'
+expect  = require 'chai' .expect
+log     = console.log
 
-LocalComponentAdapter   = require '../../../../lib/registry/config/package/component/local-component'
-
+Enricher            = require '../../../../lib/registry/config/enricher'
+PkgAdapter          = require '../../../../lib/registry/config/package/pkg-adapter'
+LocalBowerAdapter   = require '../../../../lib/registry/config/package/bower/local-bower'
 
 describe 'Enricher' ->
   describe 'create(@name, @config, @options = {})' ->
@@ -24,24 +26,25 @@ describe 'Enricher' ->
 
       describe 'enrich' ->
         specify 'enriches config' ->
-          expect normalizer.enrich! .to.eql {}
+          enricher.enrich!then (res) ->
+            expect res.categories .to.include "ui"
+            expect res.files .to.include "less/bootstrap.less"
 
-      describe 'type' ->
-        specify 'set to component' ->
-          expect normalizer.type .to.eql 'component'
 
-      describe 'from' ->
-        specify 'defaults to local' ->
-          expect normalizer.from .to.eql 'local'
+      describe 'adapted' ->
+        before ->
+          enricher.adapt!
+        specify 'is adapted obj' ->
+          expect enricher.adapted! .to.eql {}
 
-      describe 'bad-adapter' ->
-        specify 'throws' ->
-          expect normalizer.bad-adapter! .to.throw
+      describe 'adapt' ->
+        specify 'adapts' ->
+          enricher.adapt!then (res) ->
+            expect res.files .to.include "less/bootstrap.less"
 
-      describe 'adapter-clazz' ->
-        specify 'gets one' ->
-          expect normalizer.adapter-clazz! .to.eql LocalComponentAdapter
+      describe 'pkg-adapter' ->
+        specify 'is a PkgAdapter' ->
+          expect enricher.pkg-adapter! .to.be.an.instance-of PkgAdapter
 
-      describe 'adapter' ->
-        specify 'gets one' ->
-          expect normalizer.adapter('bootstrap') .to.be.an.instance-of LocalComponentAdapter
+        specify 'uses a LocalBowerAdapter' ->
+          expect enricher.pkg-adapter!.adapter! .to.be.an.instance-of LocalBowerAdapter
