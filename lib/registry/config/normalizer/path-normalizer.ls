@@ -71,7 +71,7 @@ module.exports = class PathNormalizer
 
   path-shortener: (config) ->
     config ||= @config
-    new PathShortener config
+    new FileShortener config
 
   dir-shortener: (config) ->
     config ||= @config

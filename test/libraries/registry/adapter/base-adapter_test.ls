@@ -1,9 +1,8 @@
-expect = require 'chai' .expect
+expect  = require 'chai' .expect
+log     = console.log
 
 BaseAdapter   = require '../../../../lib/registry/adapter/base-adapter'
-Installer     = require '../../../../lib/registry/installer'
-
-log = console.log
+Installer     = require '../../../../lib/registry/config/installer'
 
 describe 'BaseAdapter' ->
   var adapter
@@ -25,7 +24,7 @@ describe 'BaseAdapter' ->
 
   describe 'valid instance' ->
     before ->
-      adapter := new BaseAdapter registry: 'x'
+      adapter := new BaseAdapter registry: 'x', name: 'bootstrap'
 
     describe 'registry-uri' ->
       specify 'is path' ->
@@ -38,4 +37,8 @@ describe 'BaseAdapter' ->
     describe 'installer' ->
       specify 'is path' ->
         expect adapter.installer! .to.be.an.instance-of Installer
+
+    describe 'enrich-and-normalize' ->
+      specify 'enriches and normalizes' ->
+        expect -> adapter.enrich-and-normalize 'bootstrap' .to.throw
 

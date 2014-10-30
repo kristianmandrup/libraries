@@ -35,7 +35,7 @@ module.exports = class Normalizer
       throw new Error "Config to normalize must be an Object, was: #{@config}"
 
   should-normalize: ->
-    !!(@keys!.length is 1 and @keys!.0 is 'files')
+    @keys!['dir'] is void
 
   keys: ->
     @_keys ||= Object.keys @config

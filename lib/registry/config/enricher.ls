@@ -2,12 +2,13 @@ PkgAdapter = require './package/pkg-adapter'
 
 module.exports = class Enricher
   (@config, @options = {}) ->
-    @name = options.name
-    @type = options.type
+    @name = @options.name
+    @type = @options.type or 'bower'
     @validate!
     @
 
   validate: ->
+    console.log 'options', @options
     unless typeof! @name is 'String'
       throw new Error "Name must be a String, was: #{@name}"
 
@@ -19,7 +20,7 @@ module.exports = class Enricher
 
   enrich: ->
     @adapt!then (res) ~>
-      @config <<< res # @adapted!
+      @config <<< res
       @config
 
   adapted: ->

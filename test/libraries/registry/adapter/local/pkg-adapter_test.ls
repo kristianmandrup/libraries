@@ -3,6 +3,7 @@ log    = console.log
 
 Adapter     = require '../../../../../lib/registry/adapter/local/pkg-adapter'
 Installer   = require '../../../../../lib/registry/config/installer'
+Enricher    = require '../../../../../lib/registry/config/enricher'
 
 describe 'PkgAdapter' ->
   var adapter
@@ -25,7 +26,7 @@ describe 'PkgAdapter' ->
   describe 'valid instance' ->
     var uri, path
     before ->
-      adapter := new Adapter
+      adapter := new Adapter name: 'bootstrap'
       path    := 'bower_components/libraries/registry/bower-libs.json'
 
     describe 'pkg-path' ->
@@ -54,3 +55,13 @@ describe 'PkgAdapter' ->
       specify 'is json' ->
         adapter.list!then (list) ->
          expect list .to.include "ember-i18n"
+
+    describe 'read-config' ->
+      specify 'is json' ->
+        adapter.read-config("ember-i18n").then (res) ->
+         expect res.files .to.include 'lib/i18n.js'
+
+    describe 'enrich-and-normalize' ->
+      specify 'enriches and normalizes' ->
+        adapter.enrich-and-normalize("ember-i18n").then (res) ->
+          expect res.scripts.files .to.include 'i18n.js'

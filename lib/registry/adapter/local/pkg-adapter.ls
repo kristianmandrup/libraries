@@ -30,7 +30,8 @@ module.exports = class RegistryPackageAdapter extends BaseAdapter implements Fil
       throw new Error "pkg path must be a String, was:"
 
   read-config: (name) ->
-    @config ||= @index![name]
+    @config ||= @index!then (c) ->
+      c[name]
 
   registry-libs-uri: ->
     @registry-location-parts!.join '/'
