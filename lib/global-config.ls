@@ -54,6 +54,7 @@ module.exports = class GlobalConfig implements FileIO
 
   location: (path) ->
     loc-path = @location-of path, @rc-json!
+    console.log path, loc-path
     if loc-path
       loc = [@rc-json!.dir]
       loc = loc.concat loc-path
@@ -61,10 +62,24 @@ module.exports = class GlobalConfig implements FileIO
 
     @default-location-of path
 
-
+  find: (obj, path) ->
+    paths = path.split('.') if typeof! path is 'String'
+    return void if paths is void
+    path  = paths.shift!
+    return void unless obj
+    val = obj[path]
+    val = val! if typeof! val is 'Function'
+    return val if paths.length is 0
+    @find val, paths
 
   load-rc: ->
     @read @librariesrc
+
+  get: (path )->
+    @find(@rc-json!, path) or @find(@default!, path)
+
+  preferences: ->
+    @get 'preferences'
 
   select: ->
     file: ~>
@@ -118,3 +133,7 @@ module.exports = class GlobalConfig implements FileIO
     registries: [
       {name: 'libraries-official', type: 'uri', repo: 'kristianmandrup/libraries'}
     ]
+
+    preferences:
+      styles:   ["scss", "sass", "less", "css"]
+      scripts:  ["js", "min.js"]

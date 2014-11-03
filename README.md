@@ -28,18 +28,24 @@ configs are normalized. This needs to be fixed, so that entries are all stored i
 This will now be handled by the registry adapter, via the `BaseAdapter` class which now has a function `enrichAndNormalize`
 which is called to enrich and normalize a config before it's installed.
 
-```js
-class BaseAdapter
-  # ...
-  install: (name) ->
-    @installer!.install source: @enriched-config(name), target: @target-config(name)
+Currently there is no way that we can ensure exactly which files a config is being enriched with. For the bootstrap example
+ it includes both a `.less` and a `.css` file in the "main" files entry. We need to be able to filter which file extensions
+ we prefer for styles.
 
-  enriched-config: (name) ->
-    @read-config name
-    @enrich-and-normalize!
+We can define our preferences in `.librariesrc`.
+
+```js
+ preferences: {
+  styles: ['scss', 'sass', 'less', 'css']
+}
 ```
 
-This is still a Work In Progress...
+Which would mean that given multiple style files of the same name, we should use prioritize one file only in the order specified.
+For our bootstrap example, it would mean that only the 'bootstrap.less' file would be used.
+This will be handled by a new `Filter` class.
+
+Finally we need a way to examine which packages a given package manager has installed, then install for those entries not yet installed.
+Will be handled via a `PackageInstaller`.
 
 You are encouraged to extend the API as you see fit and integrate more of the API as CLI commands to improve
 the overall user experience!

@@ -25,5 +25,9 @@
       "type": "local",
       "path": "registry/bower-libs.json"
     }
-  ]
+  ],
+  "preferences": {
+    "styles": ["scss", "sass", "less", "css"],
+    "scripts": ["js", "min.js"]
+  }
 }

@@ -91,9 +91,22 @@
           return expect(gconf['default']().registry().dir()).to.eql('./xlibs/registry');
         });
       });
-      return describe('dir-for', function(){
+      describe('dir-for', function(){
         return specify('bower', function(){
           return expect(gconf.dirFor('bower')).to.eql('bower_components');
+        });
+      });
+      describe('find', function(){
+        return specify('finds obj via path', function(){
+          return expect(gconf.find({
+            preferences: 'x'
+          }, 'preferences')).to.eql('x');
+        });
+      });
+      return describe('preferences', function(){
+        return specify('loads all', function(){
+          log('prefs', gconf.preferences());
+          return expect(gconf.preferences().styles).to.eql(['scss', 'sass', 'less', 'css']);
         });
       });
     });

@@ -75,3 +75,12 @@ describe 'GlobalConfig' ->
     describe 'dir-for' ->
       specify 'bower' ->
         expect gconf.dir-for 'bower' .to.eql 'bower_components'
+
+    describe 'find' ->
+      specify 'finds obj via path' ->
+        expect gconf.find {preferences: 'x'}, 'preferences' .to.eql \x
+
+    describe 'preferences' ->
+      specify 'loads all' ->
+        log 'prefs', gconf.preferences!
+        expect gconf.preferences!.styles .to.eql ['scss', 'sass', 'less', 'css']
