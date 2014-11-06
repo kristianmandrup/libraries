@@ -14,6 +14,13 @@
   "config": {
     "file": "config.json"
   },
+  "registry": {
+    "adapter": {
+      "name": "pkg",
+      "type": "bower",
+      "installer": "json"
+    }
+  },
   "registries": [
     {
       "name": "libraries-official",
@@ -27,7 +34,7 @@
     }
   ],
   "preferences": {
-    "styles": ["scss", "sass", "less", "css"],
+    "styles": ["css", "less", "scss", "sass"],
     "scripts": ["js", "min.js"]
   }
 }

@@ -14,7 +14,6 @@ module.exports = class FileInstaller extends BaseInstaller implements FileIO
     unless typeof! @content is 'String'
       throw new Error "Source of config must be a String, was: #{@content}"
 
-
   install: ->
     return void if @exists @file
     try

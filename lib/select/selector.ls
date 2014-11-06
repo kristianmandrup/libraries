@@ -19,7 +19,7 @@ module.exports = class Select implements FileIO, ListMutator
     @
 
   selected-file: ->
-    if @options.env then @env-file! else gconf.selected.file!
+    if @options.env then @env-file! else gconf.select!file!
 
   env-file: ->
     [gconf.dir, @options.env,  'selected'].join '/'

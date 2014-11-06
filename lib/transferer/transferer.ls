@@ -10,7 +10,7 @@ gconf         = new GlobalConfig
 
 module.exports = class Transferer implements FileIO
   (@env) ->
-    @path = gconf.dir
+    @path = gconf.dir!
 
   transfer: ->
     @copy-select!

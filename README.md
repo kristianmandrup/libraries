@@ -10,45 +10,9 @@ It aims to make it easier and more flexible to configure libraries to be importe
 
 ## Status
 
-Most of the infrastructure is now in place.
+See also [Registry.md](https://github.com/kristianmandrup/libraries/blob/master/lib/registry/Registry.md)
 
-From [Registry.md](https://github.com/kristianmandrup/libraries/blob/master/lib/registry/Registry.md)
-
-_Currently the registry configs are installed "as is", which only works if the full library configuration is present there.
-However for many components, sufficient information is already available from their manifest file, such as the `main` key in a `bower.json` file.
-We also have the package adapters which can take this info and a normalizer to normalize it.
-The next step is thus to load extra config information directly via the package adapter (if library package is present there) and merge it with the info in the registry
-before installing the full info in the local cache._
-
-There is now a new `Enricher` clazz to handle this. The `Enricher` can enrich a given config entry with extra information, typically via a package manager file.
-
-_After the configs are cached they can be loaded from the cache. Currently it is only at the load step that
-configs are normalized. This needs to be fixed, so that entries are all stored in a normalized form._
-
-This is now be handled by the registry adapter, via the `BaseAdapter` class. The function `enrichAndNormalize`
-is called to enrich and normalize a config before it is installed.
-
-We then need a way to filter which files the Config will be enriched with. For the bootstrap example
- it includes both a `.less` and a `.css` file in the "main" files entry. We need to be able to filter which file extensions
- we want to include for styles.
-
-We can define our preferences in `.librariesrc` like this.
-
-```js
- preferences: {
-   scripts: ['js', 'min.js']
-   styles: ['scss', 'sass', 'less', 'css']
-}
-```
-
-Given multiple style files of the same name, we will prioritize one file only in the order specified.
-For our bootstrap example, it would mean that only the `bootstrap.less` file would be used as the style file to be merged in.
-This is handled by a new `Filter` class.
-
-Finally we need a way to examine which packages a given package manager has installed, then install for those entries not yet installed.
-This will be handled via a `PackageInstaller` class.
-
-All the infrastructure described here is now in place. We just need to connect it all together and ensure we can configure via
+All the infrastructure needed is now in place. Just need to connect it all together and ensure we can configure it all via
 the global config file.
 
 You are encouraged to extend the API as you see fit and integrate more of the API as CLI commands to improve

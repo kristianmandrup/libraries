@@ -81,29 +81,6 @@ module.exports = class GlobalConfig implements FileIO
   preferences: ->
     @get 'preferences'
 
-  select: ->
-    file: ~>
-      @location 'select.file'
-
-  builds: ->
-    dir: ~>
-      @location 'builds.dir'
-
-  components: ->
-    dir: ~>
-      @location 'components.dir'
-
-    file: ~>
-      @location 'components.file'
-
-  config: ->
-    file: ~>
-      @location 'config.file'
-
-  registry: ->
-    dir: ~>
-      @location 'registry.dir'
-
   registries: ->
     @parse-registries @location 'registries'
 

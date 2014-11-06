@@ -58,32 +58,32 @@
       });
       describe('select.file', function(){
         return specify('gets location', function(){
-          return expect(gconf.select().file()).to.eql('./xlibs/select');
+          return expect(gconf.location('select.file')).to.eql('./xlibs/select');
         });
       });
       describe('builds.dir', function(){
         return specify('gets location', function(){
-          return expect(gconf.builds().dir()).to.eql('./xlibs/builds');
+          return expect(gconf.location('builds.dir')).to.eql('./xlibs/builds');
         });
       });
       describe('components.dir', function(){
         return specify('gets location', function(){
-          return expect(gconf.components().dir()).to.eql('./xlibs/components');
+          return expect(gconf.location('components.dir')).to.eql('./xlibs/components');
         });
       });
       describe('components.file', function(){
         return specify('gets location', function(){
-          return expect(gconf.components().file()).to.eql('./xlibs/components/index.json');
+          return expect(gconf.location('components.file')).to.eql('./xlibs/components/index.json');
         });
       });
       describe('config.file', function(){
         return specify('gets location', function(){
-          return expect(gconf.config().file()).to.eql('./xlibs/config.json');
+          return expect(gconf.location('config.file')).to.eql('./xlibs/config.json');
         });
       });
       describe('registry.dir', function(){
         return specify('gets location', function(){
-          return expect(gconf.registry().dir()).to.eql('./xlibs/registry');
+          return expect(gconf.location('registry.dir')).to.eql('./xlibs/registry');
         });
       });
       describe('default registry.dir', function(){

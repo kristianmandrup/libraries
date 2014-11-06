@@ -35,8 +35,8 @@ module.exports = class FileNormalizer
 
   types:
     scripts: ['js', 'coffee', 'ls']
-    styles: ['css', 'scss', 'less', 'sass']
-    fonts:  ['eof', 'svg']
+    styles: ['css', 'less', 'scss', 'sass']
+    fonts:  ['eot', 'svg', 'ttf', 'woff']
     images: ['jpg', 'png', 'gif', 'bmp']
 
   add-file: (type) ->

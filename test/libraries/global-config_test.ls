@@ -46,27 +46,27 @@ describe 'GlobalConfig' ->
 
     describe 'select.file' ->
       specify 'gets location' ->
-        expect gconf.select!file! .to.eql './xlibs/select'
+        expect gconf.location \select.file .to.eql './xlibs/select'
 
     describe 'builds.dir' ->
       specify 'gets location' ->
-        expect gconf.builds!dir! .to.eql './xlibs/builds'
+        expect gconf.location \builds.dir .to.eql './xlibs/builds'
 
     describe 'components.dir' ->
       specify 'gets location' ->
-        expect gconf.components!dir! .to.eql './xlibs/components'
+        expect gconf.location \components.dir .to.eql './xlibs/components'
 
     describe 'components.file' ->
       specify 'gets location' ->
-        expect gconf.components!file! .to.eql './xlibs/components/index.json'
+        expect gconf.location \components.file .to.eql './xlibs/components/index.json'
 
     describe 'config.file' ->
       specify 'gets location' ->
-        expect gconf.config!file! .to.eql './xlibs/config.json'
+        expect gconf.location \config.file .to.eql './xlibs/config.json'
 
     describe 'registry.dir' ->
       specify 'gets location' ->
-        expect gconf.registry!dir! .to.eql './xlibs/registry'
+        expect gconf.location \registry.dir .to.eql './xlibs/registry'
 
     describe 'default registry.dir' ->
       specify 'gets location' ->

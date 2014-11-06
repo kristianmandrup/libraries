@@ -31,7 +31,6 @@ module.exports = class RootPath
 
     for file in @files
       unless typeof! file is 'String'
-        console.log 'file', file, @files
         break
       return root unless file.match new RegExp "^#{path}"
 
