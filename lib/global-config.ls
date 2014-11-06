@@ -54,7 +54,6 @@ module.exports = class GlobalConfig implements FileIO
 
   location: (path) ->
     loc-path = @location-of path, @rc-json!
-    console.log path, loc-path
     if loc-path
       loc = [@rc-json!.dir]
       loc = loc.concat loc-path

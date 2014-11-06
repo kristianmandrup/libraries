@@ -105,8 +105,7 @@
       });
       return describe('preferences', function(){
         return specify('loads all', function(){
-          log('prefs', gconf.preferences());
-          return expect(gconf.preferences().styles).to.eql(['scss', 'sass', 'less', 'css']);
+          return expect(gconf.preferences().styles).to.include('css', 'less', 'scss', 'sass');
         });
       });
     });

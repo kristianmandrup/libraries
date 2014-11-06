@@ -82,5 +82,4 @@ describe 'GlobalConfig' ->
 
     describe 'preferences' ->
       specify 'loads all' ->
-        log 'prefs', gconf.preferences!
-        expect gconf.preferences!.styles .to.eql ['scss', 'sass', 'less', 'css']
+        expect gconf.preferences!.styles .to.include \css \less \scss \sass
