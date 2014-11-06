@@ -4,7 +4,7 @@ fs              = require 'fs-extra'
 util            = require 'util'
 
 is-blank = (str) ->
-    !str or /^\s*$/.test str
+  !str or /^\s*$/.test str
 
 GlobalConfig  = require '../../../global-config'
 gconf         = new GlobalConfig

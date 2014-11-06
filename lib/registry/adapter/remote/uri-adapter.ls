@@ -2,11 +2,12 @@ FileIO        = require '../../../util/file-io'
 Installer     = require '../../config/installer'
 BaseAdapter   = require '../../base-adapter'
 fs            = require 'fs-extra'
+Q = require 'q'
 
 sync-request = require 'sync-request'
 retrieve     = require '../../../util/remote' .retrieve
 
-module.exports = class RegistryUriAdapter extends BaseAdapter  implements FileIO
+module.exports = class RegistryUriAdapter extends BaseAdapter implements FileIO
   (@options = {}) ->
     @installer-type = @options.installer or 'file'
     @repo-type = @options.repo-type or 'github'

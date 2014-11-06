@@ -1,6 +1,8 @@
 {
   "name": "dummy",
   "devDependencies": {
-    "bootstrap": "3.2.0"
+    "bootstrap": "3.2.0",
+    "masonry": "desandro/masonry#~3.1.5",
+    "foundation": "~5.4.7"
   }
 }

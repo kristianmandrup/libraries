@@ -36,16 +36,17 @@ We can define our preferences in `.librariesrc`.
 
 ```js
  preferences: {
-  styles: ['scss', 'sass', 'less', 'css']
+   scripts: ['js', 'min.js']
+   styles: ['scss', 'sass', 'less', 'css']
 }
 ```
 
-Which would mean that given multiple style files of the same name, we should use prioritize one file only in the order specified.
-For our bootstrap example, it would mean that only the 'bootstrap.less' file would be used.
-This will be handled by a new `Filter` class.
+Which would mean that given multiple style files of the same name, we should prioritize one file only in the order specified.
+For our bootstrap example, it would mean that only the `bootstrap.less` file would be used.
+This is be handled by a new `Filter` class.
 
 Finally we need a way to examine which packages a given package manager has installed, then install for those entries not yet installed.
-Will be handled via a `PackageInstaller`.
+This will be handled via a `PackageInstaller` class.
 
 You are encouraged to extend the API as you see fit and integrate more of the API as CLI commands to improve
 the overall user experience!

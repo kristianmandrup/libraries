@@ -14,6 +14,7 @@ registry =
       cb null, pkgs
 
 BaseComponentAdapter  = require './base-component'
+Q = require 'Q'
 
 module.exports = class RemoteComponentAdapter extends BaseComponentAdapter
   (@name, @options = {}) ->
