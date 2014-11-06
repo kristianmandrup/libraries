@@ -20,19 +20,19 @@ We also have the package adapters which can take this info and a normalizer to n
 The next step is thus to load extra config information directly via the package adapter (if library package is present there) and merge it with the info in the registry
 before installing the full info in the local cache._
 
-We are creating a new `config/enricher` to handle this. The `Enricher` can enrich a given config entry with extra information, typically via a package manager file.
+There is now a new `Enricher` clazz to handle this. The `Enricher` can enrich a given config entry with extra information, typically via a package manager file.
 
 _After the configs are cached they can be loaded from the cache. Currently it is only at the load step that
 configs are normalized. This needs to be fixed, so that entries are all stored in a normalized form._
 
-This will now be handled by the registry adapter, via the `BaseAdapter` class which now has a function `enrichAndNormalize`
-which is called to enrich and normalize a config before it's installed.
+This is now be handled by the registry adapter, via the `BaseAdapter` class. The function `enrichAndNormalize`
+is called to enrich and normalize a config before it is installed.
 
-Currently there is no way that we can ensure exactly which files a config is being enriched with. For the bootstrap example
+We then need a way to filter which files the Config will be enriched with. For the bootstrap example
  it includes both a `.less` and a `.css` file in the "main" files entry. We need to be able to filter which file extensions
- we prefer for styles.
+ we want to include for styles.
 
-We can define our preferences in `.librariesrc`.
+We can define our preferences in `.librariesrc` like this.
 
 ```js
  preferences: {
@@ -41,12 +41,15 @@ We can define our preferences in `.librariesrc`.
 }
 ```
 
-Which would mean that given multiple style files of the same name, we should prioritize one file only in the order specified.
-For our bootstrap example, it would mean that only the `bootstrap.less` file would be used.
-This is be handled by a new `Filter` class.
+Given multiple style files of the same name, we will prioritize one file only in the order specified.
+For our bootstrap example, it would mean that only the `bootstrap.less` file would be used as the style file to be merged in.
+This is handled by a new `Filter` class.
 
 Finally we need a way to examine which packages a given package manager has installed, then install for those entries not yet installed.
 This will be handled via a `PackageInstaller` class.
+
+All the infrastructure described here is now in place. We just need to connect it all together and ensure we can configure via
+the global config file.
 
 You are encouraged to extend the API as you see fit and integrate more of the API as CLI commands to improve
 the overall user experience!
