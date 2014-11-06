@@ -12,18 +12,26 @@ module.exports = class Filter
       throw new Error "Config to filter must be an Object, was: #{@config}"
 
   filter: ->
-    for key in @filter-pref-keys
-      @filter-on key
+    res = {}
+    for key in @filter-pref-keys!
+      res[key] ||= {}
+      res[key].files = @filter-on key
+    res
 
   filter-on: (name) ->
     files = @config-for(name).files
-    for pref in @prefs-for(name)
-       return @filter-pref files, pref
+    prefs = @prefs-for(name)
+    res = []
+    for file in files
+      filtered = @filter-one files, file, prefs
+      for f in filtered
+        res.push f unless res.index-of(f) > -1
+    res
 
   filter-pref: (files, prefs) ->
     prefs = [prefs] unless typeof! prefs is 'Array'
-    for file in files
-      for pref in prefs
+    for pref in prefs
+      for file in files
         return file if @matches file, pref
 
   filter-one: (files, file, prefs) ->
@@ -32,6 +40,7 @@ module.exports = class Filter
     #  remove other files of same name
     # group by same filename without ext
     same-files = @same files, file
+    # return [file] unless same-files.length > 1
     best-file  = @filter-pref same-files, prefs
     files.filter (file) ->
       file is best-file or same-files.index-of(file) is -1
@@ -42,12 +51,17 @@ module.exports = class Filter
       @file-name(name) is fname
 
   file-name: (file) ->
-    path.basename file, path.extname(file)
+    lname = path.basename file, path.extname(file)
+    matches = lname.match /(.*)\./
+    if matches then matches[1] else lname
 
   matches: (file, pref) ->
     return false unless typeof! pref is 'String'
-    pref = ".#{pref}" unless pref[0] is '.'
-    !!(path.extname(file) is pref)
+    # pref = ".#{pref}" unless pref[0] is '.'
+    bname = path.basename file
+    matches = file.match /\.(.*)/
+    ext = matches[1] # path.extname(file)
+    !!(ext is pref)
 
   config-for: (name) ->
     @config[name]
