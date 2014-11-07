@@ -9,8 +9,8 @@ util = require 'util'
 
 module.exports = class BaseAdapter implements FileIO
   (@options = {}) ->
-    @registry-uri         ||= @options.registry
-    @local-registry-path  = @options.local or gconf.components!dir!
+    @registry-uri         = @options.registry
+    @local-registry-path  = @options.local or gconf.location 'components.dir'
     @validate!
     @
 

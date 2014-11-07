@@ -4,22 +4,35 @@ BaseAdapter   = require '../base-adapter'
 fs            = require 'fs-extra'
 Q = require 'q'
 
+GlobalConfig  = require '../../../global-config'
+gconf         = new GlobalConfig
+
 sync-request = require 'sync-request'
 retrieve     = require '../../../util/remote' .retrieve
 
 module.exports = class RegistryUriAdapter extends BaseAdapter implements FileIO
   (@options = {}) ->
-    @installer-type = @options.installer or 'file'
-    @repo-type = @options.repo-type or 'github'
-    @type ||= 'bower'
-    @registry-uri = @options.uri or @repo-uri!
+    @installer-type = @options.installer or @default-installer!
+    @repo-type      = @options.repo-type or @default-repo!
+    @type           = @options.type or @default-type!
+    @registry-uri   = @options.uri or @repo-uri!
     super ...
     validate!
     @
 
+  default-type: ->
+    gconf.get 'registry.adapter.type' or 'bower'
+
+  default-installer: ->
+    gconf.get 'registry.adapter.installer' or 'file'
+
+  default-repo: ->
+    gconf.get 'registry.adapter.repo' or 'github'
+
   repo-uri: ->
     clazz = @repo-clazz!
-    new clazz.registry-path @options.repo
+    repo = new clazz
+    repo.registry-path @options.repo
 
   repo-clazz: ->
     @repos![@repo-type]
@@ -39,7 +52,7 @@ module.exports = class RegistryUriAdapter extends BaseAdapter implements FileIO
 
   # filter out any undefined parts
   registry-location-parts: ->
-  [@registry-uri, @registries-path!, @libs-file!].filter (part) -> !!part
+    [@registry-uri!, @registries-path!, @libs-file!].filter (part) -> !!part
 
   registries-path: ->
     'registry'

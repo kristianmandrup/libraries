@@ -1,7 +1,7 @@
 expect = require 'chai' .expect
 
-Adapter     = require '../../../../lib/registry/adapter/uri-adapter'
-Installer   = require '../../../../lib/registry/installer'
+Adapter     = require '../../../../../lib/registry/adapter/remote/uri-adapter'
+Installer   = require '../../../../../lib/registry/config/installer'
 
 log = console.log
 
