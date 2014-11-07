@@ -9,7 +9,7 @@ gconf        = new GlobalConfig
 
 module.exports = class ComponentConfig implements FileIO
   (@name, @path) ->
-    @path ||= gconf.components.dir!
+    @path ||= gconf.location 'components.dir'
     @validate!
     @
 

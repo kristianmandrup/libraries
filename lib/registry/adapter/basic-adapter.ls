@@ -1,4 +1,4 @@
-GlobalConfig  = require '../../../global-config'
+GlobalConfig  = require '../../global-config'
 gconf         = new GlobalConfig
 
 module.exports = class BasicRegistryAdapter

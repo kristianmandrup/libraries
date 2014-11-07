@@ -1,5 +1,5 @@
-FileAdapter   = require './adapter/file-adapter'
-UriAdapter    = require './adapter/uri-adapter'
+FileAdapter   = require './adapter/local-adapter'
+UriAdapter    = require './adapter/remote-adapter'
 
 module.exports = class Registry
   (@options = {}) ->

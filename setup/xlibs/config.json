@@ -1,0 +1,14 @@
+{
+  "config": {
+  },
+  "containers": {
+    "bower": {
+      "components": {
+      },
+      "libs": {
+      }
+    },
+    "vendor": {
+    }
+  }
+}

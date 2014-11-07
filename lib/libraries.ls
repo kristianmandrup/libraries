@@ -5,9 +5,22 @@ Generator     = require './output/generator'
 ConfigLoader  = require './registry/config-loader'
 Transferer    = require './tranferer/tranferer'
 
+fs = require 'fs-extra'
+
 module.exports =
   select: (opts = {}) ->
     @_selector ||= new Selector opts or @options
+
+  setup: ->
+    xlibs-src = path.resolve __dirname, 'setup/xlibs'
+    fs.copy xlibs-src, '.', (err) ->
+      return console.error(err) if err
+
+  add: (opts = {}) ->
+    @config(opts).add opts
+
+  remove: (opts = {}) ->
+    @config(opts).remove opts
 
   config: (opts = {}) ->
     @_config ||= new Configurator opts or @options

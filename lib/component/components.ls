@@ -16,7 +16,7 @@ gconf       = new GlobalConfig
 
 module.exports = class Components implements ListMutator
   (@list, @path) ->
-    @path ||= gconf.components.dir
+    @path ||= gconf.location 'components.dir'
     @validate!
     @listed-components!
     @

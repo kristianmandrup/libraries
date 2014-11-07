@@ -1,5 +1,5 @@
 FileIO          = require '../util/file-io'
-ListMutator     = require '../list-mutator'
+ListMutator     = require '../util/list-mutator'
 Configurator    = require '../config/configurator'
 Registry        = require '../registry/registry'
 

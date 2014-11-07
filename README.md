@@ -3,10 +3,12 @@
 Libraries loader for Broccoli to make it easier and more efficient. 
 We should avoid re-packaging every javascript library as a simple Ember CLI addon wrapper!! 
 
+Please read the blog post introducing [libraries](http://infomatrix-blog.herokuapp.com/post/libraries)
+
 ## Why?
 
 This project was created in response to ember-cli [#2177](https://github.com/stefanpenner/ember-cli/issues/2177).
-It aims to make it easier and more flexible to configure libraries to be imported by Broccoli.
+It aims to make it easier and more flexible to configure libraries to be imported by Broccoli or similar use cases.
 
 ## Status
 
@@ -141,7 +143,7 @@ apply on your `app` to do the magic imports! *Awesome 8>)*
 }).call(this);
 ```
 
-When you build, it will build an`xlibs/builds/imports-dev.js` if your current environment is `dev` and so on... 
+When you build, it will build an `xlibs/builds/imports-dev.js` if your current environment is `dev` and so on...
 This way you can better manage which libraries have been tested to go into production without overwriting them 
 when in dev or test mode. Super bonus!
 

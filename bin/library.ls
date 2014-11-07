@@ -5,14 +5,33 @@ program   = require 'commander'
 
 program
   .version('0.0.1')
-  .option '-f, --foo', 'enable some foo'
-  .option '-b, --bar', 'enable some bar'
-  .option '-B, --baz', 'enable some baz'
+#  .option '-f, --foo', 'enable some foo'
+#  .option '-b, --bar', 'enable some bar'
+#  .option '-B, --baz', 'enable some baz'
+
+program
+ .command 'setup'
+ .description 'setup libraries'
+ .action ->
+   libraries.setup!
 
 # `library add bootstrap`
 # `library add lib:bootstrap` (no component check)
 # `library add cmp:bootstrap` - downloads bootstrap component config from registry if not present
 # `library add bootstrap index.js` - will set the entry to `"bootstrap": "index.js"`
+program
+ .command 'add <libs>'
+ .description 'add the given libraries'
+ .action (libs) ->
+   console.log 'add libraries "%s"', libs
+
+#`library rm cmp:bootstrap` - removes bootstrap component config from registry
+#`library rm bootstrap` - will remove entry from `selected` file.
+program
+ .command 'rm <libs>'
+ .description 'remove the given libraries'
+ .action (libs) ->
+   console.log 'remove libraries "%s"', libs
 
 program
  .command 'select <lib>'
@@ -21,9 +40,6 @@ program
    console.log 'select library "%s"', lib
    libraries.select.add lib .save!
    libraries.install!
-
-#`library rm cmp:bootstrap` - removes bootstrap component config from registry
-#`library rm bootstrap` - will remove entry from `selected` file.
 
 program
  .command 'unselect <lib>'
