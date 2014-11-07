@@ -14,8 +14,8 @@ It aims to make it easier and more flexible to configure libraries to be importe
 
 See also [Registry.md](https://github.com/kristianmandrup/libraries/blob/master/lib/registry/Registry.md)
 
-All the infrastructure needed is now in place. Just need to connect it all together and ensure we can configure it all via
-the global config file.
+The infrastructure needed is now mostly in place. Just need to connect it all together and ensure we can configure it all via
+the global config file. A few bugs remain to be fixes as well, notably in `registry/config/normalizer`.
 
 You are encouraged to extend the API as you see fit and integrate more of the API as CLI commands to improve
 the overall user experience!

@@ -17,7 +17,7 @@ module.exports = class RegistryUriAdapter extends BaseAdapter implements FileIO
     @type           = @options.type or @default-type!
     @registry-uri   = @options.uri or @repo-uri!
     super ...
-    validate!
+    @validate!
     @
 
   default-type: ->
@@ -52,7 +52,7 @@ module.exports = class RegistryUriAdapter extends BaseAdapter implements FileIO
 
   # filter out any undefined parts
   registry-location-parts: ->
-    [@registry-uri!, @registries-path!, @libs-file!].filter (part) -> !!part
+    [@registry-uri, @registries-path!, @libs-file!].filter (part) -> !!part
 
   registries-path: ->
     'registry'

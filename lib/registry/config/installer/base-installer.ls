@@ -8,7 +8,7 @@ module.exports = class BaseInstaller
   (@name, @content, @options = {}) ->
     @file ||= @options.file
     @validate!
-    @log = @options.log || console.log
+    @log = @options.log or console.log
     @
 
   validate: ->

@@ -23,7 +23,7 @@ describe 'Filter' ->
           scripts:
             files: ['js/bootstrap.js']
           styles:
-            files: ['css/bootstrap.less']
+            files: ['css/bootstrap.css']
         }
 
     describe 'filter-on(name)' ->
@@ -31,7 +31,7 @@ describe 'Filter' ->
         expect filter.filter-on('scripts') .to.eql ['js/bootstrap.js']
 
       specify 'filters styles using prefs' ->
-        expect filter.filter-on('styles') .to.eql ['css/bootstrap.less']
+        expect filter.filter-on('styles') .to.eql ['css/bootstrap.css']
 
     describe 'filter-one(files, file)' ->
       specify 'filters files using prefs' ->

@@ -2,7 +2,7 @@
 (function(){
   var expect, Github, log;
   expect = require('chai').expect;
-  Github = require('../../../../../lib/registry/adapter/repo/github');
+  Github = require('../../../../../../lib/registry/adapter/remote/repo/github');
   log = console.log;
   describe('Github repo adapter', function(){
     var github;

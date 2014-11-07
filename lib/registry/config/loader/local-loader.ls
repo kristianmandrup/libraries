@@ -12,7 +12,7 @@ module.exports = class LocalLoader extends BaseLoader
     super ...
     @type       = @options.type or 'composite'
     @component  = @options.component or 'bower'
-    @path       = @options.path or gconf.components!.dir!
+    @path       = @options.path or gconf.location 'components.dir'
     @validate!
     @
 

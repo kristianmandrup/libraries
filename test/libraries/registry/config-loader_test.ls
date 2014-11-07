@@ -9,6 +9,8 @@ CompositeLoader     = require '../../../lib/registry/config/loader/composite-loa
 RemoteConfigLoader  = require '../../../lib/registry/config/loader/remote-loader'
 LocalConfigLoader   = require '../../../lib/registry/config/loader/local-loader'
 
+ConfigLoader   = require '../../../lib/registry/config-loader'
+
 log = console.log
 
 describe 'ConfigLoader' ->

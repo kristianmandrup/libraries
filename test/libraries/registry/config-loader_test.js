@@ -5,11 +5,12 @@
  * Time: 12:45
  */
 (function(){
-  var expect, CompositeLoader, RemoteConfigLoader, LocalConfigLoader, log;
+  var expect, CompositeLoader, RemoteConfigLoader, LocalConfigLoader, ConfigLoader, log;
   expect = require('chai').expect;
   CompositeLoader = require('../../../lib/registry/config/loader/composite-loader');
   RemoteConfigLoader = require('../../../lib/registry/config/loader/remote-loader');
   LocalConfigLoader = require('../../../lib/registry/config/loader/local-loader');
+  ConfigLoader = require('../../../lib/registry/config-loader');
   log = console.log;
   describe('ConfigLoader', function(){
     var loader;

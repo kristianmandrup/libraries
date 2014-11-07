@@ -1,5 +1,5 @@
-FileAdapter   = require './adapter/local-adapter'
-UriAdapter    = require './adapter/remote-adapter'
+LocalAdapter   = require './adapter/local-adapter'
+RemoteAdapter  = require './adapter/remote-adapter'
 
 module.exports = class Registry
   (@options = {}) ->
@@ -11,7 +11,7 @@ module.exports = class Registry
     @type ||= @options.type or 'local'
 
   validate: ->
-    unless typeof! @name is 'String'
+    unless typeof! @type is 'String'
       throw new Error "Type must be a String, was: #{@type}"
 
   install: (name) ->

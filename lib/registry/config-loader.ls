@@ -12,7 +12,7 @@ module.exports = class ConfigLoader
     @
 
   components-path: ->
-    if @options.env then @env-path! else gconf.components!dir!
+    if @options.env then @env-path! else gconf.location 'components.dir'
 
   env-path: ->
     [gconf.dir, @options.env,  'components'].join '/'

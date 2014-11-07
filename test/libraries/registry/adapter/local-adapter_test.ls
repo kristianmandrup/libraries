@@ -1,9 +1,9 @@
 expect = require 'chai' .expect
 log    = console.log
 
-Adapter       = require '../../../../../lib/registry/adapter/local-adapter'
-FileAdapter   = require '../../../../../lib/registry/adapter/local/file-adapter'
-PkgAdapter    = require '../../../../../lib/registry/config/local/pkg-adapter'
+Adapter       = require '../../../../lib/registry/adapter/local-adapter'
+FileAdapter   = require '../../../../lib/registry/adapter/local/file-adapter'
+PkgAdapter    = require '../../../../lib/registry/adapter/local/pkg-adapter'
 
 describe 'LocalRegistryAdapter' ->
   describe 'create' ->

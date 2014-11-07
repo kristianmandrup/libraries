@@ -3,8 +3,8 @@
   var expect, log, Adapter, UriAdapter;
   expect = require('chai').expect;
   log = console.log;
-  Adapter = require('../../../../../lib/registry/adapter/remote-adapter');
-  UriAdapter = require('../../../../../lib/registry/adapter/remote/uri-adapter');
+  Adapter = require('../../../../lib/registry/adapter/remote-adapter');
+  UriAdapter = require('../../../../lib/registry/adapter/remote/uri-adapter');
   describe('RemoteRegistryAdapter', function(){
     describe('create', function(){
       context('invalid', function(){

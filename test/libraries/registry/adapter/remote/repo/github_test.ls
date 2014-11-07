@@ -1,6 +1,6 @@
 expect = require 'chai' .expect
 
-Github   = require '../../../../../lib/registry/adapter/repo/github'
+Github   = require '../../../../../../lib/registry/adapter/remote/repo/github'
 
 log = console.log
 

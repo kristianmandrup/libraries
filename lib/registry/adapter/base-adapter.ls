@@ -9,10 +9,16 @@ util = require 'util'
 
 module.exports = class BaseAdapter implements FileIO
   (@options = {}) ->
-    @registry-uri         = @options.registry
-    @local-registry-path  = @options.local or gconf.location 'components.dir'
+    @registry-uri         = @options.registry or @default-registry-uri!
+    @local-registry-path  = @options.local or @default-components-dir!
     @validate!
     @
+
+  default-components-dir: ->
+    gconf.location 'components.dir' or './xlibs/components/'
+
+  default-registry-uri: ->
+    "https://raw.githubusercontent.com/kristianmandrup/libraries/master/registry"
 
   validate: ->
 #    unless typeof! @registry-uri is 'String'

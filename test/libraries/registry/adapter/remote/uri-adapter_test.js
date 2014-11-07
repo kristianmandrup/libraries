@@ -36,8 +36,8 @@
     return describe('valid instance', function(){
       var uri;
       before(function(){
-        adapter = new Adapter;
-        return uri = "https://raw.githubusercontent.com/kristianmandrup/libraries/master/registry";
+        uri = "https://raw.githubusercontent.com/kristianmandrup/libraries/master/registry";
+        return adapter = new Adapter;
       });
       describe('registry-uri', function(){
         return specify('is path', function(){

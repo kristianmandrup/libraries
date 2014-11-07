@@ -8,7 +8,6 @@ module.exports = class Enricher
     @
 
   validate: ->
-    console.log 'options', @options
     unless typeof! @name is 'String'
       throw new Error "Name must be a String, was: #{@name}"
 

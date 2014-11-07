@@ -26,8 +26,9 @@ describe 'UriAdapter' ->
   describe 'valid instance' ->
     var uri
     before ->
-      adapter := new Adapter
       uri := "https://raw.githubusercontent.com/kristianmandrup/libraries/master/registry"
+      adapter := new Adapter
+
 
     describe 'registry-uri' ->
       specify 'is path' ->

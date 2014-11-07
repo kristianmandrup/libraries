@@ -27,7 +27,7 @@
               files: ['js/bootstrap.js']
             },
             styles: {
-              files: ['css/bootstrap.less']
+              files: ['css/bootstrap.css']
             }
           });
         });
@@ -37,7 +37,7 @@
           return expect(filter.filterOn('scripts')).to.eql(['js/bootstrap.js']);
         });
         return specify('filters styles using prefs', function(){
-          return expect(filter.filterOn('styles')).to.eql(['css/bootstrap.less']);
+          return expect(filter.filterOn('styles')).to.eql(['css/bootstrap.css']);
         });
       });
       describe('filter-one(files, file)', function(){

@@ -7,7 +7,7 @@ gconf         = new GlobalConfig
 
 module.exports = class JsonConfigLoader extends BaseLoader
   (@name, @path, @options = {}) ->
-    @path ||= gconf.components!.dir!
+    @path ||= gconf.location 'components.dir'
     super ...
     @validate!
     @

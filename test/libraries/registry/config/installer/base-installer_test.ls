@@ -1,6 +1,6 @@
 expect = require 'chai' .expect
 
-Installer = require '../../../../lib/registry/installer/base-installer'
+Installer = require '../../../../../lib/registry/config/installer/base-installer'
 
 log = console.log
 
