@@ -1,5 +1,6 @@
 PathNormalizer  = require '../../../../../lib/registry/config/normalizer/path-normalizer'
-PathShortener   = require '../../../../../lib/registry/config/normalizer/path-shortener'
+FileShortener   = require '../../../../../lib/registry/config/normalizer/file-shortener'
+DirShortener    = require '../../../../../lib/registry/config/normalizer/dir-shortener'
 
 expect  = require 'chai' .expect
 log     = console.log
@@ -14,6 +15,10 @@ describe 'PathNormalizer' ->
       files: ['dist/js/bootstrap.js']
     styles:
       files: ['dist/css/bootstrap.css']
+
+  config.xyz =
+    scripts:
+      files: ['x/y/z.js']
 
   describe 'create(@config)' ->
 
@@ -47,6 +52,43 @@ describe 'PathNormalizer' ->
       specify 'scripts dir = js' ->
         expect config.styles.files.0 .to.eql 'bootstrap.css'
 
-    describe 'path-shortener' ->
-      specify 'is a PathShortener' ->
-        expect normalizer.path-shortener! .to.be.an.instance-of PathShortener
+    describe.only 'normalize xyz' ->
+      before ->
+        normalizer := new PathNormalizer config.xyz, ['x/y/z.js']
+
+      describe.only 'set-root' ->
+        specify 'sets root' ->
+          expect normalizer.set-root! .to.eql 'x'
+
+      describe 'config-keys' ->
+        specify 'keys' ->
+          expect normalizer.config-keys! .to.eql 'scripts'
+
+      describe 'dirs' ->
+        specify 'is x,y' ->
+          expect normalizer.dir! .to.eql [\x \y]
+
+      describe 'normalize-key-dirs' ->
+        specify 'normalizes dirs' ->
+          expect normalizer.normalize-key-dirs! .to.eql [\x \y]
+
+      describe 'normalize-key-files' ->
+        specify 'normalizes files' ->
+          expect normalizer.normalize-key-files! .to.eql [\x \y]
+
+      describe 'normalize' ->
+        specify \normalizes ->
+          expect normalizer.normalize! .to.eql {
+            dir: 'x',
+            scripts:
+              dir: 'y',
+              files: ['z.js']
+          }
+
+    describe 'file-shortener' ->
+      specify 'is a FileShortener' ->
+        expect normalizer.file-shortener! .to.be.an.instance-of FileShortener
+
+    describe 'dir-shortener' ->
+      specify 'is a DirShortener' ->
+        expect normalizer.dir-shortener! .to.be.an.instance-of DirShortener

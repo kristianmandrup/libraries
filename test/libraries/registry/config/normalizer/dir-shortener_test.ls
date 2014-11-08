@@ -23,4 +23,6 @@ describe 'DirShortener' ->
 
     describe 'shorten-dir' ->
       specify 'shortens dir path' ->
-        expect shortener.shorten-dir('dist').dir .to.eql 'js'
+        config = shortener.shorten-dir('dist')
+        log config
+        expect config.dir .to.eql 'js'

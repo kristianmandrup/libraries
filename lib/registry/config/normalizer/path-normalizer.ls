@@ -22,7 +22,9 @@ module.exports = class PathNormalizer
   # now iterate dirs, find root of common dir and set as top lv dir
   normalize: ->
     @normalize-key-files!
+    console.log 'config', @config
     @normalize-key-dirs!
+    console.log 'config', @config
     @config
 
   set-root: ->
@@ -59,7 +61,7 @@ module.exports = class PathNormalizer
     root = @root-path-of(config.files).find!
     unless is-blank root
       config.dir = root
-      @config[key] = @path-shortener(config).shorten-files!
+      @config[key] = @file-shortener(config).shorten-files!
 
   normalize-dir-for: (key, config) ->
     return if key is 'dir'
@@ -69,7 +71,7 @@ module.exports = class PathNormalizer
   root-path-of: (files) ->
     new RootPath files
 
-  path-shortener: (config) ->
+  file-shortener: (config) ->
     config ||= @config
     new FileShortener config
 

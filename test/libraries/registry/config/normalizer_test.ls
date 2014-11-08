@@ -23,16 +23,16 @@ describe 'Normalizer' ->
     describe 'should-normalize' ->
       var normalizer, config
 
-      context 'only files key' ->
+      context 'no dir' ->
         before-each ->
           normalizer := new Normalizer {files: ['x/y.js']}, {type: 'component'}
 
         specify 'it should' ->
           expect normalizer.should-normalize! .to.be.true
 
-      context 'multiple keys or any non- files: key' ->
+      context 'has a dir' ->
         before-each ->
-          normalizer := new Normalizer {scripts: ['x/y.js']}, {type: 'component'}
+          normalizer := new Normalizer {dir: \x, scripts: ['y.js']}, {type: 'component'}
 
         specify 'it should not' ->
           expect normalizer.should-normalize! .to.be.false

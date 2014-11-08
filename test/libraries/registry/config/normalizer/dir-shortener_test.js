@@ -25,7 +25,10 @@
       });
       return describe('shorten-dir', function(){
         return specify('shortens dir path', function(){
-          return expect(shortener.shortenDir('dist').dir).to.eql('js');
+          var config;
+          config = shortener.shortenDir('dist');
+          log(config);
+          return expect(config.dir).to.eql('js');
         });
       });
     });

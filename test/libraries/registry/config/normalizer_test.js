@@ -34,7 +34,7 @@
       });
       describe('should-normalize', function(){
         var normalizer, config;
-        context('only files key', function(){
+        context('no dir', function(){
           beforeEach(function(){
             return normalizer = new Normalizer({
               files: ['x/y.js']
@@ -46,10 +46,11 @@
             return expect(normalizer.shouldNormalize()).to.be['true'];
           });
         });
-        return context('multiple keys or any non- files: key', function(){
+        return context('has a dir', function(){
           beforeEach(function(){
             return normalizer = new Normalizer({
-              scripts: ['x/y.js']
+              dir: 'x',
+              scripts: ['y.js']
             }, {
               type: 'component'
             });
