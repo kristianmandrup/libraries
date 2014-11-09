@@ -105,6 +105,10 @@ module.exports = class GlobalConfig implements FileIO
     registry: ->
       dir: ~>
         [@dir, 'registry'].join '/'
+      adapter:
+        type: 'bower'
+        installer: 'json'
+        name: 'pkg'
 
     registries: [
       {name: 'libraries-official', type: 'uri', repo: 'kristianmandrup/libraries'}

@@ -7,6 +7,7 @@ BasicRegistryAdapter = require './basic-adapter'
 module.exports = class LocalRegistryAdapter extends BasicRegistryAdapter
   (@options = {}) ->
     super ...
+    @
 
   adapters:
     file: FileAdapter

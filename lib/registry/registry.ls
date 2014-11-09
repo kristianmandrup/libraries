@@ -18,10 +18,11 @@ module.exports = class Registry
     @adapter!.install name
 
   adapter: ->
-    new @selected-adapter! @options
+    clazz = @selected-adapter!
+    new clazz @options
 
   selected-adapter: ->
-    adapters[@type] or @bad-adapter!
+    @adapters[@type] or @bad-adapter!
 
   adapters:
     local:   LocalAdapter
