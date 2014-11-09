@@ -60,28 +60,31 @@
           return normalizer = new PathNormalizer(config.xyz, ['x/y/z.js']);
         });
         describe.only('set-root', function(){
-          return specify('sets root', function(){
-            return expect(normalizer.setRoot()).to.eql('x');
+          return specify('is void', function(){
+            return expect(normalizer.setRoot().root).to.eql(void 8);
           });
         });
         describe('config-keys', function(){
           return specify('keys', function(){
-            return expect(normalizer.configKeys()).to.eql('scripts');
+            return expect(normalizer.configKeys()).to.eql(['scripts']);
           });
         });
         describe('dirs', function(){
           return specify('is x,y', function(){
-            return expect(normalizer.dir()).to.eql(['x', 'y']);
+            return expect(normalizer.dirs()).to.eql([void 8]);
           });
         });
         describe('normalize-key-dirs', function(){
           return specify('normalizes dirs', function(){
-            return expect(normalizer.normalizeKeyDirs()).to.eql(['x', 'y']);
+            return expect(normalizer.normalizeKeyDirs()).to.eql([void 8]);
           });
         });
         describe('normalize-key-files', function(){
           return specify('normalizes files', function(){
-            return expect(normalizer.normalizeKeyFiles()).to.eql(['x', 'y']);
+            return expect(normalizer.normalizeKeyFiles()).to.eql([{
+              files: ['z.js'],
+              dir: 'x/y'
+            }]);
           });
         });
         return describe('normalize', function(){

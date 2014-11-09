@@ -22,9 +22,7 @@ module.exports = class PathNormalizer
   # now iterate dirs, find root of common dir and set as top lv dir
   normalize: ->
     @normalize-key-files!
-    console.log 'config', @config
     @normalize-key-dirs!
-    console.log 'config', @config
     @config
 
   set-root: ->
@@ -34,6 +32,7 @@ module.exports = class PathNormalizer
 
     unless is-blank @root
       @config.dir = @root
+    @
 
   dirs: ->
     dirs = []

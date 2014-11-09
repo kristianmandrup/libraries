@@ -57,24 +57,24 @@ describe 'PathNormalizer' ->
         normalizer := new PathNormalizer config.xyz, ['x/y/z.js']
 
       describe.only 'set-root' ->
-        specify 'sets root' ->
-          expect normalizer.set-root! .to.eql 'x'
+        specify 'is void' ->
+          expect normalizer.set-root!.root .to.eql void
 
       describe 'config-keys' ->
         specify 'keys' ->
-          expect normalizer.config-keys! .to.eql 'scripts'
+          expect normalizer.config-keys! .to.eql ['scripts']
 
       describe 'dirs' ->
         specify 'is x,y' ->
-          expect normalizer.dir! .to.eql [\x \y]
+          expect normalizer.dirs! .to.eql [ void ]
 
       describe 'normalize-key-dirs' ->
         specify 'normalizes dirs' ->
-          expect normalizer.normalize-key-dirs! .to.eql [\x \y]
+          expect normalizer.normalize-key-dirs! .to.eql [ void ]
 
       describe 'normalize-key-files' ->
         specify 'normalizes files' ->
-          expect normalizer.normalize-key-files! .to.eql [\x \y]
+          expect normalizer.normalize-key-files! .to.eql [ { files: [ 'z.js' ], dir: 'x/y' } ]
 
       describe 'normalize' ->
         specify \normalizes ->

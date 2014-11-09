@@ -21,7 +21,6 @@ module.exports = class ConfigNormalizer
     for file in @files
       @file-normalizer!.normalize file
 
-    console.log 'normalized', @normalized
     @path-normalizer!.normalize!
     @normalized
 
@@ -31,14 +30,6 @@ module.exports = class ConfigNormalizer
   path-normalizer: ->
     new PathNormalizer @normalized, @files
 
-  normalized:
-    main: {}
-    scripts: {}
-    styles: {}
-    fonts: {}
-    images: {}
-    files: {}
-
-
+  normalized: {}
 
 

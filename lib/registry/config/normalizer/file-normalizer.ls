@@ -2,7 +2,7 @@ path = require 'path'
 
 module.exports = class FileNormalizer
   (@config, @file) ->
-    @normalized = @config or @own-normalized
+    @normalized = @config or {}
     @validate!
     @
 
@@ -33,6 +33,7 @@ module.exports = class FileNormalizer
     # put in files if unknown extension
     \files
 
+  # TODO: make optionally configurable from global conf
   types:
     scripts: ['js', 'coffee', 'ls']
     styles: ['css', 'less', 'scss', 'sass']
@@ -41,15 +42,8 @@ module.exports = class FileNormalizer
 
   add-file: (type) ->
     @type ||= type
-    entry = @normalized[@type]
+    entry = @normalized[@type] ||= {}
     entry.files ||= []
     entry.files.push @file unless entry.files.index-of(@file) > -1
     @
 
-  own-normalized:
-    main: {}
-    scripts: {}
-    styles: {}
-    fonts: {}
-    images: {}
-    files: {}

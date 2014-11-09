@@ -82,9 +82,12 @@
         });
         return describe('normalize', function(){
           return specify('has one', function(){
-            return expect(normalizer.normalize().scripts).to.eql({
-              dir: 'x/y',
-              files: ['z.js']
+            return expect(normalizer.normalize()).to.eql({
+              dir: 'x',
+              scripts: {
+                dir: 'y',
+                files: ['z.js']
+              }
             });
           });
         });

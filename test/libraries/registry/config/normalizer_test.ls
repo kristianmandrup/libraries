@@ -56,8 +56,10 @@ describe 'Normalizer' ->
 
       describe 'normalize' ->
         specify 'has one' ->
-          expect normalizer.normalize!.scripts .to.eql {
-            dir: 'x/y',
-            files: ['z.js']
+          expect normalizer.normalize! .to.eql {
+            dir: 'x'
+            scripts: {
+              dir: 'y',
+              files: ['z.js']
+            }
           }
-
