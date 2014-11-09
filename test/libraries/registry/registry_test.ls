@@ -29,12 +29,10 @@ describe 'Registry' ->
         specify 'is LocalAdapter class' ->
           expect registry.selected-adapter! .to.eql LocalAdapter
 
-      describe.only 'adapter' ->
+      describe 'adapter' ->
         specify 'is LocalAdapter' ->
           expect registry.adapter! .to.be.an.instance-of LocalAdapter
 
       describe 'install(name)' ->
         specify 'installs bootstrap' ->
-          expect registry.install 'bootstrap' .to.not.throw
-
-
+          expect -> registry.install 'bootstrap' .to.not.throw

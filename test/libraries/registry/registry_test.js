@@ -40,14 +40,16 @@
             return expect(registry.selectedAdapter()).to.eql(LocalAdapter);
           });
         });
-        describe.only('adapter', function(){
+        describe('adapter', function(){
           return specify('is LocalAdapter', function(){
             return expect(registry.adapter()).to.be.an.instanceOf(LocalAdapter);
           });
         });
         return describe('install(name)', function(){
           return specify('installs bootstrap', function(){
-            return expect(registry.install('bootstrap')).to.not['throw'];
+            return expect(function(){
+              return registry.install('bootstrap').to.not['throw'];
+            });
           });
         });
       });

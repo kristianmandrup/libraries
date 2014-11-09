@@ -1,9 +1,3 @@
-/**
- * User: kristianmandrup
- * Date: 07/10/14
- * Time: 23:16
- */
-
 expect = require 'chai' .expect
 
 Components    = require '../../../lib/component/components'

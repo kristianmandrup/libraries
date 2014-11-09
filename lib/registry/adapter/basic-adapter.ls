@@ -6,7 +6,6 @@ module.exports = class BasicRegistryAdapter
     @type ||= @options.type or @default-type!
     @installer-type = @options.installer or @default-installer!
     @adapter-type   = @options.adapter or @default-adapter!
-    super ...
     @validate!
     @
 

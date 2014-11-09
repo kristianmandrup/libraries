@@ -47,7 +47,6 @@ module.exports = class Component
   emit: (locations) ->
     locations.map (location) ->
       "app.import('#{location}');"
-    # .join '\n'
 
   types: ->
     Object.keys @location-obj!
@@ -58,8 +57,9 @@ module.exports = class Component
   flat-output: (cb) ->
     flatten @type-output(cb)
 
+  # TODO: font support -> destDir: 'font'
   # TODO: Sass suppport via class path (see ember/cli/fontawesome-sass)
-  # TODO: support exports for AMD remap
+  # TODO: exports for AMD remap via Petals
   type-output: (cb) ->
     @types!.map (key) ~>
       cb @location-obj![key]
