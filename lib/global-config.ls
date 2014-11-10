@@ -107,6 +107,7 @@ module.exports = class GlobalConfig implements FileIO
         [@dir, 'registry'].join '/'
       adapter:
         type: 'bower'
+        from: 'local'
         installer: 'json'
         name: 'pkg'
 

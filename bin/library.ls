@@ -55,7 +55,7 @@ program
 # component by making a lookup in the registry `index.json` file (see below).
 #
 # If it's a component, it checks if it has a component config file in `components/ folder.
-# If not, it downloads or copies the component config from the registry.
+# If not, it downloads/copies the component config from the registry.
 
 program
  .command 'install'

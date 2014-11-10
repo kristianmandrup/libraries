@@ -10,6 +10,15 @@ module.exports = class Installer
     unless typeof! @type is 'String'
       throw new Error "Type must be a String, was: #{@type}"
 
+  install: (name, opts = {}) ->
+    unless typeof name is 'string'
+      throw Error "Must have a name of component to install, was: #{name}"
+
+    unless opts.source
+      throw Error "Missing source to install from, was: #{opts}"
+
+    @installer!install name, opts.source, opts
+
   installer: ->
     clazz = @selected-installer!
     new clazz ...@args

@@ -2,6 +2,7 @@ FileIO          = require '../../../util/file-io'
 BaseInstaller   = require './base-installer'
 fs              = require 'fs-extra'
 util            = require 'util'
+path            = require 'path'
 
 is-blank = (str) ->
   !str or /^\s*$/.test str
@@ -11,11 +12,23 @@ gconf         = new GlobalConfig
 
 module.exports = class JsonInstaller extends BaseInstaller implements FileIO
   (@name, @source, @options = {}) ->
-    @file = @options.file or gconf.location 'components.file'
+    @file = @options.file or @default-file!
+    @configure!
     super ...
     @convert!
     @validate!
     @content = void
+
+  default-file: ->
+    gconf.location 'components.json'
+
+  configure: ->
+    unless @exists @file
+      @create-components-file!
+
+  create-components-file: ->
+    fs.mkdirpSync path.dirname(@file)
+    fs.writeFileSync @file, '{}'
 
   convert: ->
     if is-blank @source

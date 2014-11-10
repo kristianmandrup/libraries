@@ -1,12 +1,13 @@
 {
-  "dir": "./xlibs2",
+  "dir": "./xlibs",
   "builds": {
     "dir": "builds"
   },
 
   "components": {
     "dir": "components",
-    "file": "index.json"
+    "file": "index.json",
+    "json": "components.json"
   },
   "select": {
     "file": "selected"
@@ -16,6 +17,7 @@
   },
   "registry": {
     "adapter": {
+      "from": "local",
       "name": "pkg",
       "type": "bower",
       "installer": "json"

@@ -1,14 +1,17 @@
 LocalAdapter   = require './adapter/local-adapter'
 RemoteAdapter  = require './adapter/remote-adapter'
 
+GlobalConfig  = require '../global-config'
+gconf         = new GlobalConfig
+
 module.exports = class Registry
   (@options = {}) ->
-    @parse!
+    @type ||= @options.type or @default-type!
     @validate!
     @
 
-  parse: ->
-    @type ||= @options.type or 'local'
+  default-type: ->
+    gconf.get 'registry.adapter.from' or 'local'
 
   validate: ->
     unless typeof! @type is 'String'

@@ -5,6 +5,7 @@ Normalizer  = require '../config/normalizer'
 
 GlobalConfig  = require '../../global-config'
 gconf         = new GlobalConfig
+
 util = require 'util'
 
 module.exports = class BaseAdapter implements FileIO
@@ -46,7 +47,7 @@ module.exports = class BaseAdapter implements FileIO
       @normalize res
 
   install: (name) ->
-    @installer!.install source: @enriched-config(name), target: @target-config(name)
+    @installer!.install name, source: @enriched-config(name), target: @target-config(name)
 
   enriched-config: (name) ->
     @enrich-and-normalize!

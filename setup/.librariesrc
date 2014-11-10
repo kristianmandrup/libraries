@@ -6,7 +6,8 @@
 
   "components": {
     "dir": "components",
-    "file": "index.json"
+    "file": "index.json",
+    "json": "components.json"
   },
   "select": {
     "file": "selected"

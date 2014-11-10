@@ -60,7 +60,7 @@ module.exports =
   transferer: -> (env) ->
     @_transferer ||= new Transferer env
 
-  install: (opts) ->
+  install: (opts = {}) ->
     console.log 'installing...'
     @select(opts).install!
     @success!

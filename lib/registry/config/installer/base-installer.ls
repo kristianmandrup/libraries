@@ -15,7 +15,6 @@ module.exports = class BaseInstaller
     unless @exists @file
       throw new Error "Target file #{@file} does not exist"
 
-  validate: ->
     unless typeof! @name is 'String'
       throw new Error "Name must be a String, was: #{@name}"
 

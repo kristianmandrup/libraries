@@ -25,18 +25,22 @@ module.exports = class BasicRegistryAdapter
     unless typeof! @adapter-type is 'String'
       throw Error "adapter type must be a String, was: #{@adapter-type}"
 
-  load: ->
-    @adapter!.load!
+    unless typeof! @installer-type is 'String'
+      throw Error "installer type must be a String, was: #{@installer-type}"
 
-  install: ->
-    @adapter!.install @installer-type
+
+  load: ->
+    @adapter!load!
+
+  install: (name) ->
+    @adapter!install name
 
   adapter: ->
     clazz = @selected-adapter!
     new clazz @options
 
   selected-adapter: ->
-    @adapter[@adapter-type] or @bad-adapter!
+    @adapters[@adapter-type] or @bad-adapter!
 
   bad-adapter: ->
     throw new Error "unknown adapter #{@adapter-type}"
