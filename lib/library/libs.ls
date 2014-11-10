@@ -1,8 +1,3 @@
-/**
- * User: kristianmandrup
- * Date: 06/10/14
- * Time: 14:40
- */
 Lib     = require './lib'
 util    = require 'util'
 

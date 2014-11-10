@@ -1,8 +1,3 @@
-/**
- * User: kristianmandrup
- * Date: 11/10/14
- * Time: 10:18
- */
 util    = require 'util'
 
 module.exports = class Lib

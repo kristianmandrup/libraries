@@ -1,8 +1,3 @@
-/**
- * User: kristianmandrup
- * Date: 11/10/14
- * Time: 09:47
- */
 Container = require './container'
 util = require 'util'
 
