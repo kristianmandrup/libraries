@@ -23,6 +23,8 @@ the overall user experience!
 - library setup works!
 - ...
 
+- install (fix)
+
 ### Select libraries
 
 `selected` is a simple text file, where each line is a library you wish to include :) 

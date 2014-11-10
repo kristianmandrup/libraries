@@ -37,6 +37,10 @@ describe 'Installer' ->
         specify 'is FileInstaller' ->
           expect installer.selected-installer! .to.eql FileInstaller
 
+      describe 'install' ->
+        specify 'installs component' ->
+          expect true .to.be.false
+
     context 'json instance' ->
       var installer
 
@@ -50,3 +54,7 @@ describe 'Installer' ->
       describe 'installer' ->
         specify 'default is FileInstaller' ->
           expect installer.installer! .to.be.an.instance-of JsonInstaller
+
+      describe 'install' ->
+        specify 'installs component' ->
+          expect true .to.be.false

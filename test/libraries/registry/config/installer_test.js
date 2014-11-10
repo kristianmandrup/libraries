@@ -44,9 +44,14 @@
             return expect(installer.installer()).to.be.an.instanceOf(FileInstaller);
           });
         });
-        return describe('selected-installer', function(){
+        describe('selected-installer', function(){
           return specify('is FileInstaller', function(){
             return expect(installer.selectedInstaller()).to.eql(FileInstaller);
+          });
+        });
+        return describe('install', function(){
+          return specify('installs component', function(){
+            return expect(true).to.be['false'];
           });
         });
       });
@@ -62,9 +67,14 @@
             return expect(installer.type).to.eql('json');
           });
         });
-        return describe('installer', function(){
+        describe('installer', function(){
           return specify('default is FileInstaller', function(){
             return expect(installer.installer()).to.be.an.instanceOf(JsonInstaller);
+          });
+        });
+        return describe('install', function(){
+          return specify('installs component', function(){
+            return expect(true).to.be['false'];
           });
         });
       });
