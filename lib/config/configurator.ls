@@ -3,7 +3,7 @@ Components    = require '../component/components'
 Container     = require './container'
 Containers    = require './containers'
 
-GlobalConfig = require '../../../../global-config'
+GlobalConfig = require '../global-config'
 gconf       = new GlobalConfig
 
 module.exports = class Configurator implements FileIO

@@ -10,7 +10,7 @@ is-blank = (str) ->
 lines = (build) ->
   build.join '\n    '
 
-GlobalConfig  = require '../../../../global-config'
+GlobalConfig  = require '../global-config'
 gconf         = new GlobalConfig
 
 module.exports = class Generator implements FileIO

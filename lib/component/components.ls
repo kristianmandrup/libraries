@@ -7,11 +7,11 @@
 Component         = require './component'
 ComponentConfig   = require './component-config'
 
-ListMutator   = require '../list-mutator'
-fs            = require 'fs'
 util          = require 'util'
+ListMutator   = util.list-mutator
+fs            = require 'fs'
 
-GlobalConfig = require '../../../../global-config'
+GlobalConfig = require '../global-config'
 gconf       = new GlobalConfig
 
 module.exports = class Components implements ListMutator

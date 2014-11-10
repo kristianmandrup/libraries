@@ -3,9 +3,10 @@ Configurator  = require './config/configurator'
 Registry      = require './registry/registry'
 Generator     = require './output/generator'
 ConfigLoader  = require './registry/config-loader'
-Transferer    = require './tranferer/tranferer'
+Transferer    = require './transferer/transferer'
 
-fs = require 'fs-extra'
+fs    = require 'fs-extra'
+path  = require 'path'
 
 module.exports =
   select: (opts = {}) ->
