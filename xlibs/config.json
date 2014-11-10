@@ -1,23 +1,14 @@
 {
   "config": {
-      "vendor": "vendor/prod"
   },
   "containers": {
     "bower": {
-      "components": [
-        "bootstrap",
-        "foundation"
-      ],
+      "components": {
+      },
       "libs": {
-        "ember-validations": "dist/ember-validations",
-        "ember-easyform": "dist/ember-easyform",
-        "moment": {
-          "at": "momentjs/index"
-        }
       }
     },
     "vendor": {
-
     }
   }
 }

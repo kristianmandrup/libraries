@@ -10,10 +10,10 @@ program
 #  .option '-B, --baz', 'enable some baz'
 
 program
- .command 'setup'
+ .command 'setup <dir>'
  .description 'setup libraries'
- .action ->
-   libraries.setup!
+ .action (dir) ->
+   libraries.setup dir
 
 # `library add bootstrap`
 # `library add lib:bootstrap` (no component check)

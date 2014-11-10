@@ -4,8 +4,8 @@
   libraries = require('../lib/libraries');
   program = require('commander');
   program.version('0.0.1');
-  program.command('setup').description('setup libraries').action(function(){
-    return libraries.setup();
+  program.command('setup <dir>').description('setup libraries').action(function(dir){
+    return libraries.setup(dir);
   });
   program.command('add <libs>').description('add the given libraries').action(function(libs){
     return console.log('add libraries "%s"', libs);

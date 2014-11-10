@@ -20,6 +20,9 @@ the global config file.
 You are encouraged to extend the API as you see fit and integrate more of the API as CLI commands to improve
 the overall user experience!
 
+- library setup works!
+- ...
+
 ### Select libraries
 
 `selected` is a simple text file, where each line is a library you wish to include :) 

@@ -7,15 +7,37 @@ Transferer    = require './transferer/transferer'
 
 fs    = require 'fs-extra'
 path  = require 'path'
+chalk = require 'chalk'
 
 module.exports =
   select: (opts = {}) ->
     @_selector ||= new Selector opts or @options
 
-  setup: ->
-    xlibs-src = path.resolve __dirname, 'setup/xlibs'
-    fs.copy xlibs-src, '.', (err) ->
-      return console.error(err) if err
+  setup: (dir = 'xlibs')->
+    console.log "Installing libraries configuration in: #{dir}"
+    try
+      xlibs-src = path.resolve __dirname, '../setup/xlibs'
+      console.log 'copy xlibs'
+      fs.copy xlibs-src, "./#{dir}", (err) ~>
+        return console.error(err) if err
+
+        rcfile = path.resolve __dirname, '../setup/.librariesrc'
+        console.log 'create .librariesrc'
+        fs.copy rcfile, ".librariesrc", (err) ~>
+          return console.error(err) if err
+
+          unless dir is 'xlibs'
+            console.log "replace xlibs with: #{dir}"
+            # replace xlibs with dir chosen
+            content = fs.readFileSync ".librariesrc", 'utf8'
+            content = content.replace /xlibs/, dir
+            fs.writeFileSync ".librariesrc", content, 'utf8'
+
+          @was-success!
+          true
+
+    catch e
+      @was-error e
 
   add: (opts = {}) ->
     @config(opts).add opts
@@ -38,9 +60,6 @@ module.exports =
   transferer: -> (env) ->
     @_transferer ||= new Transferer env
 
-  success: ->
-    console.log chalk.green('success ;>)')
-
   install: (opts) ->
     console.log 'installing...'
     @select(opts).install!
@@ -61,8 +80,25 @@ module.exports =
   # if not passed, it will use a default emit for Broccoli
   build: (opts) ->
     console.log 'building...', @config
-    @install opts
-    cb = opts.cb if opts
-    build = @select(opts).build cb
-    @generator(opts).generate build
-    @success!
+    try
+      @install opts
+      cb = opts.cb if opts
+      build = @select(opts).build cb
+      @generator(opts).generate build
+      @was-success!
+    catch e
+      @was-error e
+
+  was-success: ->
+    @success 'success ;>)'
+
+  was-error: (e) ->
+    @error "Error :("
+    console.log e
+
+  error: (msg) ->
+    console.log chalk.red(msg)
+
+  success: (msg) ->
+    console.log chalk.green(msg)
+

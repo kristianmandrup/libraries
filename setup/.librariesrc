@@ -1,5 +1,5 @@
 {
-  "dir": "./xlibs2",
+  "dir": "./xlibs",
   "builds": {
     "dir": "builds"
   },
