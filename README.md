@@ -1,5 +1,7 @@
 # Libraries
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/kristianmandrup/libraries.svg)](https://greenkeeper.io/)
+
 Libraries loader for Broccoli to make it easier and more efficient. 
 We should avoid re-packaging every javascript library as a simple Ember CLI addon wrapper!! 
 
